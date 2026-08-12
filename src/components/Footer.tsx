@@ -1,0 +1,177 @@
+import { Mail, Phone, MapPin } from "lucide-react";
+import { NavLink } from "react-router-dom";
+
+import { ROUTES } from "../constants/routes";
+import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
+
+export default function Footer() {
+  return (
+    <footer className="bg-neutral-950 text-white w-full">
+      <div className="mx-auto max-w-7xl px-4 lg:px-12 md:px-8 py-10">
+        <div className=" flex flex-col gap-10 lg:flex-row justify-between">
+          {/* Logo */}
+          <div className="w-auto lg:w-[300px] space-y-5">
+            <div>
+              <img src="/footer-logo.png" className="w-[170px] h-auto" />
+            </div>
+
+            <p className=" text-sm leading-7 text-gray-300">
+              Raising leaders, building capacity and impacting communities
+              across Africa.
+            </p>
+
+            <div className=" flex items-center gap-4">
+              <a
+                href="#"
+                className="transition hover:text-orange-500 cursor-pointer"
+                aria-label="Facebook"
+              >
+                <FaFacebook size={20} />
+              </a>
+
+              <a
+                href="#"
+                className="transition hover:text-orange-500 cursor-pointer"
+                aria-label="Twitter"
+              >
+                <FaTwitter size={20} />
+              </a>
+
+              <a
+                href="#"
+                className="transition hover:text-orange-500 cursor-pointer"
+                aria-label="Instagram"
+              >
+                <FaInstagram size={20} />
+              </a>
+
+              <a
+                href=" https://www.linkedin.com/company/leadership-conference-forum"
+                className="transition hover:text-orange-500 cursor-pointer"
+                aria-label="LinkedIn"
+              >
+                <FaLinkedin size={20} />
+              </a>
+            </div>
+          </div>
+
+          {/* Quick Links */}
+          <div className="space-y-4">
+            <h3 className=" font-semibold uppercase tracking-wider text-orange-500">
+              Quick Links
+            </h3>
+
+            <ul className="space-y-3">
+              <li>
+                <NavLink
+                  className="text-gray-300 transition text-sm hover:text-orange-500"
+                  to={ROUTES.HOME}
+                >
+                  Home
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink
+                  className="text-gray-300 transition text-sm hover:text-orange-500"
+                  to={ROUTES.ABOUT}
+                >
+                  About Us
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink
+                  className="text-gray-300 text-sm transition hover:text-orange-500"
+                  to={ROUTES.EVENTS}
+                >
+                  Events
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  className="text-gray-300 transition text-sm hover:text-orange-500"
+                  to={ROUTES.VOLUNTEER}
+                >
+                  Volunteer
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink
+                  className="text-gray-300 transition text-sm hover:text-orange-500"
+                  to={ROUTES.CONTACT}
+                >
+                  Contact Us
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink
+                  className="text-gray-300 transition text-sm hover:text-orange-500"
+                  to={ROUTES.LEGAL_NOTICE}
+                >
+                  Legal Notice
+                </NavLink>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div className="space-y-4">
+            <h3 className="font-semibold uppercase tracking-wider text-orange-500">
+              Contact Us
+            </h3>
+
+            <div className="space-y-4">
+              <div className="flex items-start gap-3">
+                <a
+                  href="mailto:Info@leadershipconferenceforum.org"
+                  className="cursor-pointer"
+                >
+                  <Mail className="mt-1 text-orange-500 shrink-0" size={18} />
+                </a>
+
+                <span className="text-gray-300 text-sm">
+                  Info@leadershipconferenceforum.org
+                </span>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <a href="tel:07500429811">
+                  <Phone
+                    className="mt-1 text-primary shrink-0 text-orange-500"
+                    size={18}
+                  />
+                </a>
+
+                <span className="text-gray-300 text-sm"> 07500429811</span>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <a href="https://maps.google.com/?q=Durham,United+Kingdom">
+                  <MapPin className="mt-1 text-orange-500 shrink-0" size={18} />
+                </a>
+
+                <span className="text-gray-300 text-sm">
+                  Durham, United Kingdom.
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div className="border mt-10 border-white/10 border-t-0 border-l-0 border-r-0" />
+
+        {/* Bottom */}
+        <div className=" text-center text-sm pt-10 text-gray-400 ">
+          <p>
+            © {new Date().getFullYear()} Leadership Conference Forum. All Rights
+            Reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}
