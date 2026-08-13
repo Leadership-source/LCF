@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import { ROUTES } from "../constants/routes";
 import HomePage from "../pages/HomePage";
 import AboutPage from "../pages/AboutPage";
@@ -13,7 +13,7 @@ import PublicLayout from "../layouts/PublicLayout";
 
 function AppRouter() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/admin/*" element={<AdminRoutes />} />
         <Route element={<PublicLayout />}>
@@ -27,7 +27,7 @@ function AppRouter() {
           <Route path={"*"} element={<PageNotFound />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 export default AppRouter;
