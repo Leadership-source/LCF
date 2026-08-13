@@ -1,4 +1,4 @@
-import { apiClient } from "../../clients";
+import { apiClient, TOKEN_KEY } from "../../clients";
 export type LoginPayload = {
   email: string;
   password: string;
@@ -24,13 +24,13 @@ export async function loginAdmin(
   payload: LoginPayload,
 ): Promise<LoginResponse> {
   const response = await apiClient.post("/auth/login", payload);
-
+  localStorage.setItem(TOKEN_KEY, response.data.token);
   return response.data;
 }
 
 export async function logoutAdmin() {
+  localStorage.removeItem(TOKEN_KEY);
   const response = await apiClient.post("/auth/logout");
-
   return response.data;
 }
 
