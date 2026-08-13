@@ -4,11 +4,7 @@ export type LoginPayload = {
   password: string;
 };
 
-type RegisterPayload = {
-  name: string;
-  email: string;
-  password: string;
-};
+export type UserRole = "USER" | "ADMIN" | "SUPERADMIN";
 
 export type LoginResponse = {
   message: string;
@@ -16,6 +12,7 @@ export type LoginResponse = {
     id: string;
     name: string;
     email: string;
+    role: UserRole;
   };
   token: string;
 };
@@ -38,12 +35,6 @@ export async function getCurrentUser() {
   const response = await apiClient.get("/auth/me");
 
   return response.data.user;
-}
-
-export async function registerAdmin(data: RegisterPayload) {
-  const response = await apiClient.post("/auth/register", data);
-
-  return response.data;
 }
 
 export type ChangePasswordPayload = {

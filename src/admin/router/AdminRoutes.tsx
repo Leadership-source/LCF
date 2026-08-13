@@ -11,6 +11,7 @@ import TeamsPage from "../pages/teams/AdminTeams";
 import Events from "../pages/events/AdminEvents";
 import Settings from "../pages/settings/Settings";
 import ResetPasswordPage from "../pages/AdminResetPassword";
+import AdminUsersPage from "../pages/users/AdminUsers";
 
 function AdminRoutes() {
   return (
@@ -29,6 +30,7 @@ function AdminRoutes() {
           <Route path="dashboard" element={<DashboardPage />} />
           <Route path="teams" element={<TeamsPage />} />
           <Route path="events" element={<Events />} />
+          <Route path="users" element={<AdminUsersPage />} />
           <Route path="settings" element={<Settings />} />
         </Route>
       </Route>

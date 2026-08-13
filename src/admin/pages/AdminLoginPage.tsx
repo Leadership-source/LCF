@@ -199,16 +199,6 @@ export default function AdminLoginPage() {
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-gray-500">
-          Don't have an admin account?{" "}
-          <Link
-            to={ADMIN_ROUTES.REGISTER}
-            className="font-semibold text-orange-500 hover:text-orange-600"
-          >
-            Create an account
-          </Link>
-        </p>
-      </div>
     </div>
   );
 }
