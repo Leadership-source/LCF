@@ -10,10 +10,10 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
-import { ADMIN_ROUTES } from "../../../constants/routes";
-import { Logo } from "../../../components/Logo";
-import { logoutAdmin } from "../../../api/services/admin/auth.service";
-import { getErrorMessage } from "../../../lib/getErrorMessage";
+import { ADMIN_ROUTES } from "../../constants/routes";
+import { Logo } from "../../components/Logo";
+import { logoutAdmin } from "../../api/services/admin/auth.service";
+import { getErrorMessage } from "../../lib/getErrorMessage";
 
 type Props = {
   isOpen: boolean;

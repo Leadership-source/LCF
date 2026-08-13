@@ -1,8 +1,8 @@
 import { Bell, ChevronDown, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getCurrentUser } from "../../../api/services/admin/auth.service";
-import { getNotifications } from "../../../api/services/admin/notification.service";
+import { getCurrentUser } from "../../api/services/admin/auth.service";
+import { getNotifications } from "../../api/services/admin/notification.service";
 
 type AdminTopBarProps = {
   toggleSidebar: () => void;
