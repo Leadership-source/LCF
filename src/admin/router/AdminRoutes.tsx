@@ -1,10 +1,10 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 
 import AdminLoginPage from "../pages/AdminLoginPage";
-import ProtectedAdminRoute from "../pages/ProtectedRoutes";
+import ProtectedAdminRoute from "./ProtectedRoutes";
 import ForgotPasswordPage from "../pages/AdminForgetPassword";
 
-import { AdminLayout } from "../components/layouts/AdminLayout";
+import { AdminLayout } from "../layouts/AdminLayout";
 
 import DashboardPage from "../pages/Dashboard/DashboardPage";
 import TeamsPage from "../pages/teams/AdminTeams";

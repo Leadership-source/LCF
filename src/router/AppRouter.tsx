@@ -7,7 +7,7 @@ import VolunteerPage from "../pages/VolunteerPage";
 import ContactPage from "../pages/ContactPage";
 import PageNotFound from "../pages/PageNotFound";
 import LegalNoticePage from "../pages/LegalNoticePage";
-import EventDetailsPage from "../events/EventDetailsPage";
+import EventDetailsPage from "../pages/EventDetailsPage";
 import AdminRoutes from "../admin/router/AdminRoutes";
 import PublicLayout from "../layouts/PublicLayout";
 
