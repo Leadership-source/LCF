@@ -8,12 +8,12 @@ import {
   X,
 } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
 import { ADMIN_ROUTES } from "../../constants/routes";
 import { Logo } from "../../components/Logo";
-import { logoutAdmin } from "../../api/services/admin/auth.service";
+import { getCurrentUser, logoutAdmin } from "../../api/services/admin/auth.service";
 import { getErrorMessage } from "../../lib/getErrorMessage";
 
 type Props = {
@@ -50,6 +50,14 @@ const coreNavItems = [
 
 export function AdminSidebar({ isOpen, onClose }: Props) {
   const navigate = useNavigate();
+
+  const { data: currentUser } = useQuery({
+    queryKey: ["currentUser"],
+    queryFn: getCurrentUser,
+    staleTime: 5 * 60 * 1000,
+  });
+
+  const isSuperAdmin = currentUser?.role === "SUPERADMIN";
 
   const logoutMutation = useMutation({
     mutationFn: logoutAdmin,
@@ -148,7 +156,8 @@ export function AdminSidebar({ isOpen, onClose }: Props) {
               );
             })}
 
-            <NavLink
+            {isSuperAdmin && (
+              <NavLink
                 to={ADMIN_ROUTES.USERS}
                 end
                 onClick={onClose}
@@ -163,6 +172,7 @@ export function AdminSidebar({ isOpen, onClose }: Props) {
                 <ShieldCheck size={20} />
                 <span>Users</span>
               </NavLink>
+            )}
           </div>
         </div>
 
