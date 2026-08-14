@@ -122,6 +122,26 @@ export async function updateEventStatus(
 
 export async function deleteEvent(id: string) {
   const response = await apiClient.delete(`/events/${id}`);
+  return response.data;
+}
 
+export type EventAttendee = {
+  id: string;
+  name: string;
+  email: string;
+  phone: string | null;
+  registeredAt: string;
+};
+
+export type EventAttendeesResponse = {
+  event: { id: string; title: string; date: string; location: string };
+  total: number;
+  attendees: EventAttendee[];
+};
+
+export async function getEventAttendees(
+  id: string,
+): Promise<EventAttendeesResponse> {
+  const response = await apiClient.get(`/events/${id}/attendees`);
   return response.data;
 }

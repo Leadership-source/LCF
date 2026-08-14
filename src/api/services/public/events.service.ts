@@ -15,12 +15,8 @@ export async function getEvent(id: string): Promise<Event> {
 
 export async function registerForEvent(
   eventId: string,
-  data: {
-    name: string;
-    email: string;
-  },
+  data: { name: string; email: string; phone?: string },
 ) {
   const response = await apiClient.post(`/events/${eventId}/register`, data);
-
   return response.data;
 }

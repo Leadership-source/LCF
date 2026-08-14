@@ -5,6 +5,7 @@ import {
   Pencil,
   Search,
   Trash2,
+  UsersRound,
 } from "lucide-react";
 
 import { useState, type Dispatch, type SetStateAction } from "react";
@@ -15,6 +16,7 @@ import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateEventStatus } from "../../../api/services/admin/events.service";
 import { DeleteEvent } from "./DeleteEvents";
+import { EventAttendeesModal } from "./EventAttendeesModal";
 
 type EventTableProps = {
   search: string;
@@ -40,6 +42,7 @@ export function EventTable({
 }: EventTableProps) {
   const [selectedEvent, setSelectedEvent] = useState<AdminEvent | null>(null);
   const [eventToDelete, setEventToDelete] = useState<AdminEvent | null>(null);
+  const [attendeesEventId, setAttendeesEventId] = useState<string | null>(null);
   const queryClient = useQueryClient();
 
   const updateStatusMutation = useMutation({
@@ -206,6 +209,15 @@ export function EventTable({
                   <div className="flex justify-center gap-2">
                     <button
                       type="button"
+                      onClick={() => setAttendeesEventId(event.id)}
+                      className="rounded-md border border-gray-300 p-2 hover:bg-gray-100"
+                      title="View attendees"
+                    >
+                      <UsersRound size={16} />
+                    </button>
+
+                    <button
+                      type="button"
                       onClick={() => setSelectedEvent(event)}
                       className="rounded-md border border-gray-300 p-2 hover:bg-gray-100"
                       title="Edit event"
@@ -267,6 +279,12 @@ export function EventTable({
         <DeleteEvent
           event={eventToDelete}
           onClose={() => setEventToDelete(null)}
+        />
+      )}
+      {attendeesEventId && (
+        <EventAttendeesModal
+          eventId={attendeesEventId}
+          onClose={() => setAttendeesEventId(null)}
         />
       )}
     </div>

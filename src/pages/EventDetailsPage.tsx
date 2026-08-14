@@ -12,6 +12,7 @@ import {
 type FormErrors = {
   name?: string;
   email?: string;
+  phone?: string;
   general?: string;
 };
 
@@ -21,6 +22,7 @@ export default function EventDetailsPage() {
   const [showRegistrationForm, setShowRegistrationForm] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
 
   const [errors, setErrors] = useState<FormErrors>({});
 
@@ -35,7 +37,7 @@ export default function EventDetailsPage() {
   });
 
   const registerMutation = useMutation({
-    mutationFn: (data: { name: string; email: string }) =>
+    mutationFn: (data: { name: string; email: string; phone?: string }) =>
       registerForEvent(id!, data),
 
     onSuccess: (data) => {
@@ -44,20 +46,24 @@ export default function EventDetailsPage() {
       setShowRegistrationForm(false);
       setName("");
       setEmail("");
+      setPhone("");
       setErrors({});
     },
 
     onError: (error: any) => {
-      console.error("EVENT REGISTRATION ERROR:", error?.response?.data);
-
+      const status = error?.response?.status;
       const message =
         error?.response?.data?.message ||
         error?.response?.data?.error ||
         "Registration failed. Please try again.";
 
-      setErrors({
-        general: message,
-      });
+      if (status === 409) {
+        setErrors({ email: message });
+      } else {
+        setErrors({ general: message });
+      }
+    },
+  });
     },
   });
 
@@ -99,6 +105,7 @@ export default function EventDetailsPage() {
     registerMutation.mutate({
       name: cleanName,
       email: cleanEmail,
+      phone: phone.trim() || undefined,
     });
   };
 
@@ -286,12 +293,7 @@ export default function EventDetailsPage() {
                   value={name}
                   onChange={(e) => {
                     setName(e.target.value);
-
-                    setErrors((prev) => ({
-                      ...prev,
-                      name: undefined,
-                      general: undefined,
-                    }));
+                    setErrors((prev) => ({ ...prev, name: undefined, general: undefined }));
                   }}
                   placeholder="Enter your full name"
                   className={`w-full rounded-lg border px-4 py-3 outline-none focus:border-orange-500 ${
@@ -315,12 +317,7 @@ export default function EventDetailsPage() {
                   value={email}
                   onChange={(e) => {
                     setEmail(e.target.value);
-
-                    setErrors((prev) => ({
-                      ...prev,
-                      email: undefined,
-                      general: undefined,
-                    }));
+                    setErrors((prev) => ({ ...prev, email: undefined, general: undefined }));
                   }}
                   placeholder="Enter your email"
                   className={`w-full rounded-lg border px-4 py-3 outline-none focus:border-orange-500 ${
@@ -331,6 +328,21 @@ export default function EventDetailsPage() {
                 {errors.email && (
                   <p className="mt-1 text-sm text-red-500">{errors.email}</p>
                 )}
+              </div>
+
+              {/* Phone (optional) */}
+              <div>
+                <label className="mb-1 block text-sm font-medium">
+                  Phone Number <span className="font-normal text-gray-400">(optional)</span>
+                </label>
+
+                <input
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="e.g. +44 7700 900000"
+                  className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-orange-500"
+                />
               </div>
 
               {/* Buttons */}
