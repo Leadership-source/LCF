@@ -210,10 +210,11 @@ export function EventTable({
                     <button
                       type="button"
                       onClick={() => setAttendeesEventId(event.id)}
-                      className="rounded-md border border-gray-300 p-2 hover:bg-gray-100"
+                      className="flex items-center gap-1.5 rounded-md border border-orange-200 bg-orange-50 px-2.5 py-1.5 text-xs font-medium text-orange-600 hover:bg-orange-100"
                       title="View attendees"
                     >
-                      <UsersRound size={16} />
+                      <UsersRound size={14} />
+                      Attendees
                     </button>
 
                     <button
