@@ -57,7 +57,7 @@ export function AdminSidebar({ isOpen, onClose }: Props) {
     staleTime: 5 * 60 * 1000,
   });
 
-  const isSuperAdmin = currentUser?.role === "SUPERADMIN";
+  const isSuperAdmin = currentUser?.role?.toUpperCase() === "SUPERADMIN";
 
   const logoutMutation = useMutation({
     mutationFn: logoutAdmin,

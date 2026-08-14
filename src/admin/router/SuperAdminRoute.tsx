@@ -13,7 +13,7 @@ export default function SuperAdminRoute() {
 
   if (isLoading) return null;
 
-  if (user?.role !== "SUPERADMIN") {
+  if (user?.role?.toUpperCase() !== "SUPERADMIN") {
     return <Navigate to={ADMIN_ROUTES.DASHBOARD} replace />;
   }
 
