@@ -221,6 +221,22 @@ export default function EventDetailsPage() {
         </div>
       </div>
 
+      {/* Location Map */}
+      <div className="bg-white px-4 py-10 md:px-8 lg:px-12">
+        <h2 className="mb-4 text-lg font-bold md:text-xl">Event Location</h2>
+        <div className="overflow-hidden rounded-xl shadow-md">
+          <iframe
+            title="Event location map"
+            src={`https://maps.google.com/maps?q=${encodeURIComponent(`${event.venue}, ${event.location}`)}&output=embed`}
+            width="100%"
+            height="380"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            className="border-0"
+          />
+        </div>
+      </div>
+
       <div className="bg-orange-500 px-4 py-10 text-center text-white md:px-8 lg:px-12">
         <h2 className="text-3xl font-bold">Ready to Join This Event?</h2>
 
