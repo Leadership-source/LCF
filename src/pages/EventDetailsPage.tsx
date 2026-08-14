@@ -64,8 +64,6 @@ export default function EventDetailsPage() {
       }
     },
   });
-    },
-  });
 
   // --------------------------------
   // Submit registration
