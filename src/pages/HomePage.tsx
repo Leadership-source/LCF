@@ -11,6 +11,7 @@ import aboutImage from "/about-section-image.png";
 import { hightlight, statsData, testimonialData } from "../static-data/data";
 import { useQuery } from "@tanstack/react-query";
 import { getPublishedTeams } from "../api/services/public/teams.service";
+import { getPublicEvents } from "../api/services/public/events.service";
 import { TeamSkeleton } from "../admin/pages/teams/TeamSkeleton";
 
 type StatCardProps = {
@@ -38,21 +39,62 @@ const MAX_TEAM_ROLE = 15;
 const MAX_TEAM_NAME = 10;
 
 export default function HomePage() {
+  const { data: events = [] } = useQuery({
+    queryKey: ["public-events"],
+    queryFn: getPublicEvents,
+    staleTime: 5 * 60 * 1000,
+  });
+
+  const upcomingEvents = events.filter(
+    (e) => new Date(e.date) >= new Date(new Date().setHours(0, 0, 0, 0)),
+  );
+
   return (
     <>
       {/* Hero */}
       <Hero />
 
-      {/* Statistics */}
-      <div className="overflow-hidden bg-orange-200/10 px-4 py-5 md:px-8 lg:px-12">
-        <div className="animate-marquee flex items-center justify-between gap-10">
-          {statsData.map((stats) => (
-            <StatCard
-              key={stats.title}
-              icon={stats.icon}
-              title={stats.title}
-              value={stats.value}
-            />
+      {/* Scrolling ticker — stats + upcoming events */}
+      <div className="overflow-hidden bg-orange-200/10 py-4">
+        <div className="animate-marquee flex w-max items-center gap-10">
+          {[...Array(2)].map((_, copyIdx) => (
+            <div key={copyIdx} className="flex items-center gap-10">
+              {statsData.map((stats) => (
+                <StatCard
+                  key={stats.title}
+                  icon={stats.icon}
+                  title={stats.title}
+                  value={stats.value}
+                />
+              ))}
+              {upcomingEvents.length > 0 && (
+                <>
+                  <span className="h-6 w-px shrink-0 bg-orange-300" />
+                  {upcomingEvents.map((event) => (
+                    <Link
+                      key={event.id}
+                      to={`${ROUTES.EVENTS}/${event.id}`}
+                      className="flex shrink-0 items-center gap-2 text-sm font-medium text-gray-700 hover:text-orange-500"
+                    >
+                      <span className="rounded-full bg-orange-500 px-2 py-0.5 text-xs font-semibold text-white">
+                        Upcoming
+                      </span>
+                      <span>{event.title}</span>
+                      <span className="text-gray-400">·</span>
+                      <span className="text-gray-500">
+                        {new Date(event.date).toLocaleDateString("en-GB", {
+                          day: "numeric",
+                          month: "short",
+                          year: "numeric",
+                        })}
+                      </span>
+                      <span className="text-gray-400">·</span>
+                      <span className="text-gray-500">{event.location}</span>
+                    </Link>
+                  ))}
+                </>
+              )}
+            </div>
           ))}
         </div>
       </div>

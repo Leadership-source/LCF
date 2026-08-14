@@ -272,7 +272,7 @@ export function AddTeam() {
                   type="text"
                   value={name}
                   onChange={(e) => handleNameChange(e.target.value)}
-                  placeholder="e.g. Mayowa Sammy Komolafe"
+                  placeholder="e.g. Jane Smith"
                   className={`w-full rounded-lg border px-4 py-3 outline-none focus:border-orange-500 ${
                     errors.name ? "border-red-500" : "border-gray-300"
                   }`}
