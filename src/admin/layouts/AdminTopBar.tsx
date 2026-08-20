@@ -1,12 +1,23 @@
 import { Bell, ChevronDown, Menu, X } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getCurrentUser } from "../../api/services/admin/auth.service";
 import { getNotifications } from "../../api/services/admin/notification.service";
+import { ADMIN_ROUTES } from "../../constants/routes";
 
 type AdminTopBarProps = {
   toggleSidebar: () => void;
 };
+
+// Map notification type prefix to the admin route it relates to
+function getNotificationRoute(type: string): string {
+  if (type.startsWith("EVENT")) return ADMIN_ROUTES.EVENTS;
+  if (type.startsWith("TEAM")) return ADMIN_ROUTES.TEAMS;
+  if (type.startsWith("TESTIMONIAL")) return ADMIN_ROUTES.TESTIMONIALS;
+  if (type.startsWith("USER")) return ADMIN_ROUTES.USERS;
+  return ADMIN_ROUTES.DASHBOARD;
+}
 
 export function AdminTopBar({ toggleSidebar }: AdminTopBarProps) {
   const [showNotifications, setShowNotifications] = useState(false);
@@ -91,10 +102,12 @@ export function AdminTopBar({ toggleSidebar }: AdminTopBarProps) {
               ) : (
                 <div className="max-h-80 overflow-y-auto">
                   {notifications.map((notification) => (
-                    <div
+                    <Link
                       key={notification.id}
-                      className={`border-b border-gray-100 px-4 py-3 last:border-b-0 ${
-                        !notification.isRead ? "bg-orange-50" : ""
+                      to={getNotificationRoute(notification.type)}
+                      onClick={() => setShowNotifications(false)}
+                      className={`block border-b border-gray-100 px-4 py-3 last:border-b-0 hover:bg-gray-50 ${
+                        !notification.isRead ? "bg-orange-50 hover:bg-orange-100" : ""
                       }`}
                     >
                       <p className="text-sm text-gray-700">
@@ -104,7 +117,7 @@ export function AdminTopBar({ toggleSidebar }: AdminTopBarProps) {
                       <p className="mt-1 text-xs text-gray-400">
                         {new Date(notification.createdAt).toLocaleString()}
                       </p>
-                    </div>
+                    </Link>
                   ))}
                 </div>
               )}
