@@ -5,7 +5,6 @@ import "./index.css";
 import App from "./App.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ErrorBoundary } from "./components/ErrorBoundary";
-//  change the env url from local to production
 const queryClient = new QueryClient();
 
 const root = document.getElementById("root");

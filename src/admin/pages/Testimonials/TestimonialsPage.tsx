@@ -13,6 +13,7 @@ import TestimonialStats from "./TestimonialStats";
 import TestimonialTable from "./TestimonialTable";
 import { useState } from "react";
 import DeleteConfirmationModal from "./DeleteConfirmationModal";
+import { getErrorMessage } from "../../../lib/getErrorMessage";
 
 export default function TestimonialsPage() {
   const queryClient = useQueryClient();
@@ -27,6 +28,7 @@ export default function TestimonialsPage() {
   } = useQuery({
     queryKey: ["admin-testimonials"],
     queryFn: getTestimonials,
+    staleTime: 2 * 60 * 1000,
   });
 
   const approveMutation = useMutation({
@@ -44,8 +46,8 @@ export default function TestimonialsPage() {
       });
     },
 
-    onError: () => {
-      toast.error("Failed to approve testimonial");
+    onError: (error: unknown) => {
+      toast.error(getErrorMessage(error, "Failed to approve testimonial"));
     },
   });
 
@@ -60,8 +62,8 @@ export default function TestimonialsPage() {
       });
     },
 
-    onError: () => {
-      toast.error("Failed to reject testimonial");
+    onError: (error: unknown) => {
+      toast.error(getErrorMessage(error, "Failed to reject testimonial"));
     },
   });
 
@@ -82,8 +84,8 @@ export default function TestimonialsPage() {
       });
     },
 
-    onError: () => {
-      toast.error("Failed to delete testimonial");
+    onError: (error: unknown) => {
+      toast.error(getErrorMessage(error, "Failed to delete testimonial"));
     },
   });
   const pendingTestimonials = testimonials.filter(
