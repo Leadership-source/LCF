@@ -13,6 +13,7 @@ import Settings from "../pages/settings/Settings";
 import ResetPasswordPage from "../pages/AdminResetPassword";
 import AdminUsersPage from "../pages/users/AdminUsers";
 import SuperAdminRoute from "./SuperAdminRoute";
+import TestimonialsPage from "../pages/Testimonials/TestimonialsPage";
 
 function AdminRoutes() {
   return (
@@ -29,6 +30,7 @@ function AdminRoutes() {
       <Route element={<ProtectedAdminRoute />}>
         <Route element={<AdminLayout />}>
           <Route path="dashboard" element={<DashboardPage />} />
+          <Route path="testimonials" element={<TestimonialsPage />} />
           <Route path="teams" element={<TeamsPage />} />
           <Route path="events" element={<Events />} />
           <Route path="settings" element={<Settings />} />

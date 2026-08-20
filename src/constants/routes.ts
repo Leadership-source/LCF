@@ -11,7 +11,7 @@ export const ROUTES = {
 export const ADMIN_ROUTES = {
   ROOT: "/admin",
   LOGIN: "/admin/login",
-
+  TESTIMONIALS: "/admin/testimonials",
   DASHBOARD: "/admin/dashboard",
   TEAMS: "/admin/teams",
   EVENTS: "/admin/events",

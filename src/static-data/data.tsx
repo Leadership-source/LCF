@@ -68,33 +68,6 @@ export const hightlight = [
   },
 ];
 
-export const testimonialData = [
-  {
-    id: 1,
-    name: "Emily Carter",
-    role: "Conference Participant",
-
-    message:
-      "LCF completely changed my perspective on leadership. The training, mentorship and relationships I've gained are priceless.",
-  },
-  {
-    id: 2,
-    name: "David Johnson",
-    role: "Volunteer",
-
-    message:
-      "Volunteering with LCF gave me confidence and helped me build meaningful relationships.",
-  },
-  {
-    id: 3,
-    name: "Charlotte Evans",
-    role: "Youth Leader",
-
-    message:
-      "The conference equipped me with practical leadership skills that I now apply every day.",
-  },
-];
-
 export const missionCards = [
   {
     id: 1,

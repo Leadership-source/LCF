@@ -6,6 +6,7 @@ import {
   LogOut,
   ShieldCheck,
   X,
+  MessageSquareQuote,
 } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -13,7 +14,10 @@ import toast from "react-hot-toast";
 
 import { ADMIN_ROUTES } from "../../constants/routes";
 import { Logo } from "../../components/Logo";
-import { getCurrentUser, logoutAdmin } from "../../api/services/admin/auth.service";
+import {
+  getCurrentUser,
+  logoutAdmin,
+} from "../../api/services/admin/auth.service";
 import { getErrorMessage } from "../../lib/getErrorMessage";
 
 type Props = {
@@ -38,6 +42,12 @@ const coreNavItems = [
     label: "Events",
     to: ADMIN_ROUTES.EVENTS,
     icon: CalendarDays,
+    end: true,
+  },
+  {
+    label: "Testimonials",
+    to: ADMIN_ROUTES.TESTIMONIALS,
+    icon: MessageSquareQuote,
     end: true,
   },
   {

@@ -8,11 +8,15 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import heroImage from "/hero-background-image.png";
 import aboutImage from "/about-section-image.png";
-import { hightlight, statsData, testimonialData } from "../static-data/data";
+import { hightlight, statsData } from "../static-data/data";
 import { useQuery } from "@tanstack/react-query";
 import { getPublishedTeams } from "../api/services/public/teams.service";
 import { getPublicEvents } from "../api/services/public/events.service";
 import { TeamSkeleton } from "../admin/pages/teams/TeamSkeleton";
+import { getPublishedTestimonials } from "../api/services/public/testimonial.service";
+import { MessageSquareQuote, ArrowRight } from "lucide-react";
+
+import ShareReviewModal from "./ShareReviewModal";
 
 type StatCardProps = {
   icon: ReactNode;
@@ -35,8 +39,6 @@ type TeamCardProps = {
 };
 
 const MAX_LENGTH = 55;
-const MAX_TEAM_ROLE = 15;
-const MAX_TEAM_NAME = 10;
 
 export default function HomePage() {
   const { data: events = [] } = useQuery({
@@ -127,14 +129,15 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Team */}
       <TeamSection />
 
       {/* Testimonials */}
       <Testimonials />
+      <section className="mx-auto flex w-full gap-10 max-w-4xl flex-col items-stretch justify-center lg:gap-20 px-4 py-10 md:flex-row md:items-stretch">
+        <ShareReview />
 
-      {/* Volunteer */}
-      <VolunteerSection />
+        <VolunteerSection />
+      </section>
     </>
   );
 }
@@ -462,22 +465,64 @@ function TeamCard({ name, role, image, isInView, index }: TeamCardProps) {
 export function Testimonials() {
   const [current, setCurrent] = useState(0);
 
+  const {
+    data: testimonials = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["public-testimonials"],
+    queryFn: getPublishedTestimonials,
+    staleTime: 5 * 60 * 1000,
+  });
+
+  const hasMultipleTestimonials = testimonials.length > 1;
+
   const nextSlide = () => {
-    setCurrent((prev) => (prev + 1) % testimonialData.length);
+    if (!hasMultipleTestimonials) return;
+
+    setCurrent((prev) => (prev + 1) % testimonials.length);
   };
 
   const prevSlide = () => {
-    setCurrent((prev) => (prev === 0 ? testimonialData.length - 1 : prev - 1));
+    if (!hasMultipleTestimonials) return;
+
+    setCurrent((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
   };
 
   useEffect(() => {
+    if (!hasMultipleTestimonials) return;
+
     const interval = setInterval(nextSlide, 5000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [testimonials.length, hasMultipleTestimonials]);
+
+  // Prevent invalid index if testimonials change
+  useEffect(() => {
+    if (current >= testimonials.length) {
+      setCurrent(0);
+    }
+  }, [testimonials.length, current]);
+
+  if (isLoading) {
+    return (
+      <section className="w-full bg-orange-200/20 px-4 py-10 md:px-8 lg:px-12">
+        <div className="mx-auto max-w-4xl animate-pulse text-center">
+          <div className="mx-auto h-4 w-28 rounded bg-gray-200" />
+          <div className="mx-auto mt-3 h-8 w-56 rounded bg-gray-200" />
+          <div className="mx-auto mt-10 h-32 rounded bg-gray-200" />
+        </div>
+      </section>
+    );
+  }
+
+  if (isError || testimonials.length === 0) {
+    return null;
+  }
 
   return (
     <section className="w-full bg-orange-200/20 px-4 py-10 md:px-8 lg:px-12">
+      {/* Header */}
       <div className="space-y-2 text-center">
         <p className="text-xs font-semibold uppercase tracking-wider text-orange-500 md:text-sm">
           Testimonials
@@ -486,106 +531,166 @@ export function Testimonials() {
         <h2 className="text-md font-bold text-gray-900 md:text-xl lg:text-3xl">
           What People Say
         </h2>
+
+        <p className="mx-auto max-w-2xl text-sm text-gray-500">
+          Hear from people whose experiences with LCF have made an impact.
+        </p>
       </div>
 
-      <div className="flex items-center justify-between overflow-hidden lg:mt-10">
-        <div>
+      {/* Testimonials */}
+      <div className="mx-auto mt-10 flex max-w-6xl items-center gap-4">
+        {/* Previous */}
+        {hasMultipleTestimonials && (
           <button
+            type="button"
             onClick={prevSlide}
-            className="hidden h-11 w-11 cursor-pointer items-center justify-center rounded-full border transition hover:bg-orange-500 hover:text-white md:flex"
+            aria-label="Previous testimonial"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-gray-300 bg-white text-gray-700 transition hover:border-orange-500 hover:bg-orange-500 hover:text-white"
           >
             <ChevronLeft size={22} />
           </button>
-        </div>
+        )}
 
-        <div
-          className="flex transition-transform duration-500 ease-in-out"
-          style={{
-            transform: `translateX(-${current * 100}%)`,
-          }}
-        >
-          {testimonialData.map((testimonial) => (
-            <div
-              key={testimonial.id}
-              className="w-full shrink-0 space-y-3 p-4 md:px-10 lg:px-20"
-            >
-              <Quote
-                size={20}
-                className="text-orange-500"
-                fill="currentColor"
-              />
+        {/* Slides */}
+        <div className="w-full overflow-hidden">
+          <div
+            className="flex transition-transform duration-500 ease-in-out"
+            style={{
+              transform: `translateX(-${current * 100}%)`,
+            }}
+          >
+            {testimonials.map((testimonial) => (
+              <div
+                key={testimonial.id}
+                className="w-full shrink-0 space-y-3 p-4 md:px-10 lg:px-20"
+              >
+                <Quote
+                  size={20}
+                  className="text-orange-500"
+                  fill="currentColor"
+                />
 
-              <p className="max-w-3xl text-md text-gray-600 md:text-xl">
-                {testimonial.message}
-              </p>
+                <p className="max-w-3xl text-md text-gray-600 md:text-xl">
+                  {testimonial.message}
+                </p>
 
-              <div className="flex items-center gap-4">
-                <div>
-                  <h3 className="text-sm font-semibold text-orange-500 md:text-xl">
-                    {testimonial.name}
-                  </h3>
+                <div className="flex items-center gap-4">
+                  <div>
+                    <h3 className="text-sm font-semibold text-orange-500 md:text-xl">
+                      {testimonial.name}
+                    </h3>
 
-                  <p className="text-xs text-gray-500 md:text-sm">
-                    {testimonial.role}
-                  </p>
+                    <p className="text-xs text-gray-500 md:text-sm">
+                      {testimonial.role}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        <div>
+        {/* Next */}
+        {hasMultipleTestimonials && (
           <button
+            type="button"
             onClick={nextSlide}
-            className="hidden h-11 w-11 cursor-pointer items-center justify-center rounded-full border transition hover:bg-orange-500 hover:text-white md:flex"
+            aria-label="Next testimonial"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-gray-300 bg-white text-gray-700 transition hover:border-orange-500 hover:bg-orange-500 hover:text-white"
           >
             <ChevronRight size={22} />
           </button>
-        </div>
+        )}
       </div>
 
       {/* Dots */}
-      <div className="mt-8 flex justify-center gap-3">
-        {testimonialData.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrent(index)}
-            className={`h-3 w-3 rounded-full transition ${
-              current === index ? "bg-orange-500" : "bg-gray-300"
-            }`}
-          />
-        ))}
-      </div>
+      {hasMultipleTestimonials && (
+        <div className="mt-8 flex justify-center gap-3">
+          {testimonials.map((testimonial, index) => (
+            <button
+              key={testimonial.id}
+              type="button"
+              onClick={() => setCurrent(index)}
+              aria-label={`Go to testimonial ${index + 1}`}
+              className={`h-3 w-3 rounded-full transition ${
+                current === index
+                  ? "bg-orange-500"
+                  : "bg-gray-300 hover:bg-gray-400"
+              }`}
+            />
+          ))}
+        </div>
+      )}
     </section>
+  );
+}
+export function ShareReview() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  return (
+    <>
+      <div className="flex h-full w-full max-w-sm flex-col lg:h-[330px] justify-between rounded-2xl bg-orange-50 px-6 py-8 text-center md:px-10">
+        <div>
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-orange-100 text-orange-500">
+            <MessageSquareQuote size={22} />
+          </div>
+
+          <h2 className="mt-4 text-2xl font-bold text-gray-900">
+            Had an Experience with LCF?
+          </h2>
+
+          <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-gray-600">
+            We'd love to hear about your experience. Share your thoughts and
+            inspire others in our community.
+          </p>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setIsModalOpen(true)}
+          className="mx-auto mt-6 flex items-center gap-2 rounded-lg bg-orange-500 px-6 py-3 text-sm font-semibold text-white transition hover:bg-orange-600"
+        >
+          Share Your Review
+          <ArrowRight size={16} />
+        </button>
+      </div>
+
+      <ShareReviewModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
+    </>
   );
 }
 
 //VOLUNTEER
 export function VolunteerSection() {
   return (
-    <section className="bg-orange-500 px-4 py-10 md:px-8 lg:px-12">
-      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <div className="flex flex-col gap-2 lg:flex-row">
-          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-orange-500">
-            <Users size={20} />
-          </div>
-
-          <div className="text-white">
-            <h4 className="font-semibold">Be part of our mission</h4>
-
-            <p>
-              Join a network of passionate leaders working together to create a
-              better future for all
-            </p>
-          </div>
+    <div className="flex h-full w-full max-w-sm  lg:h-[330px] flex-col justify-between rounded-2xl bg-orange-50 px-6 py-8 text-center md:px-10">
+      <div>
+        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-orange-100 text-orange-500">
+          <Users size={20} />
         </div>
 
-        <div>
-          <button className="rounded-xl bg-white px-8 py-4 text-center font-semibold text-orange-500">
-            <Link to={ROUTES.VOLUNTEER}>Become a volunteer →</Link>
-          </button>
-        </div>
+        <h4 className="mt-4 text-2xl font-bold text-gray-900">
+          Be part of our mission
+        </h4>
+
+        <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-gray-600">
+          Join a network of passionate leaders working together to create a
+          better future for all.
+        </p>
       </div>
-    </section>
+
+      <div>
+        <Link
+          to={ROUTES.VOLUNTEER}
+          className="mx-auto mt-6 flex w-fit items-center gap-2 rounded-lg bg-orange-500 px-6 py-3 text-sm font-semibold text-white transition hover:bg-orange-600"
+        >
+          Become a volunteer
+          <ArrowRight size={16} />
+        </Link>
+      </div>
+    </div>
   );
 }

@@ -1,10 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
-import { Users, CalendarDays, Eye, EyeOff, ArrowRight } from "lucide-react";
+import {
+  Users,
+  CalendarDays,
+  Eye,
+  EyeOff,
+  ArrowRight,
+  MessageSquareQuote,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 
 import { getTeams } from "../../../api/services/admin/teams.service";
 import { getEvents } from "../../../api/services/admin/events.service";
 import DashboardSkeleton from "./DashboardSkeleton";
+import { getTestimonials } from "../../../api/services/admin/testimonial.service";
 
 export default function DashboardPage() {
   // Get teams
@@ -19,13 +27,23 @@ export default function DashboardPage() {
     queryFn: getEvents,
   });
 
-  const isLoading = teamsLoading || eventsLoading;
+  // Get testimonials
+  const { data: testimonials = [], isLoading: testimonialsLoading } = useQuery({
+    queryKey: ["admin-testimonials"],
+    queryFn: getTestimonials,
+  });
+
+  const isLoading = teamsLoading || eventsLoading || testimonialsLoading;
 
   // Calculate statistics
   const publishedTeams = teams.filter((team) => team.status === "PUBLISHED");
 
   const unpublishedEvents = events.filter(
     (event) => event.status === "UNPUBLISHED",
+  );
+
+  const pendingTestimonials = testimonials.filter(
+    (testimonial) => testimonial.status === "PENDING",
   );
 
   // Stats used by your existing UI
@@ -54,6 +72,12 @@ export default function DashboardPage() {
       icon: EyeOff,
       description: "Currently hidden",
     },
+    {
+      title: "Pending Testimonials",
+      value: pendingTestimonials.length,
+      icon: MessageSquareQuote,
+      description: "Reviews awaiting approval",
+    },
   ];
 
   if (isLoading) {
@@ -72,7 +96,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid gap-5 grid-cols-2 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-5 lg:grid-cols-5">
         {stats.map((stat) => {
           const Icon = stat.icon;
 
@@ -144,6 +168,32 @@ export default function DashboardPage() {
 
                 <p className="text-sm text-gray-500">
                   Create, edit, publish or remove events.
+                </p>
+              </div>
+            </div>
+
+            <ArrowRight
+              size={20}
+              className="text-gray-400 transition group-hover:translate-x-1 group-hover:text-orange-500"
+            />
+          </Link>
+
+          <Link
+            to="/admin/testimonials"
+            className="group flex items-center justify-between rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-orange-300 hover:shadow-md"
+          >
+            <div className="flex items-center gap-4">
+              <div className="rounded-lg bg-orange-100 p-3">
+                <MessageSquareQuote size={22} className="text-orange-500" />
+              </div>
+
+              <div>
+                <h3 className="font-semibold text-gray-900">
+                  Manage Testimonials
+                </h3>
+
+                <p className="text-sm text-gray-500">
+                  Review, approve or reject visitor testimonials.
                 </p>
               </div>
             </div>
