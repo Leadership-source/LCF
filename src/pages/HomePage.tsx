@@ -155,7 +155,7 @@ export function Hero() {
       <div className="absolute inset-0 bg-black/55" />
 
       {/* Content */}
-      <div className="relative mx-auto mt-25 flex max-w-7xl px-4 py-10 md:px-8 lg:px-12">
+      <div className="relative mx-auto mt-25 flex justify-center items-center text-center  px-4 py-10 md:px-8 lg:px-12">
         <div className="max-w-2xl space-y-4 text-white">
           <h1
             className="animate-hero-fade-up text-xl font-bold leading-tight opacity-0 md:text-3xl lg:text-4xl"
@@ -167,7 +167,7 @@ export function Hero() {
           </h1>
 
           <p
-            className="animate-hero-fade-up max-w-xl text-sm leading-relaxed text-gray-200 opacity-0 md:text-lg md:leading-7"
+            className="animate-hero-fade-up max-w-2xl text-sm leading-relaxed text-gray-200 opacity-0 md:text-md md:leading-7"
             style={{ animationDelay: "0.4s" }}
           >
             Leadership Conference Forum serves as a not-for-profit, charitable
@@ -179,7 +179,7 @@ export function Hero() {
           </p>
 
           <div
-            className="animate-hero-fade-up flex flex-col gap-4 opacity-0 sm:flex-row"
+            className="animate-hero-fade-up flex justify-center flex-col gap-4 opacity-0 sm:flex-row"
             style={{ animationDelay: "0.6s" }}
           >
             <Link
@@ -382,7 +382,7 @@ function TeamSection() {
       </div>
 
       {/* Team Cards */}
-      <div className="mx-auto mt-10 flex flex-wrap items-center justify-center gap-10 lg:justify-between">
+      <div className="mx-auto mt-10 grid md:grid-cols-3 items-center justify-center gap-10 lg:justify-between">
         <Teams isInView={isInView} />
       </div>
     </section>
@@ -431,38 +431,9 @@ export function Teams({ isInView }: TeamsProps) {
 //TEAM CARD
 
 function TeamCard({ name, role, image, isInView, index }: TeamCardProps) {
-  const [expanded, setExpanded] = useState(false);
-
-  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 768);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  const shouldTruncate = name.length > MAX_TEAM_NAME;
-  const shouldTruncateRole = role.length > MAX_TEAM_ROLE;
-
-  const displayedName =
-    !isDesktop || expanded || !shouldTruncate
-      ? name
-      : `${name.slice(0, MAX_TEAM_NAME)}...`;
-
-  const displayedRole =
-    !isDesktop || expanded || !shouldTruncateRole
-      ? role
-      : `${role.slice(0, MAX_TEAM_ROLE)}...`;
-
   return (
     <div
-      className={`w-[300px] overflow-hidden rounded-md bg-white shadow-md transition-all duration-700 hover:-translate-y-2 hover:shadow-xl md:w-[200px] ${
+      className={`w-[300px] h-[350px] overflow-hidden rounded-md bg-white shadow-md transition-all duration-700 hover:-translate-y-2 hover:shadow-xl md:w-[320px] ${
         isInView ? "translate-y-0 opacity-100" : "translate-y-16 opacity-0"
       }`}
       style={{
@@ -474,23 +445,14 @@ function TeamCard({ name, role, image, isInView, index }: TeamCardProps) {
           src={image}
           effect="blur"
           alt={name}
-          className="h-auto w-[300px] object-cover transition duration-700 group-hover:scale-105 md:h-[150px] md:w-[200px]"
+          className="h-auto w-[300px] object-cover  transition duration-700 group-hover:scale-105 md:h-[200px] md:w-[320px]"
         />
       </div>
 
-      <div className="space-y-2 p-4">
-        <h4 className="text-md font-bold text-orange-700">{displayedName}</h4>
+      <div className=" p-4 flex flex-col gap-2 md:h-[150px] justify-center items-center">
+        <h4 className="text-md font-bold text-orange-700">{name}</h4>
 
-        <p className="text-sm text-gray-500">{displayedRole}</p>
-
-        {(shouldTruncate || shouldTruncateRole) && (
-          <button
-            onClick={() => setExpanded(!expanded)}
-            className="hidden text-sm font-semibold text-orange-600 transition hover:text-orange-700 md:block"
-          >
-            {expanded ? "Show Less" : "Show More"}
-          </button>
-        )}
+        <p className="text-sm text-gray-500">{role}</p>
       </div>
     </div>
   );
