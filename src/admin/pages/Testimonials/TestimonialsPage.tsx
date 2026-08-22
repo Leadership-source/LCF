@@ -13,13 +13,14 @@ import TestimonialStats from "./TestimonialStats";
 import TestimonialTable from "./TestimonialTable";
 import { useState } from "react";
 import DeleteConfirmationModal from "./DeleteConfirmationModal";
+import EditTestimonialModal from "./EditTestimonialModal";
 import { getErrorMessage } from "../../../lib/getErrorMessage";
+import type { AdminTestimonial } from "../../../api/services/admin/testimonial.service";
 
 export default function TestimonialsPage() {
   const queryClient = useQueryClient();
-  const [testimonialToDelete, setTestimonialToDelete] = useState<string | null>(
-    null,
-  );
+  const [testimonialToDelete, setTestimonialToDelete] = useState<string | null>(null);
+  const [testimonialToEdit, setTestimonialToEdit] = useState<AdminTestimonial | null>(null);
 
   const {
     data: testimonials = [],
@@ -141,6 +142,7 @@ export default function TestimonialsPage() {
         onApprove={(id) => approveMutation.mutate(id)}
         onReject={(id) => rejectMutation.mutate(id)}
         onDelete={(id) => setTestimonialToDelete(id)}
+        onEdit={(t) => setTestimonialToEdit(t)}
         isProcessing={isProcessing}
       />
 
@@ -154,6 +156,13 @@ export default function TestimonialsPage() {
           }
         }}
       />
+
+      {testimonialToEdit && (
+        <EditTestimonialModal
+          testimonial={testimonialToEdit}
+          onClose={() => setTestimonialToEdit(null)}
+        />
+      )}
     </div>
   );
 }

@@ -33,3 +33,17 @@ export async function deleteTestimonial(id: string) {
   const response = await apiClient.delete(`/testimonials/admin/${id}`);
   return response.data;
 }
+
+export type UpdateTestimonialPayload = {
+  name?: string;
+  role?: string;
+  message?: string;
+};
+
+export async function updateTestimonial(
+  id: string,
+  data: UpdateTestimonialPayload,
+) {
+  const response = await apiClient.put(`/testimonials/admin/${id}`, data);
+  return response.data;
+}

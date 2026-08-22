@@ -1,4 +1,4 @@
-import { Check, MessageSquareQuote, Search, Trash2, X } from "lucide-react";
+import { Check, MessageSquareQuote, Pencil, Search, Trash2, X } from "lucide-react";
 
 import { useState } from "react";
 
@@ -9,6 +9,7 @@ type Props = {
   onApprove: (id: string) => void;
   onReject: (id: string) => void;
   onDelete: (id: string) => void;
+  onEdit: (testimonial: AdminTestimonial) => void;
   isProcessing: boolean;
 };
 
@@ -17,6 +18,7 @@ export default function TestimonialTable({
   onApprove,
   onReject,
   onDelete,
+  onEdit,
   isProcessing,
 }: Props) {
   const [search, setSearch] = useState("");
@@ -159,6 +161,17 @@ export default function TestimonialTable({
                 {/* Actions */}
                 <td className="px-4 py-5">
                   <div className="flex justify-center gap-2">
+                    {/* Edit */}
+                    <button
+                      type="button"
+                      onClick={() => onEdit(testimonial)}
+                      disabled={isProcessing}
+                      className="rounded-md border border-gray-300 p-2 text-gray-600 transition hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
+                      title="Edit testimonial"
+                    >
+                      <Pencil size={16} />
+                    </button>
+
                     {/* Approve */}
                     {testimonial.status !== "APPROVED" && (
                       <button
