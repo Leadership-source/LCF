@@ -12,11 +12,12 @@ import { hightlight, statsData } from "../static-data/data";
 import { useQuery } from "@tanstack/react-query";
 import { getPublishedTeams } from "../api/services/public/teams.service";
 import { getPublicEvents } from "../api/services/public/events.service";
-import { TeamSkeleton } from "../admin/pages/teams/TeamSkeleton";
+
 import { getPublishedTestimonials } from "../api/services/public/testimonial.service";
 import { MessageSquareQuote, ArrowRight } from "lucide-react";
 
 import ShareReviewModal from "./ShareReviewModal";
+import { TeamSkeleton } from "../components/TeamSkeleton";
 
 type StatCardProps = {
   icon: ReactNode;
@@ -448,11 +449,11 @@ function TeamCard({ name, role, image, isInView, index }: TeamCardProps) {
           src={image}
           effect="blur"
           alt={name}
-          className="h-auto w-[300px] object-cover  transition duration-700 group-hover:scale-105 md:h-[200px] md:w-[320px]"
+          className="h-[200px] w-[300px] object-cover  transition duration-700 group-hover:scale-105 md:h-[200px] md:w-[320px]"
         />
       </div>
 
-      <div className=" p-4 flex flex-col gap-2 md:h-[150px] justify-center items-center">
+      <div className=" p-4 flex h-[150px] flex-col gap-2 md:h-[150px] justify-center items-center">
         <h4 className="text-md font-bold text-orange-700">{name}</h4>
 
         <p className="text-sm text-gray-500">{role}</p>

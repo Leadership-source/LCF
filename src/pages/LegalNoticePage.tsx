@@ -3,6 +3,7 @@ import {
   legalNoticeSections,
   organisationInformation,
 } from "../static-data/data";
+import legalHero from "/legal-backgroundImage.png";
 
 export default function LegalNoticePage() {
   return (
@@ -14,16 +15,29 @@ export default function LegalNoticePage() {
 }
 
 //legal hero section component
+
 export function LegalHero() {
   return (
-    <header className="relative bg-orange-200/10">
-      <div className="relative mx-auto flex h-full max-w-7xl py-10 px-4 md:px-8 lg:px-12 mt-25">
-        <div className="  space-y-4">
+    <header className="relative overflow-hidden">
+      {/* Animated Background */}
+      <div
+        className="absolute inset-0 min-h-[600px] animate-hero-image bg-cover bg-center"
+        style={{
+          backgroundImage: `url(${legalHero})`,
+        }}
+      />
+
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black/55" />
+
+      {/* Content */}
+      <div className="relative mx-auto mt-25 flex max-w-7xl items-center px-4 py-10 md:px-8 min-h-[300px] lg:px-12">
+        <div className="max-w-2xl space-y-4 text-white">
           <h1 className="text-xl text-orange-500 font-bold leading-tight md:text-3xl lg:text-4xl">
             Legal Notice
           </h1>
 
-          <p className="   md:leading-7 text-black text-sm md:text-lg">
+          <p className="   md:leading-7 text-white text-sm md:text-lg">
             Important information about Leadership Conference Forum, our and the
             use of our website organization
           </p>
