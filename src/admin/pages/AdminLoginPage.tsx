@@ -125,80 +125,115 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4">
-      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
-        <div className="mb-8 text-center">
-          <h1 className="text-2xl font-bold text-gray-900">Admin Login</h1>
+    <div className="flex min-h-screen">
+      {/* Left — hero panel */}
+      <div
+        className="relative hidden flex-1 flex-col justify-between p-12 lg:flex"
+        style={{
+          backgroundImage: "url('/Admin_Logo.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-[#14171D]/70" />
 
-          <p className="mt-2 text-sm text-gray-500">
-            Sign in to access your dashboard
-          </p>
+        {/* Branding */}
+        <div className="relative z-10">
+          <span className="inline-block rounded-full bg-orange-500 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-white">
+            LCF Admin
+          </span>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Email */}
-          <div>
-            <label className="mb-2 block text-sm font-medium">Email</label>
+        {/* Quote */}
+        <div className="relative z-10">
+          <blockquote className="text-2xl font-semibold leading-snug text-white lg:text-3xl">
+            "Empowering leaders, <br />
+            transforming communities."
+          </blockquote>
+          <p className="mt-4 text-sm text-white/60">
+            Leadership &amp; Community Foundation — Admin Portal
+          </p>
+        </div>
+      </div>
 
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => handleEmailChange(e.target.value)}
-              placeholder="admin@example.com"
-              className={`w-full rounded-lg border px-4 py-3 outline-none focus:border-orange-500 ${
-                errors.email ? "border-red-500" : "border-gray-300"
-              }`}
-            />
-
-            {errors.email && (
-              <p className="mt-1 text-sm text-red-500">{errors.email}</p>
-            )}
+      {/* Right — form panel */}
+      <div className="flex w-full flex-col items-center justify-center bg-white px-6 py-12 lg:w-[460px] lg:px-12">
+        <div className="w-full max-w-sm">
+          {/* Header */}
+          <div className="mb-8">
+            <h1 className="text-2xl font-bold text-gray-900">Welcome back</h1>
+            <p className="mt-1 text-sm text-gray-500">
+              Sign in to your admin dashboard
+            </p>
           </div>
 
-          {/* Password */}
-          <div>
-            <label className="mb-2 block text-sm font-medium">Password</label>
+          <form onSubmit={handleSubmit} className="space-y-5">
+            {/* Email */}
+            <div>
+              <label className="mb-1.5 block text-sm font-medium text-gray-700">
+                Email address
+              </label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => handleEmailChange(e.target.value)}
+                placeholder="admin@example.com"
+                className={`w-full rounded-xl border px-4 py-3 text-sm outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-500/10 ${
+                  errors.email ? "border-red-500" : "border-gray-200"
+                }`}
+              />
+              {errors.email && (
+                <p className="mt-1 text-xs text-red-500">{errors.email}</p>
+              )}
+            </div>
 
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => handlePasswordChange(e.target.value)}
-              placeholder="Enter your password"
-              className={`w-full rounded-lg border px-4 py-3 outline-none focus:border-orange-500 ${
-                errors.password ? "border-red-500" : "border-gray-300"
-              }`}
-            />
+            {/* Password */}
+            <div>
+              <label className="mb-1.5 block text-sm font-medium text-gray-700">
+                Password
+              </label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => handlePasswordChange(e.target.value)}
+                placeholder="••••••••"
+                className={`w-full rounded-xl border px-4 py-3 text-sm outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-500/10 ${
+                  errors.password ? "border-red-500" : "border-gray-200"
+                }`}
+              />
+              {errors.password && (
+                <p className="mt-1 text-xs text-red-500">{errors.password}</p>
+              )}
+            </div>
 
-            {errors.password && (
-              <p className="mt-1 text-sm text-red-500">{errors.password}</p>
+            {/* API/Login Error */}
+            {errors.general && (
+              <div className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-600">
+                {errors.general}
+              </div>
             )}
-          </div>
 
-          {/* API/Login Error */}
-          {errors.general && (
-            <p className="text-center text-sm text-red-500">{errors.general}</p>
-          )}
+            {/* Forgot Password */}
+            <div className="text-right">
+              <Link
+                to={ADMIN_ROUTES.FORGET_PASSWORD}
+                className="text-sm font-medium text-orange-500 hover:text-orange-600"
+              >
+                Forgot password?
+              </Link>
+            </div>
 
-          {/* Forgot Password */}
-          <div className="text-right">
-            <Link
-              to={ADMIN_ROUTES.FORGET_PASSWORD}
-              className="text-sm font-semibold text-orange-500 hover:text-orange-600"
+            {/* Submit */}
+            <button
+              type="submit"
+              disabled={loginMutation.isPending}
+              className="w-full rounded-xl bg-orange-500 px-4 py-3 text-sm font-semibold text-white transition hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Forgot Password?
-            </Link>
-          </div>
-
-          {/* Submit */}
-          <button
-            type="submit"
-            disabled={loginMutation.isPending}
-            className="w-full rounded-lg bg-orange-500 px-4 py-3 font-semibold text-white transition hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {loginMutation.isPending ? "Signing in..." : "Sign In"}
-          </button>
-        </form>
-
+              {loginMutation.isPending ? "Signing in…" : "Sign In"}
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

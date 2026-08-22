@@ -135,9 +135,22 @@ export function AdminSidebar({ isOpen, onClose }: Props) {
           <X size={22} />
         </button>
 
-        {/* Logo */}
-        <div className="flex items-start bg-orange-500 px-2">
-          <Logo />
+        {/* Logo — image banner with overlay */}
+        <div
+          className="relative flex h-24 shrink-0 items-end overflow-hidden px-4 pb-3"
+          style={{
+            backgroundImage: "url('/Admin_Logo.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center top",
+          }}
+        >
+          <div className="absolute inset-0 bg-[#14171D]/60" />
+          <div className="relative z-10 flex items-center gap-2">
+            <span className="rounded-md bg-orange-500 px-2 py-0.5 text-xs font-bold uppercase tracking-widest text-white">
+              LCF
+            </span>
+            <span className="text-sm font-semibold text-white">Admin Portal</span>
+          </div>
         </div>
 
         {/* Navigation */}
