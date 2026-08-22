@@ -13,7 +13,6 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
 import { ADMIN_ROUTES } from "../../constants/routes";
-import { Logo } from "../../components/Logo";
 import {
   getCurrentUser,
   logoutAdmin,
