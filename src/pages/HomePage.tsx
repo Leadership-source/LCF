@@ -468,11 +468,11 @@ function TeamCard({ name, role, bio, image, isInView, index }: TeamCardProps) {
       </div>
 
       <div className="p-5">
-        <span className="inline-block rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold text-orange-600">
+        <span className="inline-block max-w-full truncate rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold text-orange-600">
           {role}
         </span>
 
-        <h4 className="mt-2 text-base font-bold text-gray-900">{name}</h4>
+        <h4 className="mt-2 truncate text-base font-bold text-gray-900">{name}</h4>
 
         {bio && (
           <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-gray-500">
