@@ -186,8 +186,8 @@ export function EditTeam({ team, onClose }: EditTeamProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <div className="w-full max-w-lg rounded-2xl bg-white p-6">
+    <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/50 p-4">
+      <div className="my-auto w-full max-w-lg rounded-2xl bg-white p-6">
         {/* Header */}
         <div className="mb-6 flex items-center justify-between">
           <div>
