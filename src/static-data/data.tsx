@@ -59,6 +59,7 @@ export const hightlight = [
     description:
       "Engage with professionals and build lasting connections to enhance your career.",
     image: networking,
+    link: "/events",
   },
   {
     title: "Charitable Project",

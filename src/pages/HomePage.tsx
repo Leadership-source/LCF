@@ -29,6 +29,7 @@ type HightlightProps = {
   title: string;
   image: string;
   description: string;
+  link?: string;
 };
 
 type TeamCardProps = {
@@ -119,13 +120,14 @@ export default function HomePage() {
           </p>
         </div>
 
-        <div className="mx-auto mt-10 flex flex-col items-center gap-10 md:flex-row md:flex-wrap md:justify-center lg:flex-nowrap lg:justify-between">
+        <div className="mx-auto mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {hightlight.map((hl) => (
             <HighLight
               key={hl.title}
               title={hl.title}
               image={hl.image}
               description={hl.description}
+              link={hl.link}
             />
           ))}
         </div>
@@ -305,7 +307,7 @@ export function AboutSection() {
 
 //HIGHLIGHTS
 
-export function HighLight({ title, image, description }: HightlightProps) {
+export function HighLight({ title, image, description, link }: HightlightProps) {
   const [expanded, setExpanded] = useState(false);
 
   const cardRef = useRef<HTMLDivElement>(null);
@@ -325,31 +327,40 @@ export function HighLight({ title, image, description }: HightlightProps) {
   return (
     <div
       ref={cardRef}
-      className={`w-[300px] rounded-md bg-white shadow-md transition-all duration-700 md:w-[250px] ${
+      className={`w-full rounded-xl bg-white shadow-md transition-all duration-700 hover:-translate-y-1 hover:shadow-lg ${
         isInView ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
       }`}
     >
-      <div className="group overflow-hidden rounded-md rounded-b-none">
+      <div className="group overflow-hidden rounded-t-xl">
         <LazyLoadImage
           src={image}
           effect="blur"
           alt={title}
-          className="h-[150px] w-[300px] object-cover transition duration-700 group-hover:scale-105 md:w-[250px]"
+          className="h-44 w-full object-cover transition duration-700 group-hover:scale-105"
         />
       </div>
 
       <div className="space-y-2 p-4">
-        <h4 className="text-md font-bold text-orange-700">{title}</h4>
+        <h4 className="text-sm font-bold text-orange-700">{title}</h4>
 
         <p className="text-sm text-gray-500">{displayedText}</p>
 
         {shouldTruncate && (
           <button
             onClick={() => setExpanded(!expanded)}
-            className="text-sm font-semibold text-orange-600 transition hover:text-orange-700"
+            className="text-xs font-semibold text-orange-600 transition hover:text-orange-700"
           >
             {expanded ? "Show Less" : "Show More"}
           </button>
+        )}
+
+        {link && (
+          <Link
+            to={link}
+            className="mt-1 inline-flex items-center gap-1 text-xs font-semibold text-orange-500 hover:underline"
+          >
+            View events →
+          </Link>
         )}
       </div>
     </div>
