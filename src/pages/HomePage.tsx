@@ -467,22 +467,22 @@ function TeamCard({ name, role, bio, image, isInView, index }: TeamCardProps) {
         />
       </div>
 
-      <div className="p-5">
-        <span className="inline-block max-w-full truncate rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold text-orange-600">
+      <div className="p-4">
+        <span className="block truncate text-xs font-semibold text-orange-600">
           {role}
         </span>
 
-        <h4 className="mt-2 truncate text-base font-bold text-gray-900">{name}</h4>
+        <h4 className="mt-1 truncate text-sm font-bold text-gray-900">{name}</h4>
 
         {bio && (
-          <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-gray-500">
+          <p className="mt-2 line-clamp-3 text-xs leading-relaxed text-gray-500">
             {bio}
           </p>
         )}
 
         <Link
           to={ROUTES.TEAMS}
-          className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-orange-500 hover:underline"
+          className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-orange-500 hover:underline"
         >
           Read more →
         </Link>
