@@ -23,6 +23,7 @@ export type Team = {
   id: string;
   name: string;
   role: string;
+  bio?: string;
   image: string;
   status: string;
   displayOrder: number;
@@ -34,6 +35,7 @@ export type AdminTeam = {
   id: string;
   name: string;
   role: string;
+  bio?: string;
   image: string;
   status: EventStatus;
   displayOrder: number;

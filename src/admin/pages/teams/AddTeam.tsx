@@ -18,6 +18,7 @@ export function AddTeam() {
 
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
+  const [bio, setBio] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState("");
 
@@ -41,6 +42,7 @@ export function AddTeam() {
 
       setName("");
       setRole("");
+      setBio("");
       setImage(null);
       setPreview("");
       setErrors({});
@@ -204,6 +206,7 @@ export function AddTeam() {
     createTeamMutation.mutate({
       name: cleanName,
       role: cleanRole,
+      bio: bio.trim() || undefined,
       image: image!,
     });
   };
@@ -302,6 +305,20 @@ export function AddTeam() {
                 {errors.role && (
                   <p className="mt-1 text-sm text-red-500">{errors.role}</p>
                 )}
+              </div>
+
+              {/* Bio */}
+              <div>
+                <label className="mb-2 block text-sm font-medium">
+                  Bio <span className="font-normal text-gray-400">(optional)</span>
+                </label>
+                <textarea
+                  rows={3}
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                  placeholder="Brief biography or background..."
+                  className="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none focus:border-orange-500"
+                />
               </div>
 
               {/* Image */}

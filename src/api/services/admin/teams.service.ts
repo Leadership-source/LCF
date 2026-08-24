@@ -10,12 +10,14 @@ export async function getTeams(): Promise<AdminTeam[]> {
 export type UpdateTeamData = {
   name: string;
   role: string;
+  bio?: string;
   image?: File;
 };
 
 type CreateTeamData = {
   name: string;
   role: string;
+  bio?: string;
   image: File;
 };
 
@@ -24,6 +26,7 @@ export async function createTeam(data: CreateTeamData) {
 
   formData.append("name", data.name);
   formData.append("role", data.role);
+  if (data.bio !== undefined) formData.append("bio", data.bio);
   formData.append("image", data.image);
 
   const response = await apiClient.post("/teams", formData);
@@ -47,6 +50,7 @@ export async function updateTeam(id: string, data: UpdateTeamData) {
 
   formData.append("name", data.name);
   formData.append("role", data.role);
+  if (data.bio !== undefined) formData.append("bio", data.bio);
 
   if (data.image) {
     formData.append("image", data.image);

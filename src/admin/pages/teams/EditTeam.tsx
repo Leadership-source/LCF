@@ -22,6 +22,7 @@ export function EditTeam({ team, onClose }: EditTeamProps) {
 
   const [name, setName] = useState(team.name);
   const [role, setRole] = useState(team.role);
+  const [bio, setBio] = useState(team.bio ?? "");
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState(team.image);
 
@@ -30,6 +31,7 @@ export function EditTeam({ team, onClose }: EditTeamProps) {
   useEffect(() => {
     setName(team.name);
     setRole(team.role);
+    setBio(team.bio ?? "");
     setPreview(team.image);
     setImage(null);
     setErrors({});
@@ -40,6 +42,7 @@ export function EditTeam({ team, onClose }: EditTeamProps) {
       updateTeam(team.id, {
         name: name.trim(),
         role: role.trim(),
+        bio: bio.trim() || undefined,
         ...(image ? { image } : {}),
       }),
 
@@ -242,6 +245,20 @@ export function EditTeam({ team, onClose }: EditTeamProps) {
             {errors.role && (
               <p className="mt-1 text-sm text-red-500">{errors.role}</p>
             )}
+          </div>
+
+          {/* Bio */}
+          <div>
+            <label className="mb-2 block text-sm font-medium">
+              Bio <span className="font-normal text-gray-400">(optional)</span>
+            </label>
+            <textarea
+              rows={3}
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+              placeholder="Brief biography or background..."
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none focus:border-orange-500"
+            />
           </div>
 
           {/* Image */}

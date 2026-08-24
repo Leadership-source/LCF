@@ -2,6 +2,7 @@ export const ROUTES = {
   HOME: "/",
   ABOUT: "/about",
   EVENTS: "/events",
+  TEAMS: "/teams",
   VOLUNTEER: "/volunteer",
   CONTACT: "/contact",
   LEGAL_NOTICE: "/legal-notice",

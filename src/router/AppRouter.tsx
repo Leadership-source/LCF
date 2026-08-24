@@ -8,6 +8,7 @@ import ContactPage from "../pages/ContactPage";
 import PageNotFound from "../pages/PageNotFound";
 import LegalNoticePage from "../pages/LegalNoticePage";
 import EventDetailsPage from "../pages/EventDetailsPage";
+import TeamsPage from "../pages/TeamsPage";
 import AdminRoutes from "../admin/router/AdminRoutes";
 import PublicLayout from "../layouts/PublicLayout";
 
@@ -20,6 +21,7 @@ function AppRouter() {
           <Route path={ROUTES.HOME} element={<HomePage />} />
           <Route path={ROUTES.ABOUT} element={<AboutPage />} />
           <Route path={ROUTES.EVENTS} element={<EventsPage />} />
+          <Route path={ROUTES.TEAMS} element={<TeamsPage />} />
           <Route path={ROUTES.EVENTDETAILS} element={<EventDetailsPage />} />
           <Route path={ROUTES.VOLUNTEER} element={<VolunteerPage />} />
           <Route path={ROUTES.LEGAL_NOTICE} element={<LegalNoticePage />} />
