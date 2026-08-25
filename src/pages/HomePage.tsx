@@ -7,7 +7,7 @@ import { useInView } from "motion/react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import heroImage from "/hero-background-image.png";
-import aboutImage from "/about-section-image.png";
+import aboutImage from "/group-image.jpeg";
 import { hightlight, statsData } from "../static-data/data";
 import { useQuery } from "@tanstack/react-query";
 import { getPublishedTeams } from "../api/services/public/teams.service";
@@ -108,7 +108,7 @@ export default function HomePage() {
       <AboutSection />
 
       {/* Highlights */}
-      <section className="relative max-w-7xl bg-orange-200/20 px-4 py-10 md:px-8 lg:px-12">
+      <section className="relative w-full bg-orange-200/20 px-4 py-10 md:px-8 lg:px-12">
         <div className="space-y-2 text-center">
           <h4 className="text-xs font-bold uppercase text-orange-500 md:text-sm">
             Our Highlights
@@ -149,7 +149,7 @@ export default function HomePage() {
 //hero section
 export function Hero() {
   return (
-    <header className="relative overflow-hidden">
+    <header className="relative overflow-hidden mt-20">
       {/* Animated Background */}
       <div
         className="absolute inset-0 animate-hero-image bg-cover bg-center"
@@ -162,7 +162,7 @@ export function Hero() {
       <div className="absolute inset-0 bg-black/55" />
 
       {/* Content */}
-      <div className="relative mx-auto mt-25 flex justify-center items-center text-center  px-4 py-10 md:px-8 lg:px-12">
+      <div className="relative mx-auto min-h-[520px] lg:min-h-[450px]   flex justify-center items-center text-center  px-4  md:px-8 lg:px-12">
         <div className="max-w-2xl space-y-4 text-white">
           <h1
             className="animate-hero-fade-up text-xl font-bold leading-tight opacity-0 md:text-3xl lg:text-4xl"
@@ -248,7 +248,7 @@ export function AboutSection() {
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-12 md:flex-row">
         {/* Left Content */}
         <div
-          className={`w-auto space-y-4 transition-all duration-700 md:space-y-6 ${
+          className={`w-auto lg:w-[700px] space-y-4 transition-all duration-700 md:space-y-6 ${
             isInView ? "translate-x-0 opacity-100" : "-translate-x-16 opacity-0"
           }`}
         >
@@ -262,18 +262,21 @@ export function AboutSection() {
             Building A Better Society
           </h2>
 
-          <p className="max-w-lg text-sm text-gray-600 md:text-md lg:text-lg">
-            The Leadership Conference Forum is a charitable organisation based
-            in England that exists to develop the capacity and skills of people
-            in the Tees Valley and surrounding areas so they can play a fuller
-            part in society.
+          <p className="max-w-lg text-sm  text-gray-600 md:text-md lg:text-lg">
+            The Leadership Conference Forum (LCF) is a forward-thinking
+            initiative dedicated to nurturing the next generation of leaders
+            through mentorship, professional development, and collaborative
+            dialogue. Based in the United Kingdom, LCF is designed to act as a
+            platform for leadership support, empowerment, and advancement,
+            connecting emerging leaders with experienced professionals,
+            dignitaries, and seasoned changemakers from a variety of sectors
           </p>
 
           <p className="max-w-lg text-sm text-gray-600 md:text-md lg:text-lg">
-            The Forum is managed by a committee led by a Chief Executive and
-            supported by directors responsible for communication, strategic
-            planning, programmes and events, outreach and partnerships, and
-            membership engagement.
+            We believe that leadership is not just about titles; it is about
+            purpose, service, and responsibility. LCF is a space where leaders
+            can learn from each other, discuss real challenges, and grow in both
+            competence and character
           </p>
 
           <Link
@@ -287,7 +290,7 @@ export function AboutSection() {
 
         {/* Right Image */}
         <div
-          className={`w-full transition-all delay-200 duration-700 lg:w-[500px] ${
+          className={`w-full transition-all delay-200 duration-700 lg:w-[700px] ${
             isInView ? "translate-x-0 opacity-100" : "translate-x-16 opacity-0"
           }`}
         >
@@ -296,7 +299,7 @@ export function AboutSection() {
               src={aboutImage}
               effect="blur"
               alt="Leadership Conference Forum Team"
-              className="h-auto w-full rounded-xl object-cover transition duration-700 group-hover:scale-105"
+              className="h-auto md:h-[600px] w-full rounded-xl object-cover shadow-xl hover:scale-105"
             />
           </div>
         </div>
@@ -307,7 +310,12 @@ export function AboutSection() {
 
 //HIGHLIGHTS
 
-export function HighLight({ title, image, description, link }: HightlightProps) {
+export function HighLight({
+  title,
+  image,
+  description,
+  link,
+}: HightlightProps) {
   const [expanded, setExpanded] = useState(false);
 
   const cardRef = useRef<HTMLDivElement>(null);
@@ -381,7 +389,7 @@ function TeamSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative max-w-7xl overflow-hidden bg-white px-4 py-10 md:px-8 lg:px-12"
+      className="relative w-full overflow-hidden bg-white px-4 py-10 md:px-8 lg:px-12"
     >
       {/* Section Heading */}
       <div
@@ -462,7 +470,7 @@ export function Teams({ isInView }: TeamsProps) {
 function TeamCard({ name, role, bio, image, isInView, index }: TeamCardProps) {
   return (
     <div
-      className={`overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-700 hover:-translate-y-2 hover:shadow-xl ${
+      className={`overflow-hidden rounded-2xl max-w-[350px] md:w-[380px] bg-white shadow-md transition-all duration-700 hover:-translate-y-2 hover:shadow-xl ${
         isInView ? "translate-y-0 opacity-100" : "translate-y-16 opacity-0"
       }`}
       style={{
@@ -475,7 +483,7 @@ function TeamCard({ name, role, bio, image, isInView, index }: TeamCardProps) {
           src={image}
           effect="blur"
           alt={name}
-          className="h-56 w-full object-cover object-top transition duration-700 group-hover:scale-105"
+          className="h-56 w-[350px] md:w-[380px] object-cover object-top transition duration-700 group-hover:scale-105"
         />
       </div>
 

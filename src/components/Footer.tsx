@@ -6,16 +6,19 @@ import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className="bg-neutral-950 text-white w-full">
+    <footer className="bg-[#EA580C] text-white w-full">
       <div className="mx-auto max-w-7xl px-4 lg:px-12 md:px-8 py-10">
         <div className=" flex flex-col gap-10 lg:flex-row justify-between">
           {/* Logo */}
           <div className="w-auto lg:w-[300px] space-y-5">
             <div>
-              <img src="/footer-logo.png" className="w-[170px] h-auto" />
+              <img
+                src="/footer-logo.png"
+                className="w-[170px] h-auto brightness-0 invert"
+              />
             </div>
 
-            <p className=" text-sm leading-7 text-gray-300">
+            <p className=" text-sm leading-7 text-white">
               Raising leaders, building capacity and impacting communities
               across Africa.
             </p>
@@ -31,7 +34,7 @@ export default function Footer() {
 
               <a
                 href="#"
-                className="transition hover:text-orange-500 cursor-pointer"
+                className="transition  cursor-pointer"
                 aria-label="Twitter"
               >
                 <FaTwitter size={20} />
@@ -39,7 +42,7 @@ export default function Footer() {
 
               <a
                 href="#"
-                className="transition hover:text-orange-500 cursor-pointer"
+                className="transition  cursor-pointer"
                 aria-label="Instagram"
               >
                 <FaInstagram size={20} />
@@ -47,7 +50,7 @@ export default function Footer() {
 
               <a
                 href=" https://www.linkedin.com/company/leadership-conference-forum"
-                className="transition hover:text-orange-500 cursor-pointer"
+                className="transition  cursor-pointer"
                 aria-label="LinkedIn"
               >
                 <FaLinkedin size={20} />
@@ -57,14 +60,14 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h3 className=" font-semibold uppercase tracking-wider text-orange-500">
+            <h3 className=" font-semibold uppercase tracking-wider text-white">
               Quick Links
             </h3>
 
             <ul className="space-y-3">
               <li>
                 <NavLink
-                  className="text-gray-300 transition text-sm hover:text-orange-500"
+                  className="text-white transition text-sm "
                   to={ROUTES.HOME}
                 >
                   Home
@@ -73,7 +76,7 @@ export default function Footer() {
 
               <li>
                 <NavLink
-                  className="text-gray-300 transition text-sm hover:text-orange-500"
+                  className="text-white transition text-sm "
                   to={ROUTES.ABOUT}
                 >
                   About Us
@@ -81,16 +84,13 @@ export default function Footer() {
               </li>
 
               <li>
-                <NavLink
-                  className="text-gray-300 text-sm transition hover:text-orange-500"
-                  to={ROUTES.EVENTS}
-                >
+                <NavLink className=" text-sm transition " to={ROUTES.EVENTS}>
                   Events
                 </NavLink>
               </li>
               <li>
                 <NavLink
-                  className="text-gray-300 transition text-sm hover:text-orange-500"
+                  className="text-white transition text-sm "
                   to={ROUTES.VOLUNTEER}
                 >
                   Volunteer
@@ -99,7 +99,7 @@ export default function Footer() {
 
               <li>
                 <NavLink
-                  className="text-gray-300 transition text-sm hover:text-orange-500"
+                  className="text-white transition text-sm "
                   to={ROUTES.CONTACT}
                 >
                   Contact Us
@@ -108,7 +108,7 @@ export default function Footer() {
 
               <li>
                 <NavLink
-                  className="text-gray-300 transition text-sm hover:text-orange-500"
+                  className="text-whitetransition text-sm hover:text-white"
                   to={ROUTES.LEGAL_NOTICE}
                 >
                   Legal Notice
@@ -119,7 +119,7 @@ export default function Footer() {
 
           {/* Contact */}
           <div className="space-y-4">
-            <h3 className="font-semibold uppercase tracking-wider text-orange-500">
+            <h3 className="font-semibold uppercase tracking-wider text-white">
               Contact Us
             </h3>
 
@@ -129,10 +129,10 @@ export default function Footer() {
                   href="mailto:Info@leadershipconferenceforum.org"
                   className="cursor-pointer"
                 >
-                  <Mail className="mt-1 text-orange-500 shrink-0" size={18} />
+                  <Mail className="mt-1 text-white shrink-0" size={18} />
                 </a>
 
-                <span className="text-gray-300 text-sm">
+                <span className="text-white text-sm">
                   Info@leadershipconferenceforum.org
                 </span>
               </div>
@@ -140,20 +140,20 @@ export default function Footer() {
               <div className="flex items-start gap-3">
                 <a href="tel:07500429811">
                   <Phone
-                    className="mt-1 text-primary shrink-0 text-orange-500"
+                    className="mt-1 text-primary shrink-0 white"
                     size={18}
                   />
                 </a>
 
-                <span className="text-gray-300 text-sm"> 07500429811</span>
+                <span className="text-white text-sm"> 07500429811</span>
               </div>
 
               <div className="flex items-start gap-3">
                 <a href="https://maps.google.com/?q=Durham,United+Kingdom">
-                  <MapPin className="mt-1 text-orange-500 shrink-0" size={18} />
+                  <MapPin className="mt-1 text-white shrink-0" size={18} />
                 </a>
 
-                <span className="text-gray-300 text-sm">
+                <span className="text-white text-sm">
                   Durham, United Kingdom.
                 </span>
               </div>
@@ -165,7 +165,7 @@ export default function Footer() {
         <div className="border mt-10 border-white/10 border-t-0 border-l-0 border-r-0" />
 
         {/* Bottom */}
-        <div className=" text-center text-sm pt-10 text-gray-400 ">
+        <div className=" text-center text-sm pt-10 text-gray-100 ">
           <p>
             © {new Date().getFullYear()} Leadership Conference Forum. All Rights
             Reserved.
