@@ -67,10 +67,20 @@ export async function deleteTeam(id: string) {
   return response.data;
 }
 
-export async function reorderTeams(
-  orders: { id: string; displayOrder: number }[],
-) {
-  const response = await apiClient.patch("/teams/reorder", { orders });
+const ORDER_KEY = "lcf_team_order";
 
-  return response.data;
+// Persists the ordered list of team IDs to localStorage
+export function saveTeamOrder(ids: string[]): void {
+  localStorage.setItem(ORDER_KEY, JSON.stringify(ids));
+}
+
+// Returns saved order array, or null if none saved yet
+export function getSavedTeamOrder(): string[] | null {
+  const raw = localStorage.getItem(ORDER_KEY);
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw) as string[];
+  } catch {
+    return null;
+  }
 }

@@ -34,7 +34,8 @@ import { CSS } from "@dnd-kit/utilities";
 
 import {
   updateTeamStatus,
-  reorderTeams,
+  saveTeamOrder,
+  getSavedTeamOrder,
 } from "../../../api/services/admin/teams.service";
 import { EditTeam } from "./EditTeam";
 import { DeleteTeam } from "./DeleteTeam";
@@ -176,25 +177,17 @@ export function TeamTable({
     },
   });
 
-  const reorderMutation = useMutation({
-    mutationFn: reorderTeams,
-    onSuccess: () => {
-      toast.success("Display order saved");
-      queryClient.invalidateQueries({ queryKey: ["admin-teams"] });
-      setIsDragMode(false);
-    },
-    onError: (error: any) => {
-      toast.error(
-        error?.response?.data?.message || "Failed to save display order",
-      );
-    },
-  });
-
   const enterDragMode = () => {
-    const sorted = [...allTeams].sort(
-      (a, b) => a.displayOrder - b.displayOrder,
-    );
-    setDragOrder(sorted);
+    const saved = getSavedTeamOrder();
+    const base = [...allTeams];
+    if (saved) {
+      base.sort(
+        (a, b) => saved.indexOf(a.id) - saved.indexOf(b.id),
+      );
+    } else {
+      base.sort((a, b) => a.displayOrder - b.displayOrder);
+    }
+    setDragOrder(base);
     setIsDragMode(true);
   };
 
@@ -212,11 +205,17 @@ export function TeamTable({
   };
 
   const saveOrder = () => {
-    const orders = dragOrder.map((member, index) => ({
-      id: member.id,
-      displayOrder: index + 1,
-    }));
-    reorderMutation.mutate(orders);
+    const ids = dragOrder.map((m) => m.id);
+    saveTeamOrder(ids);
+    // Reflect new order in cache immediately
+    queryClient.setQueryData<AdminTeam[]>(["admin-teams"], (old = []) => {
+      const rank = new Map(ids.map((id, i) => [id, i]));
+      return [...old].sort(
+        (a, b) => (rank.get(a.id) ?? Infinity) - (rank.get(b.id) ?? Infinity),
+      );
+    });
+    toast.success("Display order saved");
+    setIsDragMode(false);
   };
 
   const searchedTeams = filteredTeams.filter((member) => {
@@ -254,11 +253,11 @@ export function TeamTable({
             <button
               type="button"
               onClick={saveOrder}
-              disabled={reorderMutation.isPending}
+              disabled={false}
               className="flex items-center gap-2 rounded-lg bg-orange-500 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-600 disabled:opacity-60"
             >
               <Save size={15} />
-              {reorderMutation.isPending ? "Saving…" : "Save Order"}
+              Save Order
             </button>
           </div>
         </div>
