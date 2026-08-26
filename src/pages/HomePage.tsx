@@ -478,11 +478,12 @@ function TeamCard({ name, role, bio, image, isInView, index }: TeamCardProps) {
       }}
     >
       {/* Fixed-height image — uniform across all cards */}
-      <div className="group h-56 overflow-hidden">
+      <div className="group h-56 w-full overflow-hidden">
         <LazyLoadImage
           src={image}
           effect="blur"
           alt={name}
+          wrapperClassName="w-full"
           className="h-56 w-full object-cover object-top transition duration-700 group-hover:scale-105"
         />
       </div>
