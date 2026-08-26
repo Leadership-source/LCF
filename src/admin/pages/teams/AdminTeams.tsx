@@ -127,6 +127,7 @@ export default function TeamsPage() {
         setSearch={setSearch}
         status={status}
         setStatus={setStatus}
+        allTeams={teams}
         filteredTeams={filteredAndSortedTeams}
         sortBy={sortBy}
         setSortBy={setSortBy}

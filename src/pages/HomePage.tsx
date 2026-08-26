@@ -483,7 +483,7 @@ function TeamCard({ name, role, bio, image, isInView, index }: TeamCardProps) {
           src={image}
           effect="blur"
           alt={name}
-          className="h-56 w-[350px] md:w-[380px] object-cover object-top transition duration-700 group-hover:scale-105"
+          className="h-56 w-full object-cover object-top transition duration-700 group-hover:scale-105"
         />
       </div>
 

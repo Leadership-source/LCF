@@ -66,3 +66,11 @@ export async function deleteTeam(id: string) {
 
   return response.data;
 }
+
+export async function reorderTeams(
+  orders: { id: string; displayOrder: number }[],
+) {
+  const response = await apiClient.patch("/teams/reorder", { orders });
+
+  return response.data;
+}
