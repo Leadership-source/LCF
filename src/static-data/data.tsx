@@ -1,5 +1,13 @@
-import { CalendarDays, Globe, HeartHandshake, Users, Star } from "lucide-react";
-import { Target, Eye, Heart, Flag } from "lucide-react";
+import {
+  CalendarDays,
+  Globe,
+  HeartHandshake,
+  Users,
+  Star,
+  LayoutGrid,
+  User,
+} from "lucide-react";
+import { Target, Eye, Heart } from "lucide-react";
 import { Megaphone, PenLine, Settings, UsersRound } from "lucide-react";
 import { Handshake, TrendingUp } from "lucide-react";
 
@@ -75,33 +83,40 @@ export const missionCards = [
     icon: Target,
     title: "Our Mission",
     description:
-      "To raise transformational leaders through learning, connection, and service to humanity.",
+      "Our mission is to inspire, develop, and connect leaders of today and tomorrow, equipping them with the tools, networks, and opportunities needed to make impactful contributions to their communities and beyond.",
   },
   {
     id: 2,
     icon: Eye,
     title: "Our Vision",
     description:
-      "A world where leaders are equipped to build inclusive, just, and empowered communities.",
+      "To become a leading platform for leadership development and civic engagement across the United Kingdom, recognised for its inclusive approach to mentorship, thought leadership, and charitable influence",
   },
   {
     id: 3,
-    icon: Heart,
-    title: "Our Values",
-    values: [
-      "Integrity",
-      "Excellence",
-      "Service",
-      "Inclusivity",
-      "Collaboration",
+    icon: LayoutGrid,
+    title: "Key Programmes and Activities",
+    programs: [
+      "Annual Leadership Conference",
+      "Monthly Leadership Talk Series",
+      "Structured Mentoring Programme",
+      "Leadership Roundtable Forums",
+      "Recognition Awards for outstanding leadership",
+      "Community Outreach and Youth Empowerment Project",
     ],
   },
   {
     id: 4,
-    icon: Flag,
-    title: "Our Commitment",
-    description:
-      "We are committed to creating sustainable impact through ethical leadership and community development.",
+    icon: User,
+    title: "Target Audience",
+    programs: [
+      " Student Leaders",
+      "Young Professionals",
+      " Community Leaders",
+      "Civic and Political Aspirants",
+      "Entrepreneurs and Innovators",
+      "Individuals committed to self-development and leadership impact",
+    ],
   },
 ];
 

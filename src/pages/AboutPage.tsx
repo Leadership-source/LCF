@@ -1,6 +1,6 @@
 import { missionCards, statsData } from "../static-data/data";
-import aboutImage from "/about-section-image.png";
-import aboutHero from "/about-backgroundImage.png";
+import aboutImage from "/group-image.jpeg";
+// import aboutHero from "/about-backgroundImage.png";
 import { CheckCircle, type LucideIcon } from "lucide-react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
@@ -10,7 +10,7 @@ type MissionCardProps = {
   Icon: LucideIcon;
   title: string;
   description?: string;
-  values?: string[];
+  programs?: string[];
 };
 
 //stat props
@@ -36,7 +36,7 @@ export default function AboutPage() {
               Icon={card.icon}
               title={card.title}
               description={card.description}
-              values={card.values}
+              programs={card.programs}
             />
           ))}
         </div>
@@ -51,36 +51,39 @@ export default function AboutPage() {
 
 export function AboutHero() {
   return (
-    <header className="relative overflow-hidden">
-      {/* Animated Background */}
-      <div
-        className="absolute inset-0 min-h-[600px] animate-hero-image bg-cover bg-center"
-        style={{
-          backgroundImage: `url(${aboutHero})`,
-        }}
-      />
-
-      {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/35" />
+    <section className="relative overflow-hidden bg-[#EA580C]  mt-15 text-white">
+      <div className="pointer-events-none absolute inset-0">
+        <div
+          className="absolute inset-0 opacity-[0.15]"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px)
+            `,
+            backgroundSize: "35px 35px",
+          }}
+        />
+      </div>
 
       {/* Content */}
-      <div className="relative mx-auto mt-25 flex max-w-7xl items-center px-4 py-10 md:px-8 min-h-[300px] lg:px-12">
-        <div className="max-w-2xl space-y-4 text-white">
-          <h1 className="text-xl text-orange-500 font-bold leading-tight md:text-3xl lg:text-4xl">
+      <div className="relative  flex   gap-4 flex-col   mx-auto max-w-7xl mt-15 py-10 px-6 md:px-8 lg:px-12">
+        <div className="max-w-3xl flex flex-col gap-4 ">
+          <h1 className="text-2xl font-bold leading-[1.08] text-[#ffdcc0] tracking-tight md:text-4xl lg:text-5xl">
             About Us
           </h1>
 
-          <p className="   md:leading-7 text-white text-sm md:text-lg">
-            Leadership Conference Forum serves as a not-for-profit, charitable
-            initiative with a community-driven vision, established to deliver
-            public benefit rather than commercial gain. We are committed to
-            creating an inclusive and vibrant space where leadership potential
-            can be cultivated through conferences, workshops, networking events,
-            and expert-led forums.
+          {/* Description */}
+          <p className=" max-w-2xl text-base leading-7 text-white md:text-md md:leading-8">
+            The Leadership Conference Forum is more than just a conference, it
+            is a movement. It exists to bring together individuals who are
+            passionate about making a difference. Whether you are a student
+            leader, a young professional, a public servant, a social
+            entrepreneur, or simply someone with a desire to lead, LCF offers
+            you the community, the platform, and the guidance to thrive
           </p>
         </div>
       </div>
-    </header>
+    </section>
   );
 }
 
@@ -89,7 +92,7 @@ export function AboutSection() {
     <section className="py-10 px-4 md:px-8 lg:px-12 bg-white">
       <div className="mx-auto flex max-w-7xl  flex-col  items-center gap-12 justify-between  md:flex-row">
         {/* Left Content */}
-        <div className="w-auto space-y-4 md:space-y-6 ">
+        <div className="w-auto space-y-4 md:space-y-6 lg:w-[700px]  ">
           <span className="text-xs md:text-sm font-bold uppercase tracking-wider text-orange-500">
             who we are
           </span>
@@ -100,55 +103,101 @@ export function AboutSection() {
             Building A Better Society
           </h2>
 
-          <p className=" max-w-lg text-sm md:text-md  lg:text-lg text-gray-600">
-            The Leadership Conference Forum is a charitable organisation based
-            in England that exists to develop the capacity and skills of people
-            in the Tees Valley and surrounding areas so they can play a fuller
-            part in society.
+          <p className="max-w-lg text-sm text-gray-600 md:text-md lg:text-lg">
+            The Leadership Conference Forum (LCF) is a forward-thinking
+            initiative dedicated to nurturing the next generation of leaders
+            through mentorship, professional development, and collaborative
+            dialogue. Based in the United Kingdom, LCF is designed to act as a
+            platform for leadership support, empowerment, and advancement,
+            connecting emerging leaders with experienced professionals,
+            dignitaries, and seasoned changemakers from a variety of sectors
           </p>
-          <p className=" max-w-lg text-sm md:text-md  lg:text-lg text-gray-600">
-            The Forum is managed by a committee led by a Chief Executive and
-            supported by directors responsible for communication, strategic
-            planning, programmes and events, outreach and partnerships, and
-            membership engagement.
+
+          <p className="max-w-lg text-sm text-gray-600 md:text-md lg:text-lg">
+            We believe that leadership is not just about titles; it is about
+            purpose, service, and responsibility. LCF is a space where leaders
+            can learn from each other, discuss real challenges, and grow in both
+            competence and character
           </p>
+
           <div className="space-y-2">
             <p className=" max-w-lg text-sm md:text-md  lg:text-lg text-gray-600">
               Our purpose is to inspire and equip both aspiring and established
               leaders across the United Kingdom and beyond
             </p>
             <p className="text-sm md:text-md   lg:text-lg text-gray-600 font-bold">
-              We do this by:
+              Our Core Objectives:
             </p>
-            <ul className="list-disc px-8 space-y-1  md:text-md lg:text-md">
+            <ul className="list-disc px-8 space-y-1 text-gray-600  md:text-md lg:text-md">
               <li>
-                Running leadership conferences and forums that bring people
-                together to share ideas and best practice
+                <strong>Support Upcoming Leaders:</strong>
+                {""}{" "}
+                <span className="text-sm">
+                  {" "}
+                  Provide guidance, encouragement, and capacity-building
+                  resources for individuals taking on or aspiring to leadership
+                  roles within their communities, institutions, and
+                  professions.{" "}
+                </span>
               </li>
               <li>
-                Providing mentoring and development workshops for emerging
-                leaders
+                <strong>Mentorship and Coaching:</strong>
+                {""}{" "}
+                <span className="text-sm">
+                  {" "}
+                  Facilitate structured mentorship schemes led by experienced
+                  leaders and professionals to support personal and career
+                  growth{" "}
+                </span>
               </li>
               <li>
-                Creating opportunities for networking, collaboration and civic
-                engagement
+                <strong> Leadership Forums and Conferences:</strong>
+                {""}{" "}
+                <span className="text-sm">
+                  {" "}
+                  Host regular conferences, speaker events, panel discussions
+                  and leadership talks to share experiences, promote knowledge
+                  exchange, and discuss current societal issues from a
+                  leadership perspective{" "}
+                </span>
               </li>
               <li>
-                Forming partnerships that promote inclusive growth and
-                charitable activity
+                <strong> Networking and Collaboration:</strong>
+                {""}{" "}
+                <span className="text-sm">
+                  {" "}
+                  Create networking opportunities between emerging leaders,
+                  professionals, public figures, academics, and policymakers,
+                  fostering partnerships that can lead to real-world im{" "}
+                </span>
+              </li>
+              <li>
+                <strong> Charitable and Social Development:</strong>
+                {""}{" "}
+                <span className="text-sm">
+                  {" "}
+                  Operate as a registered charity to ensure our work remains
+                  inclusive, transparent, and community-focused, attracting
+                  charitable advisors, patrons, and key supporters who align
+                  with our vision and values{" "}
+                </span>
               </li>
             </ul>
           </div>
         </div>
 
         {/* Right Image */}
-        <div className="w-full lg:w-[500px]">
-          <LazyLoadImage
-            src={aboutImage}
-            effect="blur"
-            alt="Leadership Conference Forum Team"
-            className="h-auto md:h-[600px] w-full rounded-xl object-cover shadow-xl"
-          />
+        <div
+          className={`w-full transition-all delay-200 duration-700 lg:w-[700px] `}
+        >
+          <div className="group overflow-hidden rounded-xl shadow-xl">
+            <LazyLoadImage
+              src={aboutImage}
+              effect="blur"
+              alt="Leadership Conference Forum Team"
+              className="h-auto md:h-[900px] w-full rounded-xl object-cover shadow-xl hover:scale-105"
+            />
+          </div>
         </div>
       </div>
     </section>
@@ -160,7 +209,7 @@ export function MissionCard({
   Icon,
   title,
   description,
-  values,
+  programs,
 }: MissionCardProps) {
   return (
     <div className="rounded-2xl space-y-2 border border-gray-200 bg-white p-6 shadow-md transition duration-300 hover:-translate-y-1 hover:shadow-lg">
@@ -174,15 +223,15 @@ export function MissionCard({
         </p>
       )}
 
-      {values && (
+      {programs && (
         <ul className="space-y-3">
-          {values.map((value) => (
+          {programs.map((program) => (
             <li
-              key={value}
+              key={program}
               className="flex text-sm lg:text-md md:text-md items-center gap-3 text-gray-700"
             >
               <CheckCircle size={18} className="  text-orange-500" />
-              {value}
+              {program}
             </li>
           ))}
         </ul>
@@ -251,3 +300,38 @@ export function StatCard({ icon, value, title }: StatCardProps) {
     </div>
   );
 }
+
+// export function AboutHero() {
+//   return (
+//     <header className="relative overflow-hidden">
+//       {/* Animated Background */}
+//       <div
+//         className="absolute inset-0 min-h-[600px] animate-hero-image bg-cover bg-center"
+//         style={{
+//           backgroundImage: `url(${aboutHero})`,
+//         }}
+//       />
+
+//       {/* Dark Overlay */}
+//       <div className="absolute inset-0 bg-black/35" />
+
+//       {/* Content */}
+//       <div className="relative mx-auto mt-25 flex max-w-7xl items-center px-4 py-10 md:px-8 min-h-[300px] lg:px-12">
+//         <div className="max-w-2xl space-y-4 text-white">
+//           <h1 className="text-xl text-orange-500 font-bold leading-tight md:text-3xl lg:text-4xl">
+//             About Us
+//           </h1>
+
+//           <p className="   md:leading-7 text-white text-sm md:text-lg">
+//             Leadership Conference Forum serves as a not-for-profit, charitable
+//             initiative with a community-driven vision, established to deliver
+//             public benefit rather than commercial gain. We are committed to
+//             creating an inclusive and vibrant space where leadership potential
+//             can be cultivated through conferences, workshops, networking events,
+//             and expert-led forums.
+//           </p>
+//         </div>
+//       </div>
+//     </header>
+//   );
+// }

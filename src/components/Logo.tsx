@@ -2,9 +2,9 @@ export function Logo() {
   return (
     <div>
       <img
-        src="/footer-logo.png"
+        src="/lfc-logo.png"
         alt="logo"
-        className="w-[170px] h-auto object-cover"
+        className="w-[100px] h-auto object-cover"
       />
     </div>
   );
