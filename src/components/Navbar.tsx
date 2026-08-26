@@ -20,7 +20,7 @@ export default function Navbar() {
               className={({ isActive }) =>
                 `  transition ${
                   isActive
-                    ? "border-b-2 border-white"
+                    ? "border-b-2 border-orange-500"
                     : "border-b-2 border-transparent"
                 }`
               }
@@ -47,7 +47,7 @@ export default function Navbar() {
               to={ROUTES.EVENTS}
               className={({ isActive }) =>
                 isActive
-                  ? "border-b-2 border-white pb-1"
+                  ? "border-b-2 border-orange-500 pb-1"
                   : "border-b-2 border-transparent pb-1"
               }
             >
@@ -60,7 +60,7 @@ export default function Navbar() {
               to={ROUTES.VOLUNTEER}
               className={({ isActive }) =>
                 isActive
-                  ? "border-b-2 border-white pb-1"
+                  ? "border-b-2 border-orange-500 pb-1"
                   : "border-b-2 border-transparent pb-1"
               }
             >
@@ -73,7 +73,7 @@ export default function Navbar() {
               to={ROUTES.LEGAL_NOTICE}
               className={({ isActive }) =>
                 isActive
-                  ? "border-b-2 border-white pb-1"
+                  ? "border-b-2 border-orange-500 pb-1"
                   : "border-b-2 border-transparent pb-1"
               }
             >

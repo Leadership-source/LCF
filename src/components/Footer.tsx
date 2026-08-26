@@ -108,7 +108,7 @@ export default function Footer() {
 
               <li>
                 <NavLink
-                  className="text-whitetransition text-sm hover:text-white"
+                  className="text-white transition text-sm"
                   to={ROUTES.LEGAL_NOTICE}
                 >
                   Legal Notice
@@ -140,7 +140,7 @@ export default function Footer() {
               <div className="flex items-start gap-3">
                 <a href="tel:07500429811">
                   <Phone
-                    className="mt-1 text-primary shrink-0 white"
+                    className="mt-1 text-white shrink-0"
                     size={18}
                   />
                 </a>
