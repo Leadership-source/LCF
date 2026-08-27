@@ -3,7 +3,7 @@ export const ROUTES = {
   ABOUT: "/about",
   EVENTS: "/events",
   TEAMS: "/teams",
-  VOLUNTEER: "/volunteer",
+  GETINVOLVE: "/get-Involve",
   CONTACT: "/contact",
   LEGAL_NOTICE: "/legal-notice",
   EVENTDETAILS: "/events/:id",

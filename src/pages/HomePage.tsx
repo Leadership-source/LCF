@@ -732,10 +732,10 @@ export function VolunteerSection() {
 
       <div>
         <Link
-          to={ROUTES.VOLUNTEER}
+          to={ROUTES.GETINVOLVE}
           className="mx-auto mt-6 flex w-fit items-center gap-2 rounded-lg bg-orange-500 px-6 py-3 text-sm font-semibold text-white transition hover:bg-orange-600"
         >
-          Become a volunteer
+          Get Involve
           <ArrowRight size={16} />
         </Link>
       </div>

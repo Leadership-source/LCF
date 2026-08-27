@@ -6,10 +6,18 @@ import {
   Star,
   LayoutGrid,
   User,
+  Target,
+  Eye,
+  Heart,
+  Megaphone,
+  PenLine,
+  Settings,
+  UsersRound,
+  Handshake,
+  TrendingUp,
+  GraduationCap,
+  UserRoundPlus,
 } from "lucide-react";
-import { Target, Eye, Heart } from "lucide-react";
-import { Megaphone, PenLine, Settings, UsersRound } from "lucide-react";
-import { Handshake, TrendingUp } from "lucide-react";
 
 import mentorship from "/highlight/mentorship.jpg";
 import leadership from "/highlight/leadership.jpg";
@@ -256,5 +264,101 @@ export const volunteerOpportunities = [
     description:
       "Assist with administration, research, and day-to-day operations.",
     icon: Settings,
+  },
+];
+
+export const externalRoles = [
+  {
+    title: "Advisors",
+    description:
+      "Our Advisors work behind the scenes to provide the trustees and board members with expert advice, insights, and strategic guidance as required.",
+  },
+  {
+    title: "Patrons",
+    description:
+      "Patrons support the charity by providing leadership quotes for use across our social media platforms, website, newsletters, and other promotional materials.",
+  },
+  {
+    title: "Brand Ambassadors",
+    description:
+      "Our Brand Ambassadors lend their image and visibility to the charity by allowing us to feature their photos on social media and promotional materials. They may also help to promote the charity online, although this is not a formal requirement.",
+  },
+  {
+    title: "Honorary Supporters",
+    description:
+      "Honorary Supporters assist by connecting LCF with their networks through referrals and recommendations, helping to strengthen our community outreach.",
+  },
+];
+
+export const involvementOptions = [
+  {
+    icon: UserRoundPlus,
+    title: "Become a Member",
+    description:
+      "Join the LCF community and connect with people who share a commitment to leadership development and positive community impact.",
+    href: "mailto:info@leadershipconferenceforum.org?subject=Membership%20Enquiry",
+    actionLabel: "Become a Member",
+  },
+
+  {
+    icon: HeartHandshake,
+    title: "Volunteer With LCF",
+    description:
+      "Support our activities through volunteering in event planning, community engagement, outreach, and programme coordination.",
+    href: "#volunteer",
+  },
+
+  {
+    icon: GraduationCap,
+    title: "Become a Mentor",
+    description:
+      "Share your knowledge and experience by supporting others through mentorship.",
+    href: "mailto:info@leadershipconferenceforum.org?subject=Mentor%20Application",
+    actionLabel: "Become a Mentor",
+  },
+
+  {
+    icon: Users,
+    title: "Apply for Mentoring",
+    description:
+      "Explore opportunities to receive guidance, support, and development through mentorship.",
+    href: "mailto:info@leadershipconferenceforum.org?subject=Mentoring%20Application",
+    actionLabel: "Apply for Mentoring",
+  },
+
+  {
+    icon: Handshake,
+    title: "Partner With Us",
+    description:
+      "Universities, charities, businesses, professional bodies, and community organisations can collaborate with LCF.",
+    href: "mailto:info@leadershipconferenceforum.org?subject=Partnership%20Enquiry",
+    actionLabel: "Partner With Us",
+  },
+
+  {
+    icon: Building2,
+    title: "Sponsor / Support an Event",
+    description:
+      "Organisations interested in supporting an LCF event or programme can get in touch to discuss opportunities.",
+    href: "mailto:info@leadershipconferenceforum.org?subject=Event%20Sponsorship%20Enquiry",
+    actionLabel: "Support an Event",
+  },
+
+  {
+    icon: CalendarDays,
+    title: "Attend an Event",
+    description:
+      "Discover current Leadership Conference Forum events and register to attend.",
+    href: "/events",
+    actionLabel: "View Events",
+  },
+
+  {
+    icon: Heart,
+    title: "Donate / Support LCF",
+    description:
+      "Support the work of LCF. Donation functionality and approved wording will be added when ready.",
+    href: "mailto:info@leadershipconferenceforum.org?subject=Support%20LCF%20Enquiry",
+    actionLabel: "Support LCF",
   },
 ];
