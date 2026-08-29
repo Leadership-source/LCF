@@ -362,3 +362,165 @@ export const involvementOptions = [
     actionLabel: "Support LCF",
   },
 ];
+
+export const newsArticles = [
+  {
+    id: 2,
+    title: "Building Stronger Communities Through Leadership",
+    category: "Leadership",
+    date: "August 15, 2026",
+    readTime: "4 min read",
+    image:
+      "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=900&q=80",
+    excerpt:
+      "Strong communities are built when individuals are encouraged to lead with integrity, collaborate with others and contribute positively to the people around them.",
+    content: `
+Strong communities are built when individuals are encouraged to take responsibility, support one another and contribute positively to the people around them.
+
+Leadership goes beyond holding a position or having a title. It involves integrity, responsibility, empathy and the willingness to make a meaningful difference in the lives of others.
+
+At Leadership Conference Forum, we believe that leadership development plays an important role in building stronger communities. When individuals are equipped with the right knowledge, confidence and support, they are better prepared to contribute positively within their communities and professions.
+
+Through leadership conversations, mentorship, networking opportunities and community engagement, we create opportunities for people to learn from one another and develop practical leadership skills.
+
+Strong communities are not created by one person. They are built through collaboration between individuals who are willing to share ideas, support others and work towards a common purpose.
+
+As we continue our work, we remain committed to encouraging responsible leadership, creating meaningful connections and supporting individuals who want to make a positive impact.
+    `,
+  },
+
+  {
+    id: 3,
+    title: "The Importance of Diversity in Leadership",
+    category: "Leadership",
+    date: "August 10, 2026",
+    readTime: "6 min read",
+    image:
+      "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=900&q=80",
+    excerpt:
+      "Diverse perspectives can create stronger teams, better conversations and more inclusive approaches to leadership across different professions and communities.",
+    content: `
+Leadership is strengthened when people from different backgrounds, experiences and professions have the opportunity to contribute their perspectives.
+
+Diversity in leadership allows organisations and communities to approach challenges from different viewpoints. It can encourage better conversations, greater understanding and more inclusive decision-making.
+
+At Leadership Conference Forum, diversity is an important part of our approach to leadership development. We believe that leadership exists across different professions, communities and areas of expertise.
+
+Bringing people together creates an environment where individuals can share their experiences, learn from one another and discover different ways of approaching leadership.
+
+Diversity also creates opportunities for younger and aspiring leaders to learn directly from people who have experience in their chosen fields.
+
+By encouraging open conversations, mentorship and collaboration, we aim to create a community where different voices are valued and individuals are encouraged to lead with confidence and integrity.
+
+The future of leadership requires people who are willing to listen, learn and work with others. Embracing diverse perspectives is an important part of that journey.
+    `,
+  },
+
+  {
+    id: 4,
+    title: "Young Professionals and the Future of Leadership",
+    category: "Young Leaders",
+    date: "August 5, 2026",
+    readTime: "4 min read",
+    image:
+      "https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=900&q=80",
+    excerpt:
+      "Young professionals have an important role to play in shaping the future. Leadership development can help them prepare to make meaningful contributions.",
+    content: `
+Young professionals are an important part of the future of leadership. Their ideas, skills and experiences will influence the organisations and communities they become part of.
+
+Developing leadership skills early can help young professionals build confidence, communicate effectively and make informed decisions.
+
+Leadership is not something that only begins when someone becomes a manager or holds a senior position. It can be developed through everyday actions, relationships and responsibilities.
+
+At Leadership Conference Forum, we encourage young professionals and aspiring leaders to learn continuously, connect with experienced professionals and take opportunities to grow.
+
+Mentorship can play an important role in this process. Learning directly from people who have experience in different professions can provide valuable insight and help younger leaders better understand the opportunities and challenges within their fields.
+
+We believe that investing in young professionals is an investment in stronger communities and a more responsible future.
+
+Through mentorship, networking and leadership development, young people can be better prepared to make meaningful contributions wherever their careers take them.
+    `,
+  },
+
+  {
+    id: 5,
+    title: "Creating Meaningful Connections Through Networking",
+    category: "Community",
+    date: "July 29, 2026",
+    readTime: "3 min read",
+    image:
+      "https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&w=900&q=80",
+    excerpt:
+      "Networking is more than exchanging contact details. It creates opportunities for people to share knowledge, collaborate and build relationships that can last.",
+    content: `
+Networking is often described as the process of meeting new people and building professional relationships. However, meaningful networking goes beyond exchanging contact details.
+
+Good relationships are built through genuine conversations, shared experiences and a willingness to support one another.
+
+At Leadership Conference Forum, we create opportunities for people from different backgrounds and professions to connect, exchange ideas and build relationships.
+
+Networking can introduce individuals to new perspectives, opportunities and experiences. It can also create collaborations between people who may otherwise never have had the opportunity to meet.
+
+For young professionals and aspiring leaders, networking can provide access to experienced individuals who can offer advice, encouragement and useful insights.
+
+Meaningful connections also strengthen communities. When people share knowledge, support one another and collaborate, they create opportunities for collective growth.
+
+We believe that every conversation has the potential to create a connection that can lead to learning, collaboration and positive impact.
+    `,
+  },
+
+  {
+    id: 6,
+    title: "Leadership Lessons From Different Professions",
+    category: "Insights",
+    date: "July 22, 2026",
+    readTime: "5 min read",
+    image:
+      "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=900&q=80",
+    excerpt:
+      "Leadership can be found across every profession. Exploring different experiences helps us understand the many ways people lead and influence positive change.",
+    content: `
+Leadership is not limited to one profession or career path. People demonstrate leadership in business, healthcare, education, technology, politics, finance, law, journalism and many other fields.
+
+Each profession provides different experiences and challenges, which can teach valuable lessons about leadership.
+
+A business leader may learn the importance of decision-making and strategy, while a healthcare professional may demonstrate empathy, responsibility and teamwork. A journalist may highlight the importance of communication and integrity, while a technology professional may demonstrate innovation and problem-solving.
+
+Learning from different professions allows us to develop a broader understanding of what leadership means.
+
+At Leadership Conference Forum, we believe that bringing people from different professional backgrounds together creates opportunities for knowledge sharing and mentorship.
+
+Our mentorship approach encourages individuals to learn from experienced people within their chosen disciplines while also exposing them to ideas from other fields.
+
+Leadership can take many forms, but the common foundation remains the same: integrity, responsibility, continuous learning and a willingness to positively influence others.
+    `,
+  },
+
+  {
+    id: 7,
+    title: "Preparing for the Future Leaders Conference 2026",
+    category: "Events",
+    date: "July 15, 2026",
+    readTime: "3 min read",
+    image:
+      "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=900&q=80",
+    excerpt:
+      "The Leadership Conference Forum is preparing for another opportunity to bring leaders, professionals and aspiring leaders together for learning and connection.",
+    content: `
+The Leadership Conference Forum is preparing for the Future Leaders Conference 2026, bringing together leaders, professionals, young professionals and aspiring leaders for an opportunity to learn, connect and share experiences.
+
+The conference is designed to create meaningful conversations around leadership development and the role individuals can play in creating positive change within their communities and professions.
+
+Participants will have the opportunity to learn from experienced speakers, engage in leadership discussions and connect with other individuals who share an interest in leadership and personal development.
+
+The event will also provide opportunities for networking and meaningful conversations between participants from different professional backgrounds.
+
+We believe that conferences such as this create an important space for people to exchange ideas, develop new perspectives and build relationships that can continue beyond the event itself.
+
+As preparations continue, we look forward to welcoming participants and creating an experience focused on learning, leadership and meaningful connection.
+    `,
+  },
+];
+
+export const featuredArticle = newsArticles[0];

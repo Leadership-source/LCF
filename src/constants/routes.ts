@@ -6,7 +6,9 @@ export const ROUTES = {
   GETINVOLVE: "/get-Involve",
   CONTACT: "/contact",
   LEGAL_NOTICE: "/legal-notice",
+  NEWS: "/news",
   EVENTDETAILS: "/events/:id",
+  NEWSDETAILS: "/news/:id",
 };
 
 export const ADMIN_ROUTES = {
@@ -20,4 +22,5 @@ export const ADMIN_ROUTES = {
   SETTINGS: "/admin/settings",
   FORGET_PASSWORD: "/admin/forget-password",
   RESET_PASSWORD: "/admin/reset-password",
+  NEWS: "/admin/news",
 };
