@@ -7,6 +7,7 @@ import {
   ShieldCheck,
   X,
   MessageSquareQuote,
+  Newspaper,
 } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -47,6 +48,12 @@ const coreNavItems = [
     label: "Testimonials",
     to: ADMIN_ROUTES.TESTIMONIALS,
     icon: MessageSquareQuote,
+    end: true,
+  },
+  {
+    label: "News & Insights",
+    to: ADMIN_ROUTES.NEWS,
+    icon: Newspaper,
     end: true,
   },
   {
@@ -148,7 +155,9 @@ export function AdminSidebar({ isOpen, onClose }: Props) {
             <span className="rounded-md bg-orange-500 px-2 py-0.5 text-xs font-bold uppercase tracking-widest text-white">
               LCF
             </span>
-            <span className="text-sm font-semibold text-white">Admin Portal</span>
+            <span className="text-sm font-semibold text-white">
+              Admin Portal
+            </span>
           </div>
         </div>
 

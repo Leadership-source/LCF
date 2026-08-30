@@ -91,9 +91,9 @@ export default function Footer() {
               <li>
                 <NavLink
                   className="text-white transition text-sm "
-                  to={ROUTES.VOLUNTEER}
+                  to={ROUTES.GETINVOLVE}
                 >
-                  Volunteer
+                  Get Involved
                 </NavLink>
               </li>
 
