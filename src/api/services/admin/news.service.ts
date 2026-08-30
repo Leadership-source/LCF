@@ -37,13 +37,13 @@ export type UpdateNewsData = {
 export async function getNews(): Promise<AdminNewsArticle[]> {
   const response = await apiClient.get("/news");
 
-  return response.data;
+  return response.data.data;
 }
 
 export async function getNewsById(id: string): Promise<AdminNewsArticle> {
   const response = await apiClient.get(`/news/${id}`);
 
-  return response.data;
+  return response.data.data;
 }
 
 export async function createNews(data: CreateNewsData) {
