@@ -64,7 +64,7 @@ export default function Navbar() {
                   : "border-b-2 border-transparent pb-1"
               }
             >
-              Get Involve
+              Get Involved
             </NavLink>
           </li>
           <li>
@@ -147,7 +147,7 @@ export default function Navbar() {
 
             <li>
               <NavLink to={ROUTES.GETINVOLVE} onClick={() => setIsOpen(false)}>
-                Get Involve
+                Get Involved
               </NavLink>
             </li>
             <li>

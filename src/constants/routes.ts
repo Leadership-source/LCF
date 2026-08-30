@@ -3,7 +3,7 @@ export const ROUTES = {
   ABOUT: "/about",
   EVENTS: "/events",
   TEAMS: "/teams",
-  GETINVOLVE: "/get-Involve",
+  GETINVOLVE: "/get-involved",
   CONTACT: "/contact",
   LEGAL_NOTICE: "/legal-notice",
   NEWS: "/news",

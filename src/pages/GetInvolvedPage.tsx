@@ -18,7 +18,7 @@ type InvolvementCardProps = {
   actionLabel?: string;
 };
 
-export default function GetInvolvePage() {
+export default function GetInvolvedPage() {
   return (
     <>
       <VolunteerHero />

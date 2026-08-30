@@ -11,9 +11,9 @@ import EventDetailsPage from "../pages/EventDetailsPage";
 import TeamsPage from "../pages/TeamsPage";
 import AdminRoutes from "../admin/router/AdminRoutes";
 import PublicLayout from "../layouts/PublicLayout";
-import VolunteerPage from "../pages/GetInvolvedPage";
+import GetInvolvedPage from "../pages/GetInvolvedPage";
 import NewsPage from "../pages/NewsPage";
-import NewsDetailsPage from "../pages/NewDetailsPage";
+import NewsDetailsPage from "../pages/NewsDetailsPage";
 
 function AppRouter() {
   return (
@@ -27,7 +27,7 @@ function AppRouter() {
           <Route path={ROUTES.TEAMS} element={<TeamsPage />} />
           <Route path={ROUTES.EVENTDETAILS} element={<EventDetailsPage />} />
           <Route path={ROUTES.NEWSDETAILS} element={<NewsDetailsPage />} />
-          <Route path={ROUTES.GETINVOLVE} element={<VolunteerPage />} />
+          <Route path={ROUTES.GETINVOLVE} element={<GetInvolvedPage />} />
           <Route path={ROUTES.LEGAL_NOTICE} element={<LegalNoticePage />} />
           <Route path={ROUTES.NEWS} element={<NewsPage />} />
           <Route path={ROUTES.CONTACT} element={<ContactPage />} />

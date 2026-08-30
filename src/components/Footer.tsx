@@ -93,7 +93,7 @@ export default function Footer() {
                   className="text-white transition text-sm "
                   to={ROUTES.GETINVOLVE}
                 >
-                  Volunteer
+                  Get Involved
                 </NavLink>
               </li>
 
