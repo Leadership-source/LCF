@@ -139,9 +139,10 @@ export default function QuoteInvitationPage() {
   // --------------------------------
 
   if (isError || !invitation) {
-    const message =
-      (error as any)?.response?.data?.message ||
-      "This invitation link is invalid or has expired.";
+    const message = getErrorMessage(
+      error,
+      "This invitation link is invalid or has expired.",
+    );
 
     return (
       <div className="flex min-h-screen items-center justify-center bg-gray-50 p-6">

@@ -433,27 +433,6 @@ function ContactSection() {
         <div className="h-1 w-14 rounded-full bg-orange-500" />
 
         <div className="flex gap-4">
-          {/* <a
-            href="#"
-            className="flex h-12 w-12 items-center justify-center rounded-full bg-[#1877F2] text-white transition hover:scale-105"
-          >
-            <FaFacebookF />
-          </a>
-
-          <a
-            href="#"
-            className="flex h-12 w-12 items-center justify-center rounded-full bg-[#1DA1F2] text-white transition hover:scale-105"
-          >
-            <FaTwitter />
-          </a>
-
-          <a
-            href="#"
-            className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-yellow-400 via-pink-500 to-purple-600 text-white transition hover:scale-105"
-          >
-            <FaInstagram />
-          </a> */}
-
           <a
             href="https://www.linkedin.com/company/leadership-conference-forum"
             className="flex h-12 w-12 items-center justify-center rounded-full bg-[#0077B5] text-white transition hover:scale-105"

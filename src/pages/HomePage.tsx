@@ -25,10 +25,7 @@ import { MessageSquareQuote, ArrowRight } from "lucide-react";
 import ShareReviewModal from "./ShareReviewModal";
 import { TeamSkeleton } from "../components/TeamSkeleton";
 
-import {
-  getPublishedQuotes,
-  // type PublicQuote,
-} from "../api/services/public/quote.service";
+import { getPublishedQuotes } from "../api/services/public/quote.service";
 
 type StatCardProps = {
   icon: ReactNode;
@@ -606,8 +603,6 @@ export function LeaderQuotes() {
   if (isError || quotes.length === 0) {
     return null;
   }
-
-  // const activeQuote: PublicQuote = quotes[current];
 
   return (
     <section className="w-full bg-orange-200/20 px-4 py-10 md:px-8 lg:px-12">

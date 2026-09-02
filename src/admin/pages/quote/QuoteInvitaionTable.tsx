@@ -267,7 +267,7 @@ function InvitationRow({
           >
             <Trash2 size={14} />
 
-            {/* {isDeleting ? "Deleting..." : "Delete"} */}
+            {isDeleting ? "Deleting..." : "Delete"}
           </button>
         </div>
       </td>

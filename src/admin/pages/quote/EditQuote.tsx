@@ -9,6 +9,8 @@ import {
   type UpdateQuoteData,
 } from "../../../api/services/admin/quote.service";
 
+import { getErrorMessage } from "../../../lib/getErrorMessage";
+
 type EditQuoteProps = {
   quote: AdminQuote;
   open: boolean;
@@ -79,11 +81,9 @@ export function EditQuote({ quote, open, onClose }: EditQuoteProps) {
       setErrors({});
     },
 
-    onError: (error: any) => {
-      console.error("UPDATE QUOTE ERROR:", error?.response?.data);
-
+    onError: (error: unknown) => {
       setErrors({
-        server: error?.response?.data?.message || "Failed to update quote.",
+        server: getErrorMessage(error, "Failed to update quote."),
       });
     },
   });

@@ -24,30 +24,6 @@ export default function Footer() {
             </p>
 
             <div className=" flex items-center gap-4">
-              {/* <a
-                href="#"
-                className="transition hover:text-orange-500 cursor-pointer"
-                aria-label="Facebook"
-              >
-                <FaFacebook size={20} />
-              </a>
-
-              <a
-                href="#"
-                className="transition  cursor-pointer"
-                aria-label="Twitter"
-              >
-                <FaTwitter size={20} />
-              </a>
-
-              <a
-                href="#"
-                className="transition  cursor-pointer"
-                aria-label="Instagram"
-              >
-                <FaInstagram size={20} />
-              </a> */}
-
               <a
                 href=" https://www.linkedin.com/company/leadership-conference-forum"
                 className="transition  cursor-pointer"

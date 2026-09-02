@@ -22,6 +22,8 @@ import type {
 
 import { updateQuoteStatus } from "../../../api/services/admin/quote.service";
 
+import { getErrorMessage } from "../../../lib/getErrorMessage";
+
 import { EditQuote } from "./EditQuote";
 import { DeleteQuote } from "./DeleteQuote";
 
@@ -64,12 +66,8 @@ export function QuoteTable({
       });
     },
 
-    onError: (error: any) => {
-      console.error("UPDATE QUOTE STATUS ERROR:", error?.response?.data);
-
-      toast.error(
-        error?.response?.data?.message || "Failed to update quote status",
-      );
+    onError: (error: unknown) => {
+      toast.error(getErrorMessage(error, "Failed to update quote status"));
     },
   });
 
