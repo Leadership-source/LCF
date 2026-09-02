@@ -79,19 +79,6 @@ export default function Navbar() {
               News
             </NavLink>
           </li>
-
-          <li>
-            <NavLink
-              to={ROUTES.LEGAL_NOTICE}
-              className={({ isActive }) =>
-                isActive
-                  ? "border-b-2 border-orange-500 pb-1"
-                  : "border-b-2 border-transparent pb-1"
-              }
-            >
-              Legal Notice
-            </NavLink>
-          </li>
         </ul>
 
         <button className="hidden lg:block rounded-md bg-orange-500 px-6 py-3 text-xl font-semibold text-white ">
@@ -153,15 +140,6 @@ export default function Navbar() {
             <li>
               <NavLink to={ROUTES.NEWS} onClick={() => setIsOpen(false)}>
                 News
-              </NavLink>
-            </li>
-
-            <li>
-              <NavLink
-                to={ROUTES.LEGAL_NOTICE}
-                onClick={() => setIsOpen(false)}
-              >
-                Legal Notice
               </NavLink>
             </li>
           </ul>
