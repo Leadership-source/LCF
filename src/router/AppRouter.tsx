@@ -14,6 +14,7 @@ import PublicLayout from "../layouts/PublicLayout";
 import GetInvolvedPage from "../pages/GetInvolvedPage";
 import NewsPage from "../pages/NewsPage";
 import NewsDetailsPage from "../pages/NewsDetailsPage";
+import QuoteInvitationPage from "../pages/QuoteInvitationPage";
 
 function AppRouter() {
   return (
@@ -31,6 +32,10 @@ function AppRouter() {
           <Route path={ROUTES.LEGAL_NOTICE} element={<LegalNoticePage />} />
           <Route path={ROUTES.NEWS} element={<NewsPage />} />
           <Route path={ROUTES.CONTACT} element={<ContactPage />} />
+          <Route
+            path={ROUTES.QUOTEINVITATION}
+            element={<QuoteInvitationPage />}
+          />
           <Route path={"*"} element={<PageNotFound />} />
         </Route>
       </Routes>

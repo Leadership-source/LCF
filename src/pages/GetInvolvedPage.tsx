@@ -178,7 +178,7 @@ export function Ready() {
         <div className="w-auto md:max-w-xl space-y-2">
           <h2 className="text-md md:text-xl font-bold ">Ready to Volunteer?</h2>
 
-          <p className=" text-xl md:text-sm text-orange-50">
+          <p className=" text-md md:text-sm text-orange-50">
             We'd love to hear from you! If you're passionate about making a
             positive impact in your community and would like to volunteer with
             Leadership Conference Forum, simply send us an email telling us why

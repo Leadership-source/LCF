@@ -8,6 +8,7 @@ import {
   X,
   MessageSquareQuote,
   Newspaper,
+  Quote,
 } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -54,6 +55,12 @@ const coreNavItems = [
     label: "News & Insights",
     to: ADMIN_ROUTES.NEWS,
     icon: Newspaper,
+    end: true,
+  },
+  {
+    label: "Leaders' Quotes",
+    to: ADMIN_ROUTES.QUOTES,
+    icon: Quote,
     end: true,
   },
   {

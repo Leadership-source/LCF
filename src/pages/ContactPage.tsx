@@ -1,11 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { Clock3, Mail, MapPin, Phone } from "lucide-react";
-import {
-  FaFacebookF,
-  FaInstagram,
-  FaLinkedinIn,
-  FaTwitter,
-} from "react-icons/fa";
+import { FaLinkedinIn } from "react-icons/fa";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
@@ -40,16 +35,30 @@ export default function ContactPage() {
   );
 }
 
-function ContactHero() {
+export function ContactHero() {
   return (
-    <header className="relative bg-orange-200/10">
-      <div className="relative mx-auto mt-25 flex h-full max-w-7xl px-4 py-10 md:px-8 lg:px-12">
-        <div className="space-y-4">
-          <h1 className="text-xl font-bold leading-tight text-orange-500 md:text-3xl lg:text-4xl">
+    <section className="relative mt-15 overflow-hidden bg-[#EA580C] text-white">
+      <div className="pointer-events-none absolute inset-0">
+        <div
+          className="absolute inset-0 opacity-[0.15]"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px)
+            `,
+            backgroundSize: "35px 35px",
+          }}
+        />
+      </div>
+
+      {/* Content */}
+      <div className="relative mx-auto mt-15 flex max-w-7xl flex-col gap-4 px-6 py-10 md:px-8 lg:px-12">
+        <div className="flex max-w-3xl flex-col gap-4">
+          <h1 className="text-2xl font-bold leading-[1.08] tracking-tight text-[#ffdcc0] md:text-4xl lg:text-5xl">
             Contact us
           </h1>
 
-          <p className="text-sm text-black md:text-lg md:leading-7">
+          <p className="max-w-2xl text-base leading-7 text-white md:text-md md:leading-8">
             We would love to hear from you.
             <br />
             Get in touch with us for enquiries, partnerships, or any other
@@ -57,7 +66,7 @@ function ContactHero() {
           </p>
         </div>
       </div>
-    </header>
+    </section>
   );
 }
 
@@ -79,7 +88,10 @@ function ContactSection() {
 
     onError: (error: unknown) => {
       setErrors({
-        message: getErrorMessage(error, "Unable to send your message. Please try again."),
+        message: getErrorMessage(
+          error,
+          "Unable to send your message. Please try again.",
+        ),
       });
     },
   });
@@ -421,7 +433,7 @@ function ContactSection() {
         <div className="h-1 w-14 rounded-full bg-orange-500" />
 
         <div className="flex gap-4">
-          <a
+          {/* <a
             href="#"
             className="flex h-12 w-12 items-center justify-center rounded-full bg-[#1877F2] text-white transition hover:scale-105"
           >
@@ -440,7 +452,7 @@ function ContactSection() {
             className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-yellow-400 via-pink-500 to-purple-600 text-white transition hover:scale-105"
           >
             <FaInstagram />
-          </a>
+          </a> */}
 
           <a
             href="https://www.linkedin.com/company/leadership-conference-forum"

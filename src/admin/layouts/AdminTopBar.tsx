@@ -1,8 +1,13 @@
 import { Bell, ChevronDown, Menu, X } from "lucide-react";
+
 import { useState } from "react";
+
 import { Link } from "react-router-dom";
+
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+
 import { getCurrentUser } from "../../api/services/admin/auth.service";
+
 import {
   getNotifications,
   markNotificationAsRead,
@@ -10,32 +15,79 @@ import {
   deleteNotification,
   deleteAllNotifications,
 } from "../../api/services/admin/notification.service";
+
 import { ADMIN_ROUTES } from "../../constants/routes";
+
 import toast from "react-hot-toast";
 
 type AdminTopBarProps = {
   toggleSidebar: () => void;
 };
 
-// Map notification type prefix to the admin route it relates to
+// ======================================================
+// NOTIFICATION ROUTE
+// ======================================================
+
 function getNotificationRoute(type: string): string {
-  if (type.startsWith("EVENT")) return ADMIN_ROUTES.EVENTS;
-  if (type.startsWith("TEAM")) return ADMIN_ROUTES.TEAMS;
-  if (type.startsWith("TESTIMONIAL")) return ADMIN_ROUTES.TESTIMONIALS;
-  if (type.startsWith("USER")) return ADMIN_ROUTES.USERS;
+  if (type.startsWith("EVENT")) {
+    return ADMIN_ROUTES.EVENTS;
+  }
+
+  if (type.startsWith("TEAM")) {
+    return ADMIN_ROUTES.TEAMS;
+  }
+
+  if (type.startsWith("TESTIMONIAL")) {
+    return ADMIN_ROUTES.TESTIMONIALS;
+  }
+
+  if (type.startsWith("USER")) {
+    return ADMIN_ROUTES.USERS;
+  }
+
+  if (type.startsWith("NEWS")) {
+    return ADMIN_ROUTES.NEWS;
+  }
+
+  if (type.startsWith("QUOTE")) {
+    return ADMIN_ROUTES.QUOTES;
+  }
+
   return ADMIN_ROUTES.DASHBOARD;
 }
 
+// ======================================================
+// ADMIN TOP BAR
+// ======================================================
+
 export function AdminTopBar({ toggleSidebar }: AdminTopBarProps) {
   const [showNotifications, setShowNotifications] = useState(false);
+
   const queryClient = useQueryClient();
+
+  // ======================================================
+  // CURRENT USER
+  // ======================================================
 
   const { data: user } = useQuery({
     queryKey: ["currentUser"],
     queryFn: getCurrentUser,
   });
 
-  // mark as read
+  // ======================================================
+  // GET NOTIFICATIONS
+  // ======================================================
+
+  const { data: notifications = [], isLoading: notificationsLoading } =
+    useQuery({
+      queryKey: ["notifications"],
+      queryFn: getNotifications,
+    });
+
+  // ======================================================
+  // MARK ONE AS READ
+  // ======================================================
+
   const markAsReadMutation = useMutation({
     mutationFn: markNotificationAsRead,
 
@@ -50,7 +102,10 @@ export function AdminTopBar({ toggleSidebar }: AdminTopBarProps) {
     },
   });
 
-  // mark as all read
+  // ======================================================
+  // MARK ALL AS READ
+  // ======================================================
+
   const markAllAsReadMutation = useMutation({
     mutationFn: markAllNotificationsAsRead,
 
@@ -67,7 +122,10 @@ export function AdminTopBar({ toggleSidebar }: AdminTopBarProps) {
     },
   });
 
-  //delete one notification
+  // ======================================================
+  // DELETE ONE NOTIFICATION
+  // ======================================================
+
   const deleteNotificationMutation = useMutation({
     mutationFn: deleteNotification,
 
@@ -84,7 +142,10 @@ export function AdminTopBar({ toggleSidebar }: AdminTopBarProps) {
     },
   });
 
-  //clear all notification
+  // ======================================================
+  // DELETE ALL NOTIFICATIONS
+  // ======================================================
+
   const deleteAllNotificationsMutation = useMutation({
     mutationFn: deleteAllNotifications,
 
@@ -101,19 +162,23 @@ export function AdminTopBar({ toggleSidebar }: AdminTopBarProps) {
     },
   });
 
-  const { data: notifications = [], isLoading: notificationsLoading } =
-    useQuery({
-      queryKey: ["notifications"],
-      queryFn: getNotifications,
-    });
+  // ======================================================
+  // USER INITIAL
+  // ======================================================
 
-  // Get first letter of user's name
   const userInitial = user?.name?.charAt(0).toUpperCase() || "A";
 
-  // Get unread notifications
+  // ======================================================
+  // UNREAD NOTIFICATIONS
+  // ======================================================
+
   const unreadNotifications = notifications.filter(
     (notification) => !notification.isRead,
   );
+
+  // ======================================================
+  // RENDER
+  // ======================================================
 
   return (
     <header className="sticky top-0 z-30 flex items-center justify-between border-b border-gray-200 bg-white px-4 py-4 shadow-sm md:px-8">
@@ -131,8 +196,9 @@ export function AdminTopBar({ toggleSidebar }: AdminTopBarProps) {
 
       {/* Right */}
       <div className="flex items-center gap-4">
+        {/* Notifications */}
         <div className="relative">
-          {/* Bell button */}
+          {/* Bell Button */}
           <button
             type="button"
             onClick={() => setShowNotifications((prev) => !prev)}
@@ -145,9 +211,9 @@ export function AdminTopBar({ toggleSidebar }: AdminTopBarProps) {
             )}
           </button>
 
-          {/* Dropdown */}
+          {/* Notification Dropdown */}
           {showNotifications && (
-            <div className="absolute -right-15 lg:right-0 top-12 z-50 w-80 rounded-xl border border-gray-200 bg-white shadow-lg">
+            <div className="absolute -right-15 top-12 z-50 w-80 rounded-xl border border-gray-200 bg-white shadow-lg lg:right-0">
               {/* Header */}
               <div className="flex items-center justify-between border-b border-gray-200 px-4 py-3">
                 <h3 className="font-semibold text-gray-900">Notifications</h3>
@@ -219,7 +285,7 @@ export function AdminTopBar({ toggleSidebar }: AdminTopBarProps) {
                         </p>
                       </Link>
 
-                      {/* Clear one */}
+                      {/* Clear One */}
                       <button
                         type="button"
                         onClick={() =>
@@ -236,7 +302,7 @@ export function AdminTopBar({ toggleSidebar }: AdminTopBarProps) {
                 </div>
               )}
 
-              {/* Clear all */}
+              {/* Clear All */}
               {notifications.length > 0 && (
                 <div className="border-t border-gray-200 px-4 py-3">
                   <button
@@ -260,11 +326,12 @@ export function AdminTopBar({ toggleSidebar }: AdminTopBarProps) {
           type="button"
           className="flex items-center gap-3 rounded-xl p-2 transition hover:bg-gray-100"
         >
-          {/* User abbreviation */}
+          {/* User Abbreviation */}
           <div className="flex h-9 w-9 items-center justify-center rounded-full bg-orange-500 font-semibold text-white">
             {userInitial}
           </div>
 
+          {/* User Details */}
           <div className="hidden text-left lg:block">
             <p className="text-sm font-medium text-gray-900">
               {user?.name || "Admin"}
