@@ -2,7 +2,7 @@ import { Mail, Phone, MapPin } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 import { ROUTES } from "../constants/routes";
-import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
+import { FaLinkedin } from "react-icons/fa";
 
 export default function Footer() {
   return (
@@ -24,30 +24,6 @@ export default function Footer() {
             </p>
 
             <div className=" flex items-center gap-4">
-              <a
-                href="#"
-                className="transition hover:text-orange-500 cursor-pointer"
-                aria-label="Facebook"
-              >
-                <FaFacebook size={20} />
-              </a>
-
-              <a
-                href="#"
-                className="transition  cursor-pointer"
-                aria-label="Twitter"
-              >
-                <FaTwitter size={20} />
-              </a>
-
-              <a
-                href="#"
-                className="transition  cursor-pointer"
-                aria-label="Instagram"
-              >
-                <FaInstagram size={20} />
-              </a>
-
               <a
                 href=" https://www.linkedin.com/company/leadership-conference-forum"
                 className="transition  cursor-pointer"
@@ -139,10 +115,7 @@ export default function Footer() {
 
               <div className="flex items-start gap-3">
                 <a href="tel:07500429811">
-                  <Phone
-                    className="mt-1 text-white shrink-0"
-                    size={18}
-                  />
+                  <Phone className="mt-1 text-white shrink-0" size={18} />
                 </a>
 
                 <span className="text-white text-sm"> 07500429811</span>

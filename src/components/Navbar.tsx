@@ -122,7 +122,7 @@ export default function Navbar() {
         }`}
       >
         <div className="py-10 px-6  flex flex-col gap-4">
-          <ul className="flex text-orange-500 text-xl flex-col gap-4 ">
+          <ul className="flex text-orange-500 text-md flex-col gap-4 ">
             <li>
               <NavLink
                 to={ROUTES.HOME}
@@ -165,7 +165,7 @@ export default function Navbar() {
               </NavLink>
             </li>
           </ul>
-          <button className="block lg:hidden rounded-md bg-orange-500 px-6 py-3 text-xl font-semibold text-white ">
+          <button className="block lg:hidden rounded-md bg-orange-500 px-6 py-3 text-md font-semibold text-white ">
             <NavLink
               to={ROUTES.CONTACT}
               className={({ isActive }) =>

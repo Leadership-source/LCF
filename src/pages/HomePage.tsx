@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
 import { ROUTES } from "../constants/routes";
-import { Users, ChevronLeft, ChevronRight, Quote } from "lucide-react";
+import {
+  Users,
+  ChevronLeft,
+  ChevronRight,
+  Quote,
+  QuoteIcon,
+} from "lucide-react";
 import type { ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "motion/react";
@@ -18,6 +24,8 @@ import { MessageSquareQuote, ArrowRight } from "lucide-react";
 
 import ShareReviewModal from "./ShareReviewModal";
 import { TeamSkeleton } from "../components/TeamSkeleton";
+
+import { getPublishedQuotes } from "../api/services/public/quote.service";
 
 type StatCardProps = {
   icon: ReactNode;
@@ -135,6 +143,7 @@ export default function HomePage() {
 
       <TeamSection />
 
+      <LeaderQuotes />
       {/* Testimonials */}
       <Testimonials />
       <section className="mx-auto flex w-full gap-10 max-w-4xl flex-col items-stretch justify-center lg:gap-20 px-4 py-10 md:flex-row md:items-stretch">
@@ -389,7 +398,7 @@ function TeamSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full overflow-hidden bg-white px-4 py-10 md:px-8 lg:px-12"
+      className="relative w-full overflow-hidden bg-white px-4 py-10 md:px-8 lg:px-12 "
     >
       {/* Section Heading */}
       <div
@@ -510,6 +519,208 @@ function TeamCard({ name, role, bio, image, isInView, index }: TeamCardProps) {
   );
 }
 
+//quote
+
+export function LeaderQuotes() {
+  const [current, setCurrent] = useState(0);
+
+  const {
+    data: quotes = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["public-quotes"],
+    queryFn: getPublishedQuotes,
+    staleTime: 5 * 60 * 1000,
+  });
+
+  const hasMultipleQuotes = quotes.length > 1;
+
+  // --------------------------------
+  // Next quote
+  // --------------------------------
+
+  const nextSlide = () => {
+    if (!hasMultipleQuotes) return;
+
+    setCurrent((prev) => (prev + 1) % quotes.length);
+  };
+
+  // --------------------------------
+  // Previous quote
+  // --------------------------------
+
+  const prevSlide = () => {
+    if (!hasMultipleQuotes) return;
+
+    setCurrent((prev) => (prev === 0 ? quotes.length - 1 : prev - 1));
+  };
+
+  // --------------------------------
+  // Auto rotate
+  // --------------------------------
+
+  useEffect(() => {
+    if (!hasMultipleQuotes) return;
+
+    const interval = setInterval(nextSlide, 5000);
+
+    return () => clearInterval(interval);
+  }, [quotes.length, hasMultipleQuotes]);
+
+  // --------------------------------
+  // Prevent invalid index
+  // --------------------------------
+
+  useEffect(() => {
+    if (current >= quotes.length) {
+      setCurrent(0);
+    }
+  }, [quotes.length, current]);
+
+  // --------------------------------
+  // Loading
+  // --------------------------------
+
+  if (isLoading) {
+    return (
+      <section className="w-full bg-white px-4 py-10 md:px-8 lg:px-12">
+        <div className="mx-auto max-w-4xl animate-pulse text-center">
+          <div className="mx-auto h-4 w-28 rounded bg-gray-200" />
+
+          <div className="mx-auto mt-3 h-8 w-64 rounded bg-gray-200" />
+
+          <div className="mx-auto mt-10 h-36 rounded-xl bg-gray-200" />
+        </div>
+      </section>
+    );
+  }
+
+  // --------------------------------
+  // Error / Empty
+  // --------------------------------
+
+  if (isError || quotes.length === 0) {
+    return null;
+  }
+
+  return (
+    <section className="w-full bg-orange-200/20 px-4 py-10 md:px-8 lg:px-12">
+      {/* Header */}
+
+      <div className="space-y-2 text-center">
+        <p className="text-xs font-semibold uppercase tracking-wider text-orange-500 md:text-sm">
+          Voices of Leadership
+        </p>
+
+        <h2 className="text-md font-bold text-gray-900 md:text-xl lg:text-3xl">
+          Words From Leaders
+        </h2>
+
+        <p className="mx-auto max-w-2xl text-sm text-gray-500">
+          Inspiration and wisdom from leaders and industry professionals.
+        </p>
+      </div>
+
+      {/* Quote slider */}
+
+      <div className="mx-auto mt-10 flex max-w-6xl items-center gap-4">
+        {/* Previous */}
+
+        {hasMultipleQuotes && (
+          <button
+            type="button"
+            onClick={prevSlide}
+            aria-label="Previous quote"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-gray-300 bg-white text-gray-700 transition hover:border-orange-500 hover:bg-orange-500 hover:text-white"
+          >
+            <ChevronLeft size={22} />
+          </button>
+        )}
+
+        {/* Slides */}
+
+        <div className="w-full overflow-hidden">
+          <div
+            className="flex transition-transform duration-500 ease-in-out"
+            style={{
+              transform: `translateX(-${current * 100}%)`,
+            }}
+          >
+            {quotes.map((quote) => (
+              <div
+                key={quote.id}
+                className="w-full shrink-0 px-4 md:px-10 lg:px-20"
+              >
+                <div className="mx-auto max-w-4xl rounded-2xl  p-6  md:p-10">
+                  {/* Quote icon */}
+
+                  <QuoteIcon
+                    size={28}
+                    className="text-orange-500"
+                    fill="currentColor"
+                  />
+
+                  {/* Quote */}
+
+                  <blockquote className="mt-5 text-base leading-8 text-gray-700 md:text-xl md:leading-9">
+                    “{quote.quote}”
+                  </blockquote>
+
+                  {/* Leader */}
+
+                  <div className="mt-8">
+                    <h3 className="text-base font-semibold text-orange-500 md:text-xl">
+                      {quote.name}
+                    </h3>
+
+                    <p className="mt-1 text-xs text-gray-500 md:text-sm">
+                      {quote.role}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Next */}
+
+        {hasMultipleQuotes && (
+          <button
+            type="button"
+            onClick={nextSlide}
+            aria-label="Next quote"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-gray-300 bg-white text-gray-700 transition hover:border-orange-500 hover:bg-orange-500 hover:text-white"
+          >
+            <ChevronRight size={22} />
+          </button>
+        )}
+      </div>
+
+      {/* Dots */}
+
+      {hasMultipleQuotes && (
+        <div className="mt-8 flex justify-center gap-3">
+          {quotes.map((quote, index) => (
+            <button
+              key={quote.id}
+              type="button"
+              onClick={() => setCurrent(index)}
+              aria-label={`Go to quote ${index + 1}`}
+              className={`h-3 w-3 rounded-full transition ${
+                current === index
+                  ? "bg-orange-500"
+                  : "bg-gray-300 hover:bg-gray-400"
+              }`}
+            />
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
 //TESTIMONIALS
 export function Testimonials() {
   const [current, setCurrent] = useState(0);
@@ -555,7 +766,7 @@ export function Testimonials() {
 
   if (isLoading) {
     return (
-      <section className="w-full bg-orange-200/20 px-4 py-10 md:px-8 lg:px-12">
+      <section className="w-full bg-orange-200/20 px-4 py-10 md:px-8 lg:px-12 ">
         <div className="mx-auto max-w-4xl animate-pulse text-center">
           <div className="mx-auto h-4 w-28 rounded bg-gray-200" />
           <div className="mx-auto mt-3 h-8 w-56 rounded bg-gray-200" />
@@ -570,7 +781,7 @@ export function Testimonials() {
   }
 
   return (
-    <section className="w-full bg-orange-200/20 px-4 py-10 md:px-8 lg:px-12">
+    <section className="w-full bg-orange-200/20 px-4 py-10 md:px-8 lg:px-12 mt-20">
       {/* Header */}
       <div className="space-y-2 text-center">
         <p className="text-xs font-semibold uppercase tracking-wider text-orange-500 md:text-sm">

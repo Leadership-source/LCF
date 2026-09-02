@@ -15,6 +15,7 @@ import AdminUsersPage from "../pages/users/AdminUsers";
 import SuperAdminRoute from "./SuperAdminRoute";
 import TestimonialsPage from "../pages/Testimonials/TestimonialsPage";
 import NewsPage from "../pages/News/AdminNews";
+import QuotesPage from "../pages/quote/AdminQuote";
 
 function AdminRoutes() {
   return (
@@ -36,6 +37,7 @@ function AdminRoutes() {
           <Route path="events" element={<Events />} />
           <Route path="settings" element={<Settings />} />
           <Route path="news" element={<NewsPage />} />
+          <Route path="quotes" element={<QuotesPage />} />
           <Route element={<SuperAdminRoute />}>
             <Route path="users" element={<AdminUsersPage />} />
           </Route>

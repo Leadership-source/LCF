@@ -9,6 +9,7 @@ export const ROUTES = {
   NEWS: "/news",
   EVENTDETAILS: "/events/:id",
   NEWSDETAILS: "/news/:id",
+  QUOTEINVITATION: "/quote-invitation/:token",
 };
 
 export const ADMIN_ROUTES = {
@@ -23,4 +24,5 @@ export const ADMIN_ROUTES = {
   FORGET_PASSWORD: "/admin/forget-password",
   RESET_PASSWORD: "/admin/reset-password",
   NEWS: "/admin/news",
+  QUOTES: "/admin/quotes",
 };
