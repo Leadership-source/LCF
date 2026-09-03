@@ -156,7 +156,7 @@ export default function EventDetailsPage() {
   // --------------------------------
 
   return (
-    <section className="mt-25 max-w-7xl">
+    <section className="mt-25 w-full">
       <div className="relative">
         <div className="absolute inset-0 bg-black/50" />
 
@@ -193,7 +193,7 @@ export default function EventDetailsPage() {
         </div>
       </div>
 
-      <div className="grid gap-8 bg-white px-4 py-10 md:px-8 lg:grid-cols-2 lg:px-10">
+      <div className="grid gap-8 md:grid-cols-2 bg-white px-4 py-10 md:px-8 lg:grid-cols-2 lg:px-10">
         <div className="space-y-2 rounded-md bg-white p-4 shadow-md">
           <h2 className="text-md font-bold md:text-xl">Event Information</h2>
 
@@ -242,16 +242,18 @@ export default function EventDetailsPage() {
         </div>
       </div>
 
-      <div className="bg-orange-500 px-4 py-10 text-center text-white md:px-8 lg:px-12">
-        <h2 className="text-3xl font-bold">Ready to Join This Event?</h2>
+      <div className="bg-orange-100/50 px-4 py-10 text-center text-orange-500 md:px-8 lg:px-12">
+        <h2 className="text-xl font-bold md:text-2xl">
+          Ready to Join This Event?
+        </h2>
 
-        <p className="mt-2">
+        <p className="mt-2 text-black">
           Reserve your place and be part of an inspiring leadership experience.
         </p>
 
         <button
           onClick={handleOpenRegistration}
-          className="mt-6 rounded-lg bg-white px-8 py-4 font-semibold text-orange-500"
+          className="mt-6 rounded-lg bg-orange-500 px-8 py-4 font-semibold text-white"
         >
           Register Now
         </button>
@@ -291,7 +293,11 @@ export default function EventDetailsPage() {
                   value={name}
                   onChange={(e) => {
                     setName(e.target.value);
-                    setErrors((prev) => ({ ...prev, name: undefined, general: undefined }));
+                    setErrors((prev) => ({
+                      ...prev,
+                      name: undefined,
+                      general: undefined,
+                    }));
                   }}
                   placeholder="Enter your full name"
                   className={`w-full rounded-lg border px-4 py-3 outline-none focus:border-orange-500 ${
@@ -315,7 +321,11 @@ export default function EventDetailsPage() {
                   value={email}
                   onChange={(e) => {
                     setEmail(e.target.value);
-                    setErrors((prev) => ({ ...prev, email: undefined, general: undefined }));
+                    setErrors((prev) => ({
+                      ...prev,
+                      email: undefined,
+                      general: undefined,
+                    }));
                   }}
                   placeholder="Enter your email"
                   className={`w-full rounded-lg border px-4 py-3 outline-none focus:border-orange-500 ${
@@ -331,7 +341,8 @@ export default function EventDetailsPage() {
               {/* Phone (optional) */}
               <div>
                 <label className="mb-1 block text-sm font-medium">
-                  Phone Number <span className="font-normal text-gray-400">(optional)</span>
+                  Phone Number{" "}
+                  <span className="font-normal text-gray-400">(optional)</span>
                 </label>
 
                 <input

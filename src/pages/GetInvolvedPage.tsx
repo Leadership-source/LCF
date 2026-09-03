@@ -1,6 +1,5 @@
 import type { LucideIcon } from "lucide-react";
 import { involvementOptions } from "../static-data/data";
-import volunteerHero from "/volunteer-backgroundImage.png";
 
 //volunteerCard props
 type VolunteerCardProps = {
@@ -31,26 +30,28 @@ export default function GetInvolvedPage() {
 
 export function VolunteerHero() {
   return (
-    <header className="relative overflow-hidden">
-      {/* Animated Background */}
-      <div
-        className="absolute inset-0 min-h-[600px] animate-hero-image bg-cover bg-center"
-        style={{
-          backgroundImage: `url(${volunteerHero})`,
-        }}
-      />
-
-      {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/55" />
+    <section className="relative mt-15 overflow-hidden bg-[#EA580C] text-white">
+      <div className="pointer-events-none absolute inset-0">
+        <div
+          className="absolute inset-0 opacity-[0.15]"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px)
+            `,
+            backgroundSize: "35px 35px",
+          }}
+        />
+      </div>
 
       {/* Content */}
-      <div className="relative mx-auto mt-25 flex max-w-7xl items-center  px-4 py-10  md:px-8 min-h-[300px] lg:px-12">
-        <div className="max-w-2xl space-y-4 text-white">
-          <h1 className="text-xl text-orange-500 font-bold leading-tight md:text-3xl lg:text-4xl">
-            Get Involved With LCF
+      <div className="relative mx-auto mt-15 flex max-w-7xl flex-col gap-4 px-6 py-10 md:px-8 lg:px-12">
+        <div className="flex max-w-3xl flex-col gap-4">
+          <h1 className="text-2xl font-bold leading-[1.08] tracking-tight text-[#ffdcc0] md:text-4xl lg:text-5xl">
+            Get Involved with LCF
           </h1>
 
-          <p className="md:leading-7 text-white text-sm md:text-lg">
+          <p className="max-w-2xl text-base leading-7 text-white md:text-md md:leading-8">
             There are many ways to get involved with Leadership Conference
             Forum. Whether you become a member, volunteer, mentor, partner with
             us, support an event, or attend one of our programmes, your
@@ -59,7 +60,7 @@ export function VolunteerHero() {
           </p>
         </div>
       </div>
-    </header>
+    </section>
   );
 }
 

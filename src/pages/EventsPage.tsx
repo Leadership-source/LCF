@@ -8,7 +8,6 @@ import { getPublicEvents } from "../api/services/public/events.service";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { EventSkeleton } from "../components/EventSkeleton";
-import eventHero from "/event-backgroundImage.png";
 
 //eventcardprops
 type EventCardProps = {
@@ -44,33 +43,35 @@ export default function EventsPage() {
 
 export function EventHero() {
   return (
-    <header className="relative overflow-hidden">
-      {/* Animated Background */}
-      <div
-        className="absolute inset-0 min-h-[600px] animate-hero-image bg-cover bg-center"
-        style={{
-          backgroundImage: `url(${eventHero})`,
-        }}
-      />
-
-      {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/35" />
+    <section className="relative mt-15 overflow-hidden bg-[#EA580C] text-white">
+      <div className="pointer-events-none absolute inset-0">
+        <div
+          className="absolute inset-0 opacity-[0.15]"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px)
+            `,
+            backgroundSize: "35px 35px",
+          }}
+        />
+      </div>
 
       {/* Content */}
-      <div className="relative mx-auto mt-25 flex max-w-7xl items-center px-4 py-10 md:px-8 min-h-[300px] lg:px-12">
-        <div className="max-w-2xl space-y-4 text-white">
-          <h1 className="text-xl text-orange-500 font-bold leading-tight md:text-3xl lg:text-4xl">
+      <div className="relative mx-auto mt-15 flex max-w-7xl flex-col gap-4 px-6 py-10 md:px-8 lg:px-12">
+        <div className="flex max-w-3xl flex-col gap-4">
+          <h1 className="text-2xl font-bold leading-[1.08] tracking-tight text-[#ffdcc0] md:text-4xl lg:text-5xl">
             Our Events
           </h1>
 
-          <p className="   md:leading-7 text-white text-sm md:text-lg">
+          <p className="max-w-2xl text-base leading-7 text-white md:text-md md:leading-8">
             Explore our upcoming conferences, workshops, and networking events
             inspire, equip, and connect leaders designed across the UK and
             beyound
           </p>
         </div>
       </div>
-    </header>
+    </section>
   );
 }
 
@@ -99,12 +100,18 @@ export function UpcomingEvents() {
     );
   }
 
+  // Get unique categories from the events
+  const categories = Array.from(
+    new Set(events.map((event) => event.category?.trim()).filter(Boolean)),
+  );
+
+  // Filter events based on selected category
   const filteredEvents =
     selectedCategory === "All Events"
       ? events
       : events.filter(
           (event) =>
-            event.category.toLowerCase() === selectedCategory.toLowerCase(),
+            event.category?.toLowerCase() === selectedCategory.toLowerCase(),
         );
 
   return (
@@ -116,33 +123,42 @@ export function UpcomingEvents() {
           <h2 className="text-xl font-bold md:text-2xl">Upcoming Events</h2>
         </div>
 
+        {/* Dynamic Category Filter */}
         <select
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
           className="w-auto rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-orange-500 md:w-52"
         >
           <option value="All Events">All Events</option>
-          <option value="Conference">Conference</option>
-          <option value="Workshop">Workshop</option>
-          <option value="Networking">Networking</option>
-          <option value="Training">Training</option>
+
+          {categories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
         </select>
       </div>
 
       <div className="space-y-8">
-        {filteredEvents.map((event) => (
-          <EventCard
-            key={event.id}
-            id={event.id}
-            image={event.image}
-            category={event.category}
-            title={event.title}
-            location={event.location}
-            date={event.date}
-            time={event.time}
-            description={event.description}
-          />
-        ))}
+        {filteredEvents.length > 0 ? (
+          filteredEvents.map((event) => (
+            <EventCard
+              key={event.id}
+              id={event.id}
+              image={event.image}
+              category={event.category}
+              title={event.title}
+              location={event.location}
+              date={event.date}
+              time={event.time}
+              description={event.description}
+            />
+          ))
+        ) : (
+          <p className="py-10 text-center text-gray-500">
+            No events found for this category.
+          </p>
+        )}
       </div>
     </section>
   );

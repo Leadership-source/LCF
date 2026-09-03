@@ -7,14 +7,14 @@ import {
   Quote,
   QuoteIcon,
 } from "lucide-react";
-import type { ReactNode } from "react";
+
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "motion/react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import heroImage from "/hero-background-image.png";
 import aboutImage from "/group-image.jpeg";
-import { hightlight, statsData } from "../static-data/data";
+import { hightlight } from "../static-data/data";
 import { useQuery } from "@tanstack/react-query";
 import { getPublishedTeams } from "../api/services/public/teams.service";
 import { getPublicEvents } from "../api/services/public/events.service";
@@ -26,12 +26,6 @@ import ShareReviewModal from "./ShareReviewModal";
 import { TeamSkeleton } from "../components/TeamSkeleton";
 
 import { getPublishedQuotes } from "../api/services/public/quote.service";
-
-type StatCardProps = {
-  icon: ReactNode;
-  value: number | string;
-  title: string;
-};
 
 type HightlightProps = {
   title: string;
@@ -67,51 +61,48 @@ export default function HomePage() {
       {/* Hero */}
       <Hero />
 
-      {/* Scrolling ticker — stats + upcoming events */}
-      <div className="overflow-hidden bg-orange-200/10 py-4">
-        <div className="animate-marquee flex w-max items-center gap-10">
-          {[...Array(2)].map((_, copyIdx) => (
-            <div key={copyIdx} className="flex items-center gap-10">
-              {statsData.map((stats) => (
-                <StatCard
-                  key={stats.title}
-                  icon={stats.icon}
-                  title={stats.title}
-                  value={stats.value}
-                />
+      {/* upcoming events */}
+      {upcomingEvents.length > 0 && (
+        <>
+          <div className="overflow-hidden bg-orange-200/10 py-4">
+            <div className="animate-marquee flex w-max items-center gap-10">
+              {[...Array(2)].map((_, copyIdx) => (
+                <div key={copyIdx} className="flex items-center gap-10">
+                  {upcomingEvents.length > 0 && (
+                    <>
+                      <span className="h-6 w-px shrink-0 bg-orange-300" />
+                      {upcomingEvents.map((event) => (
+                        <Link
+                          key={event.id}
+                          to={`${ROUTES.EVENTS}/${event.id}`}
+                          className="flex shrink-0 items-center gap-2 text-sm font-medium text-gray-700 hover:text-orange-500"
+                        >
+                          <span className="rounded-full bg-orange-500 px-2 py-0.5 text-xs font-semibold text-white">
+                            Upcoming
+                          </span>
+                          <span>{event.title}</span>
+                          <span className="text-gray-400">·</span>
+                          <span className="text-gray-500">
+                            {new Date(event.date).toLocaleDateString("en-GB", {
+                              day: "numeric",
+                              month: "short",
+                              year: "numeric",
+                            })}
+                          </span>
+                          <span className="text-gray-400">·</span>
+                          <span className="text-gray-500">
+                            {event.location}
+                          </span>
+                        </Link>
+                      ))}
+                    </>
+                  )}
+                </div>
               ))}
-              {upcomingEvents.length > 0 && (
-                <>
-                  <span className="h-6 w-px shrink-0 bg-orange-300" />
-                  {upcomingEvents.map((event) => (
-                    <Link
-                      key={event.id}
-                      to={`${ROUTES.EVENTS}/${event.id}`}
-                      className="flex shrink-0 items-center gap-2 text-sm font-medium text-gray-700 hover:text-orange-500"
-                    >
-                      <span className="rounded-full bg-orange-500 px-2 py-0.5 text-xs font-semibold text-white">
-                        Upcoming
-                      </span>
-                      <span>{event.title}</span>
-                      <span className="text-gray-400">·</span>
-                      <span className="text-gray-500">
-                        {new Date(event.date).toLocaleDateString("en-GB", {
-                          day: "numeric",
-                          month: "short",
-                          year: "numeric",
-                        })}
-                      </span>
-                      <span className="text-gray-400">·</span>
-                      <span className="text-gray-500">{event.location}</span>
-                    </Link>
-                  ))}
-                </>
-              )}
             </div>
-          ))}
-        </div>
-      </div>
-
+          </div>
+        </>
+      )}
       {/* About */}
       <AboutSection />
 
@@ -186,12 +177,13 @@ export function Hero() {
             className="animate-hero-fade-up max-w-2xl text-sm leading-relaxed text-gray-200 opacity-0 md:text-md md:leading-7"
             style={{ animationDelay: "0.4s" }}
           >
-            Leadership Conference Forum serves as a not-for-profit, charitable
-            initiative with a community-driven vision, established to deliver
-            public benefit rather than commercial gain. We are committed to
-            creating an inclusive and vibrant space where leadership potential
-            can be cultivated through conferences, workshops, networking events,
-            and expert-led forums.
+            Leadership Conference Forum (LCF) is a registered charity dedicated
+            to inspiring, developing and connecting current and future leaders
+            through leadership development, mentorship, professional
+            development, networking and collaborative learning. We create
+            opportunities for people to strengthen their leadership capacity,
+            connect with experienced professionals and contribute positively to
+            their communities.
           </p>
 
           <div
@@ -220,25 +212,25 @@ export function Hero() {
 
 // STATISTIC
 
-export function StatCard({ icon, value, title }: StatCardProps) {
-  return (
-    <div className="flex items-center">
-      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-100 text-orange-500">
-        {icon}
-      </div>
+// export function StatCard({ icon, value, title }: StatCardProps) {
+//   return (
+//     <div className="flex items-center">
+//       <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-100 text-orange-500">
+//         {icon}
+//       </div>
 
-      <div>
-        <h3 className="text-lg font-bold text-orange-500 md:text-2xl">
-          {value}+
-        </h3>
+//       <div>
+//         <h3 className="text-lg font-bold text-orange-500 md:text-2xl">
+//           {value}+
+//         </h3>
 
-        <p className="text-xs font-semibold text-gray-700 md:text-sm">
-          {title}
-        </p>
-      </div>
-    </div>
-  );
-}
+//         <p className="text-xs font-semibold text-gray-700 md:text-sm">
+//           {title}
+//         </p>
+//       </div>
+//     </div>
+//   );
+// }
 
 //ABOUT SECTION
 export function AboutSection() {
@@ -272,20 +264,23 @@ export function AboutSection() {
           </h2>
 
           <p className="max-w-lg text-sm  text-gray-600 md:text-md lg:text-lg">
-            The Leadership Conference Forum (LCF) is a forward-thinking
-            initiative dedicated to nurturing the next generation of leaders
-            through mentorship, professional development, and collaborative
-            dialogue. Based in the United Kingdom, LCF is designed to act as a
-            platform for leadership support, empowerment, and advancement,
-            connecting emerging leaders with experienced professionals,
-            dignitaries, and seasoned changemakers from a variety of sectors
+            Leadership Conference Forum (LCF) is a registered charity in England
+            and Wales dedicated to inspiring, developing and connecting current
+            and future leaders. Based in the United Kingdom, LCF exists to
+            create opportunities for people to develop their leadership
+            potential, strengthen their professional and personal capabilities,
+            and build meaningful connections with experienced leaders,
+            professionals and organisations.
           </p>
 
           <p className="max-w-lg text-sm text-gray-600 md:text-md lg:text-lg">
-            We believe that leadership is not just about titles; it is about
-            purpose, service, and responsibility. LCF is a space where leaders
-            can learn from each other, discuss real challenges, and grow in both
-            competence and character
+            Our work focuses on leadership development, mentorship, professional
+            development, networking, collaborative learning and community
+            engagement. Through our programmes, events and partnerships, we aim
+            to create an inclusive platform where emerging and established
+            leaders can learn from one another, share experiences, discuss
+            real-world challenges and develop the skills, confidence and
+            character needed to make a positive contribution to society.
           </p>
 
           <Link
@@ -319,12 +314,7 @@ export function AboutSection() {
 
 //HIGHLIGHTS
 
-export function HighLight({
-  title,
-  image,
-  description,
-  link,
-}: HightlightProps) {
+export function HighLight({ title, image, description }: HightlightProps) {
   const [expanded, setExpanded] = useState(false);
 
   const cardRef = useRef<HTMLDivElement>(null);
@@ -371,15 +361,6 @@ export function HighLight({
             {expanded ? "Show Less" : "Show More"}
           </button>
         )}
-
-        {link && (
-          <Link
-            to={link}
-            className="mt-1 inline-flex items-center gap-1 text-xs font-semibold text-orange-500 hover:underline"
-          >
-            View events →
-          </Link>
-        )}
       </div>
     </div>
   );
@@ -416,7 +397,7 @@ function TeamSection() {
       </div>
 
       {/* Team Cards */}
-      <div className="mx-auto mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mx-auto mt-10 grid grid-cols-1 items-center gap-8 sm:grid-cols-2 lg:grid-cols-3">
         <Teams isInView={isInView} />
       </div>
 
@@ -487,13 +468,13 @@ function TeamCard({ name, role, bio, image, isInView, index }: TeamCardProps) {
       }}
     >
       {/* Fixed-height image — uniform across all cards */}
-      <div className="group h-56 w-full overflow-hidden">
+      <div className="group h-60 w-full overflow-hidden">
         <LazyLoadImage
           src={image}
           effect="blur"
           alt={name}
           wrapperClassName="w-full"
-          className="h-56 w-full object-cover object-top transition duration-700 group-hover:scale-105"
+          className="h-60 w-full object-cover object-top transition duration-700 group-hover:scale-105"
         />
       </div>
 
