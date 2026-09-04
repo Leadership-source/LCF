@@ -19,8 +19,12 @@ export default function Footer() {
             </div>
 
             <p className=" text-sm leading-7 text-white">
-              Raising leaders, building capacity and impacting communities
-              across Africa.
+              Raising leaders, building capacity, inspiring, developing and
+              connecting current and future leaders.
+            </p>
+            <p className=" text-sm leading-7 text-white">
+              Leadership Conference Forum – Registered Charity in England and
+              Wales, Charity No. 1218419.
             </p>
 
             <div className=" flex items-center gap-4">

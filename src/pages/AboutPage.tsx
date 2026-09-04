@@ -1,4 +1,4 @@
-import { missionCards, statsData } from "../static-data/data";
+import { missionCards } from "../static-data/data";
 import aboutImage from "/group-image.jpeg";
 // import aboutHero from "/about-backgroundImage.png";
 import { CheckCircle, type LucideIcon } from "lucide-react";
@@ -11,13 +11,6 @@ type MissionCardProps = {
   title: string;
   description?: string;
   programs?: string[];
-};
-
-//stat props
-type StatCardProps = {
-  icon: React.ReactNode;
-  value: number;
-  title: string;
 };
 
 //about page
@@ -52,7 +45,7 @@ export default function AboutPage() {
       </section>
 
       {/* impact section */}
-      <OurImpact />
+      {/* <OurImpact /> */}
     </>
   );
 }
@@ -98,9 +91,9 @@ export function AboutHero() {
 export function AboutSection() {
   return (
     <section className="bg-white px-4 py-10 md:px-8 lg:px-12">
-      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-12 md:flex-row">
+      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-12 lg:flex-row">
         {/* Left Content */}
-        <div className="w-auto space-y-4 md:space-y-6 lg:w-[700px]">
+        <div className="w-auto space-y-4  md:space-y-6 lg:w-[700px]">
           <span className="text-xs font-bold uppercase tracking-wider text-orange-500 md:text-sm">
             who we are
           </span>
@@ -111,25 +104,27 @@ export function AboutSection() {
             Building A Better Society
           </h2>
 
-          <p className="max-w-lg text-sm text-gray-600 md:text-md lg:text-lg">
-            The Leadership Conference Forum (LCF) is a forward-thinking
-            initiative dedicated to nurturing the next generation of leaders
-            through mentorship, professional development, and collaborative
-            dialogue. Based in the United Kingdom, LCF is designed to act as a
-            platform for leadership support, empowerment, and advancement,
-            connecting emerging leaders with experienced professionals,
-            dignitaries, and seasoned changemakers from a variety of sectors.
+          <p className="w-auto text-sm text-gray-600 md:text-md lg:text-lg">
+            Leadership Conference Forum (LCF) is a registered charity in England
+            and Wales dedicated to inspiring, developing and connecting current
+            and future leaders. Based in the United Kingdom, LCF exists to
+            create opportunities for people to develop their leadership
+            potential, strengthen their professional and personal capabilities,
+            and build meaningful connections with experienced leaders,
+            professionals and organisations
           </p>
 
-          <p className="max-w-lg text-sm text-gray-600 md:text-md lg:text-lg">
-            We believe that leadership is not just about titles; it is about
-            purpose, service, and responsibility. LCF is a space where leaders
-            can learn from each other, discuss real challenges, and grow in both
-            competence and character.
+          <p className="w-auto text-sm text-gray-600 md:text-md lg:text-lg">
+            We believe leadership is not simply about titles or positions; it is
+            about purpose, service, responsibility and the ability to positively
+            influence others. LCF is committed to helping people recognise their
+            leadership potential, access opportunities for development and
+            contribute meaningfully within their workplaces, organisations and
+            communities.
           </p>
 
           <div className="space-y-2">
-            <p className="max-w-lg text-sm text-gray-600 md:text-md lg:text-lg">
+            <p className="w-auto text-sm text-gray-600 md:text-md lg:text-lg">
               Our purpose is to inspire and equip both aspiring and established
               leaders across the United Kingdom and beyond.
             </p>
@@ -364,62 +359,62 @@ export function MissionCard({
 }
 
 // our impact
-export function OurImpact() {
-  return (
-    <section className="bg-orange-200/10 px-4 py-10 md:px-8 lg:px-12">
-      <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
-        <div className="flex flex-col gap-12 lg:flex-row lg:items-center lg:justify-between">
-          {/* Left */}
-          <div className="max-w-md space-y-2">
-            <p className="text-sm font-semibold uppercase tracking-wide text-orange-500 md:text-md">
-              Our Impact
-            </p>
+// export function OurImpact() {
+//   return (
+//     <section className="bg-orange-200/10 px-4 py-10 md:px-8 lg:px-12">
+//       <div className="mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
+//         <div className="flex flex-col gap-12 lg:flex-row lg:items-center lg:justify-between">
+//           {/* Left */}
+//           <div className="max-w-md space-y-2">
+//             <p className="text-sm font-semibold uppercase tracking-wide text-orange-500 md:text-md">
+//               Our Impact
+//             </p>
 
-            <h2 className="text-md font-bold leading-tight text-gray-900 md:text-2xl">
-              Making A Difference
-              <br />
-              Across The UK & Beyond
-            </h2>
-          </div>
+//             <h2 className="text-md font-bold leading-tight text-gray-900 md:text-2xl">
+//               Making A Difference
+//               <br />
+//               Across The UK & Beyond
+//             </h2>
+//           </div>
 
-          {/* Right */}
-          <div className="grid flex-1 grid-cols-2 gap-8 md:grid-cols-4 lg:gap-0">
-            {statsData.map((stat, index) => (
-              <div
-                key={stat.title}
-                className={`flex justify-center ${
-                  index !== statsData.length - 1
-                    ? "lg:border-r lg:border-gray-200"
-                    : ""
-                }`}
-              >
-                <StatCard
-                  icon={stat.icon}
-                  value={stat.value}
-                  title={stat.title}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
+//           {/* Right */}
+//           <div className="grid flex-1 grid-cols-2 gap-8 md:grid-cols-4 lg:gap-0">
+//             {statsData.map((stat, index) => (
+//               <div
+//                 key={stat.title}
+//                 className={`flex justify-center ${
+//                   index !== statsData.length - 1
+//                     ? "lg:border-r lg:border-gray-200"
+//                     : ""
+//                 }`}
+//               >
+//                 <StatCard
+//                   icon={stat.icon}
+//                   value={stat.value}
+//                   title={stat.title}
+//                 />
+//               </div>
+//             ))}
+//           </div>
+//         </div>
+//       </div>
+//     </section>
+//   );
+// }
 
-// statcard component
-export function StatCard({ icon, value, title }: StatCardProps) {
-  return (
-    <div className="flex flex-col items-center text-center">
-      <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-orange-100 text-orange-500">
-        {icon}
-      </div>
+// // statcard component
+// export function StatCard({ icon, value, title }: StatCardProps) {
+//   return (
+//     <div className="flex flex-col items-center text-center">
+//       <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-orange-100 text-orange-500">
+//         {icon}
+//       </div>
 
-      <h3 className="text-2xl font-bold text-orange-500">
-        {value.toLocaleString()}+
-      </h3>
+//       <h3 className="text-2xl font-bold text-orange-500">
+//         {value.toLocaleString()}+
+//       </h3>
 
-      <p className="mt-2 text-sm font-medium text-gray-700">{title}</p>
-    </div>
-  );
-}
+//       <p className="mt-2 text-sm font-medium text-gray-700">{title}</p>
+//     </div>
+//   );
+// }
