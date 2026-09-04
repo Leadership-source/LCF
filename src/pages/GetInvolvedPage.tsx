@@ -27,6 +27,15 @@ const initialVolunteerForm: VolunteerFormData = {
   message: "",
 };
 
+const volunteerAreas = [
+  ["Mentoring and coaching", "Guide emerging leaders through practical support and encouragement."],
+  ["Events", "Help create welcoming, well-run programmes and community gatherings."],
+  ["Community outreach", "Build relationships and connect LCF with local communities."],
+  ["Communications", "Share our work through content, storytelling, and digital platforms."],
+  ["Fundraising", "Support sustainable programmes through fundraising ideas and partnerships."],
+  ["Admin support", "Bring your organisational skills to the work that keeps LCF moving."],
+];
+
 export default function GetInvolvedPage() {
   return (
     <>
@@ -209,6 +218,16 @@ export function Ready() {
           Choose the area where you can make the greatest contribution. We will
           review your application and get in touch.
         </p>
+      </div>
+      <div className="grid gap-x-8 gap-y-6 border-y border-orange-100 py-7 md:grid-cols-2 lg:grid-cols-3">
+        {volunteerAreas.map(([title, description]) => (
+          <div key={title} className="border-l-2 border-orange-500 pl-4">
+            <h3 className="font-semibold text-gray-900">{title}</h3>
+            <p className="mt-1 text-sm leading-6 text-gray-600">
+              {description}
+            </p>
+          </div>
+        ))}
       </div>
       <form onSubmit={handleSubmit} className="rounded-xl bg-orange-500 p-6 text-white md:p-8">
         <div className="mb-6 space-y-2">
