@@ -25,4 +25,5 @@ export const ADMIN_ROUTES = {
   RESET_PASSWORD: "/admin/reset-password",
   NEWS: "/admin/news",
   QUOTES: "/admin/quotes",
+  VOLUNTEERS: "/admin/volunteers",
 };

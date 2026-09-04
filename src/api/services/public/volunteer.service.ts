@@ -13,6 +13,11 @@ export type VolunteerOption = {
   fields: VolunteerField[];
 };
 
+export type AvailabilityOption = {
+  value: string;
+  label: string;
+};
+
 export type VolunteerFormData = {
   fullName: string;
   email: string;
@@ -25,18 +30,19 @@ export type VolunteerFormData = {
 
 type VolunteerOptionsResponse = {
   options: VolunteerOption[];
+  availabilityOptions: AvailabilityOption[];
 };
 
 type VolunteerSubmissionResponse = {
   message?: string;
 };
 
-export async function getVolunteerOptions(): Promise<VolunteerOption[]> {
+export async function getVolunteerOptions(): Promise<VolunteerOptionsResponse> {
   const response = await apiClient.get<VolunteerOptionsResponse>(
     "/volunteers/options",
   );
 
-  return response.data.options;
+  return response.data;
 }
 
 export async function submitVolunteerApplication(

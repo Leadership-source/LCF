@@ -7,6 +7,7 @@ import { involvementOptions } from "../static-data/data";
 import {
   getVolunteerOptions,
   submitVolunteerApplication,
+  type AvailabilityOption,
   type VolunteerFormData,
   type VolunteerOption,
 } from "../api/services/public/volunteer.service";
@@ -179,6 +180,9 @@ export function InvolvementCard({
 
 export function Ready() {
   const [options, setOptions] = useState<VolunteerOption[]>([]);
+  const [availabilityOptions, setAvailabilityOptions] = useState<
+    AvailabilityOption[]
+  >([]);
   const [form, setForm] = useState<VolunteerFormData>(initialVolunteerForm);
   const [errors, setErrors] = useState<FormErrors>({});
   const [optionsError, setOptionsError] = useState("");
@@ -187,8 +191,11 @@ export function Ready() {
     let active = true;
 
     getVolunteerOptions()
-      .then((volunteerOptions) => {
-        if (active) setOptions(volunteerOptions);
+      .then((volunteerFormOptions) => {
+        if (active) {
+          setOptions(volunteerFormOptions.options);
+          setAvailabilityOptions(volunteerFormOptions.availabilityOptions);
+        }
       })
       .catch((error: unknown) => {
         if (active) {
@@ -268,7 +275,7 @@ export function Ready() {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) newErrors.email = "Enter a valid email address.";
     if (phone.length > 20) newErrors.phone = "Phone number cannot exceed 20 characters.";
     if (!selectedOption) newErrors.areaOfInterest = "Select an area of interest.";
-    if (availability.length < 2 || availability.length > 100) newErrors.availability = "Enter your availability using 2 to 100 characters.";
+    if (!availabilityOptions.some((option) => option.value === availability)) newErrors.availability = "Select your availability.";
     if (message.length > 2000) newErrors.message = "Message cannot exceed 2,000 characters.";
 
     selectedOption?.fields.forEach((field) => {
@@ -334,7 +341,14 @@ export function Ready() {
               <FormField label="Full name" name="fullName" value={form.fullName} error={errors.fullName} onChange={handleChange} required maxLength={100} />
               <FormField label="Email address" name="email" type="email" value={form.email} error={errors.email} onChange={handleChange} required maxLength={254} />
               <FormField label="Phone number" name="phone" type="tel" value={form.phone || ""} error={errors.phone} onChange={handleChange} maxLength={20} />
-              <FormField label="Availability" name="availability" value={form.availability} error={errors.availability} onChange={handleChange} required maxLength={100} />
+              <div>
+                <label htmlFor="availability" className="mb-2 block text-sm font-semibold">Availability <span aria-hidden="true">*</span></label>
+                <select id="availability" name="availability" value={form.availability} onChange={handleChange} disabled={!availabilityOptions.length} required className={inputClassName(errors.availability)}>
+                  <option value="">{availabilityOptions.length ? "Select availability" : "Loading availability..."}</option>
+                  {availabilityOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+                </select>
+                <FieldError message={errors.availability} />
+              </div>
               <div>
                 <label htmlFor="areaOfInterest" className="mb-2 block text-sm font-semibold">Area of interest <span aria-hidden="true">*</span></label>
                 <select id="areaOfInterest" value={form.areaOfInterest} onChange={handleAreaChange} disabled={!options.length} className={inputClassName(errors.areaOfInterest)}>
@@ -361,7 +375,7 @@ export function Ready() {
               <textarea id="message" name="message" value={form.message || ""} onChange={handleChange} maxLength={2000} className={`${inputClassName(errors.message)} min-h-32`} />
               <FieldError message={errors.message} />
             </div>
-            <button type="submit" disabled={volunteerMutation.isPending || !options.length} className="mt-6 rounded-md bg-white px-5 py-3 text-sm font-semibold text-orange-600 transition hover:bg-orange-100 disabled:cursor-not-allowed disabled:opacity-70">
+            <button type="submit" disabled={volunteerMutation.isPending || !options.length || !availabilityOptions.length} className="mt-6 rounded-md bg-white px-5 py-3 text-sm font-semibold text-orange-600 transition hover:bg-orange-100 disabled:cursor-not-allowed disabled:opacity-70">
               {volunteerMutation.isPending ? "Submitting application..." : "Submit volunteer application"}
             </button>
           </>
@@ -377,7 +391,7 @@ function inputClassName(error?: string) {
 
 type FormFieldProps = {
   label: string;
-  name: "fullName" | "email" | "phone" | "availability";
+  name: "fullName" | "email" | "phone";
   type?: "text" | "email" | "tel";
   value: string;
   error?: string;

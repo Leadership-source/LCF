@@ -9,6 +9,7 @@ import {
   MessageSquareQuote,
   Newspaper,
   Quote,
+  HandHeart,
 } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -61,6 +62,12 @@ const coreNavItems = [
     label: "Leaders' Quotes",
     to: ADMIN_ROUTES.QUOTES,
     icon: Quote,
+    end: true,
+  },
+  {
+    label: "Volunteer Applications",
+    to: ADMIN_ROUTES.VOLUNTEERS,
+    icon: HandHeart,
     end: true,
   },
   {
