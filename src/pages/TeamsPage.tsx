@@ -102,6 +102,7 @@ export default function TeamsPage() {
     queryKey: ["external-roles-public"],
     queryFn: getPublishedExternalRoles,
     staleTime: 5 * 60 * 1000,
+    retry: false,
   });
 
   const selectedMembers = useMemo(
@@ -262,7 +263,10 @@ export default function TeamsPage() {
             {externalRolesLoading ? (
               <p className="py-12 text-center text-gray-500">Loading external roles...</p>
             ) : externalRolesError ? (
-              <p className="py-12 text-center text-red-500">Failed to load external roles.</p>
+              <p className="py-12 text-center text-red-500">
+                External roles are temporarily unavailable. Please try again
+                later.
+              </p>
             ) : selectedMembers.length === 0 ? (
               <p className="rounded-xl bg-white px-6 py-12 text-center text-gray-500">
                 No published members are currently listed for this role.
