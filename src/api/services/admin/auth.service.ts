@@ -17,10 +17,30 @@ export type LoginResponse = {
   token: string;
 };
 
+export type LoginVerificationRequiredResponse = {
+  status: "verification_required";
+  message: string;
+  challenge: string;
+};
+
 export async function loginAdmin(
   payload: LoginPayload,
-): Promise<LoginResponse> {
+): Promise<LoginResponse | LoginVerificationRequiredResponse> {
   const response = await apiClient.post("/auth/login", payload);
+
+  if (response.data.token) {
+    localStorage.setItem(TOKEN_KEY, response.data.token);
+  }
+
+  return response.data;
+}
+
+export async function verifyAdminLogin(challenge: string, code: string) {
+  const response = await apiClient.post<LoginResponse>("/auth/login/verify", {
+    challenge,
+    code,
+  });
+
   localStorage.setItem(TOKEN_KEY, response.data.token);
   return response.data;
 }

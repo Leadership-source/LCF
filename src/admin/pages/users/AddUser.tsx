@@ -22,13 +22,18 @@ export function AddUser({ onClose }: Props) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [generatePassword, setGeneratePassword] = useState(true);
   const [role, setRole] = useState<UserRole>("USER");
   const [errors, setErrors] = useState<FormErrors>({});
 
   const mutation = useMutation({
     mutationFn: createUser,
-    onSuccess: () => {
-      toast.success("User created successfully");
+    onSuccess: (response) => {
+      toast.success(
+        response.emailSent
+          ? "User created and welcome email sent."
+          : "User created, but the welcome email could not be delivered.",
+      );
       queryClient.invalidateQueries({ queryKey: ["admin-users"] });
       onClose();
     },
@@ -43,8 +48,8 @@ export function AddUser({ onClose }: Props) {
     if (!email.trim()) errs.email = "Email is required.";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()))
       errs.email = "Enter a valid email address.";
-    if (!password) errs.password = "Password is required.";
-    else if (password.length < 8) errs.password = "Minimum 8 characters.";
+    if (!generatePassword && !password) errs.password = "Password is required.";
+    else if (!generatePassword && password.length < 6) errs.password = "Minimum 6 characters.";
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
@@ -53,7 +58,12 @@ export function AddUser({ onClose }: Props) {
     e.preventDefault();
     if (!validate()) return;
     setErrors({});
-    mutation.mutate({ name: name.trim(), email: email.trim(), password, role });
+    mutation.mutate({
+      name: name.trim(),
+      email: email.trim(),
+      role,
+      ...(generatePassword ? {} : { password }),
+    });
   };
 
   return (
@@ -99,17 +109,33 @@ export function AddUser({ onClose }: Props) {
 
           {/* Password */}
           <div>
-            <label className="mb-1 block text-sm font-medium text-gray-700">
-              Password
+            <label className="flex items-start gap-3 rounded-lg bg-orange-50 p-3 text-sm text-gray-700">
+              <input
+                type="checkbox"
+                checked={generatePassword}
+                onChange={(event) => {
+                  setGeneratePassword(event.target.checked);
+                  setErrors((current) => ({ ...current, password: undefined }));
+                }}
+                className="mt-0.5 accent-orange-500"
+              />
+              <span>
+                <span className="block font-medium">Generate and email a temporary password</span>
+                <span className="mt-1 block text-xs text-gray-500">The API will create the password and send onboarding instructions to the user.</span>
+              </span>
             </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => { setPassword(e.target.value); setErrors((p) => ({ ...p, password: undefined })); }}
-              placeholder="Min. 8 characters"
-              className={`w-full rounded-lg border px-4 py-2.5 text-sm outline-none focus:border-orange-500 ${errors.password ? "border-red-500" : "border-gray-300"}`}
-            />
-            {errors.password && <p className="mt-1 text-xs text-red-500">{errors.password}</p>}
+            {!generatePassword && (
+              <>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => { setPassword(e.target.value); setErrors((p) => ({ ...p, password: undefined })); }}
+                  placeholder="Minimum 6 characters"
+                  className={`mt-3 w-full rounded-lg border px-4 py-2.5 text-sm outline-none focus:border-orange-500 ${errors.password ? "border-red-500" : "border-gray-300"}`}
+                />
+                {errors.password && <p className="mt-1 text-xs text-red-500">{errors.password}</p>}
+              </>
+            )}
           </div>
 
           {/* Role */}

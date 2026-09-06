@@ -20,7 +20,10 @@ apiClient.interceptors.request.use((config) => {
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    const isAuthRoute = (error.config?.url as string)?.includes("/auth/login");
+    const requestUrl = (error.config?.url as string) || "";
+    const isAuthRoute =
+      requestUrl.includes("/auth/login") ||
+      requestUrl.includes("/auth/login/verify");
     if (error.response?.status === 401 && !isAuthRoute) {
       localStorage.removeItem(TOKEN_KEY);
       window.location.href = "/#/admin/login";

@@ -3,13 +3,17 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
-import { loginAdmin } from "../../api/services/admin/auth.service";
+import {
+  loginAdmin,
+  verifyAdminLogin,
+} from "../../api/services/admin/auth.service";
 import { ADMIN_ROUTES } from "../../constants/routes";
 import { getErrorMessage } from "../../lib/getErrorMessage";
 
 type FormErrors = {
   email?: string;
   password?: string;
+  code?: string;
   general?: string;
 };
 
@@ -19,6 +23,8 @@ export default function AdminLoginPage() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [code, setCode] = useState("");
+  const [challenge, setChallenge] = useState("");
 
   const [errors, setErrors] = useState<FormErrors>({});
 
@@ -26,6 +32,13 @@ export default function AdminLoginPage() {
     mutationFn: loginAdmin,
 
     onSuccess: (data) => {
+      if ("challenge" in data) {
+        setChallenge(data.challenge);
+        setCode("");
+        setErrors({});
+        return;
+      }
+
       toast.success("Login successful");
 
       queryClient.setQueryData(["currentUser"], data.user);
@@ -39,6 +52,18 @@ export default function AdminLoginPage() {
       setErrors({
         general: getErrorMessage(error, "Invalid email or password"),
       });
+    },
+  });
+
+  const verifyMutation = useMutation({
+    mutationFn: () => verifyAdminLogin(challenge, code),
+    onSuccess: (data) => {
+      toast.success("Login successful");
+      queryClient.setQueryData(["currentUser"], data.user);
+      navigate(ADMIN_ROUTES.DASHBOARD, { replace: true });
+    },
+    onError: (error: unknown) => {
+      setErrors({ code: getErrorMessage(error, "Invalid or expired security code.") });
     },
   });
 
@@ -124,6 +149,19 @@ export default function AdminLoginPage() {
     });
   }
 
+  function handleVerify(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const cleanCode = code.trim();
+
+    if (!/^\d{6}$/.test(cleanCode)) {
+      setErrors({ code: "Enter the six-digit security code from your email." });
+      return;
+    }
+
+    setErrors({});
+    verifyMutation.mutate();
+  }
+
   return (
     <div className="flex min-h-screen">
       {/* Left — hero panel */}
@@ -168,6 +206,53 @@ export default function AdminLoginPage() {
             </p>
           </div>
 
+          {challenge ? (
+            <form onSubmit={handleVerify} className="space-y-5">
+              <div>
+                <h2 className="text-lg font-semibold text-gray-900">Verify your login</h2>
+                <p className="mt-1 text-sm leading-6 text-gray-500">
+                  Enter the six-digit code sent to your email. It expires in 10 minutes.
+                </p>
+              </div>
+
+              <div>
+                <label className="mb-1.5 block text-sm font-medium text-gray-700">
+                  Security code
+                </label>
+                <input
+                  type="text"
+                  value={code}
+                  onChange={(event) => {
+                    setCode(event.target.value.replace(/\D/g, "").slice(0, 6));
+                    setErrors((current) => ({ ...current, code: undefined }));
+                  }}
+                  inputMode="numeric"
+                  autoComplete="one-time-code"
+                  maxLength={6}
+                  autoFocus
+                  placeholder="000000"
+                  className={`w-full rounded-xl border px-4 py-3 text-center text-xl tracking-[0.4em] outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-500/10 ${errors.code ? "border-red-500" : "border-gray-200"}`}
+                />
+                {errors.code && <p className="mt-1 text-xs text-red-500">{errors.code}</p>}
+              </div>
+
+              <button
+                type="submit"
+                disabled={verifyMutation.isPending}
+                className="w-full rounded-xl bg-orange-500 px-4 py-3 text-sm font-semibold text-white transition hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {verifyMutation.isPending ? "Verifying..." : "Verify and sign in"}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => { setChallenge(""); setCode(""); setErrors({}); }}
+                className="w-full text-sm font-medium text-gray-500 hover:text-orange-500"
+              >
+                Use different credentials
+              </button>
+            </form>
+          ) : (
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Email */}
             <div>
@@ -233,6 +318,7 @@ export default function AdminLoginPage() {
               {loginMutation.isPending ? "Signing in…" : "Sign In"}
             </button>
           </form>
+          )}
         </div>
       </div>
     </div>

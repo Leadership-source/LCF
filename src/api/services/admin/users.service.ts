@@ -12,8 +12,13 @@ export type AdminUser = {
 export type CreateUserPayload = {
   name: string;
   email: string;
-  password: string;
+  password?: string;
   role?: UserRole;
+};
+
+export type CreateUserResponse = {
+  user: AdminUser;
+  emailSent: boolean;
 };
 
 export async function getUsers(): Promise<AdminUser[]> {
@@ -21,9 +26,9 @@ export async function getUsers(): Promise<AdminUser[]> {
   return response.data.users;
 }
 
-export async function createUser(data: CreateUserPayload): Promise<AdminUser> {
+export async function createUser(data: CreateUserPayload): Promise<CreateUserResponse> {
   const response = await apiClient.post("/admin/users", data);
-  return response.data.user;
+  return response.data;
 }
 
 export async function deleteUser(id: string): Promise<void> {
