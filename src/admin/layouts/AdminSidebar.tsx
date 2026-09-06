@@ -11,6 +11,7 @@ import {
   Quote,
   HandHeart,
   Handshake,
+  ContactRound,
 } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -75,6 +76,12 @@ const coreNavItems = [
     label: "Partners & Supporters",
     to: ADMIN_ROUTES.PARTNERS,
     icon: Handshake,
+    end: true,
+  },
+  {
+    label: "External Roles",
+    to: ADMIN_ROUTES.EXTERNAL_ROLES,
+    icon: ContactRound,
     end: true,
   },
   {

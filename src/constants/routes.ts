@@ -27,4 +27,5 @@ export const ADMIN_ROUTES = {
   QUOTES: "/admin/quotes",
   VOLUNTEERS: "/admin/volunteers",
   PARTNERS: "/admin/partners",
+  EXTERNAL_ROLES: "/admin/external-roles",
 };

@@ -1,3 +1,4 @@
+import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -5,7 +6,41 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
 import { getPublishedTeams } from "../api/services/public/teams.service";
-import { externalPeople, externalRoles } from "../static-data/data";
+import {
+  externalRoleTypes,
+  getPublishedExternalRoles,
+  type ExternalRoleType,
+} from "../api/services/public/externalRoles.service";
+
+const externalRoleDetails: Record<ExternalRoleType, {
+  title: string;
+  description: string;
+}> = {
+  ADVISOR: {
+    title: "Advisors",
+    description: "Provide expert advice, insight, and strategic guidance to support LCF's work.",
+  },
+  PATRON: {
+    title: "Patrons",
+    description: "Support our mission and help amplify leadership and community development.",
+  },
+  BRAND_AMBASSADOR: {
+    title: "Brand Ambassadors",
+    description: "Help raise awareness of LCF and connect our work with wider communities.",
+  },
+  HONORARY_SUPPORTER: {
+    title: "Honorary Supporters",
+    description: "Stand alongside LCF as valued supporters of our programmes and vision.",
+  },
+  MENTEE: {
+    title: "Mentees",
+    description: "Engage with leadership development, mentoring, and opportunities to grow.",
+  },
+};
+
+function formatRoleType(roleType: ExternalRoleType) {
+  return externalRoleDetails[roleType].title;
+}
 
 // ============================================================
 // TEAM HERO
@@ -47,6 +82,9 @@ export function TeamHero() {
 }
 
 export default function TeamsPage() {
+  const [selectedRoleType, setSelectedRoleType] = useState<ExternalRoleType>(
+    "ADVISOR",
+  );
   const {
     data: teams = [],
     isLoading,
@@ -56,6 +94,20 @@ export default function TeamsPage() {
     queryFn: getPublishedTeams,
     staleTime: 5 * 60 * 1000,
   });
+  const {
+    data: externalRoles = [],
+    isLoading: externalRolesLoading,
+    isError: externalRolesError,
+  } = useQuery({
+    queryKey: ["external-roles-public"],
+    queryFn: getPublishedExternalRoles,
+    staleTime: 5 * 60 * 1000,
+  });
+
+  const selectedMembers = useMemo(
+    () => externalRoles.filter((person) => person.roleType === selectedRoleType),
+    [externalRoles, selectedRoleType],
+  );
 
   return (
     <>
@@ -150,7 +202,7 @@ export default function TeamsPage() {
             EXTERNAL ROLES
         ==================================================== */}
 
-        <section className=" bg-orange-100/50 mx-auto w-full px-6 py-10 md:px-8 lg:px-12">
+        <section className="bg-orange-100/50 mx-auto w-full px-6 py-10 md:px-8 lg:px-12">
           {/* Header */}
           <div className="space-y-2">
             <p className="text-xs font-bold uppercase tracking-wider text-orange-500 md:text-sm">
@@ -158,104 +210,101 @@ export default function TeamsPage() {
             </p>
 
             <p className=" text-sm leading-7 text-gray-600 md:text-base">
-              In addition to the trustees, we engage with dignitaries,
-              professionals, and community leaders to act as Advisors, Patrons,
-              Brand Ambassadors, and Honorary Supporters. Their expertise and
-              endorsement help to guide our work, strengthen our credibility,
-              and expand our reach.
+              Our wider network includes people who guide, support, represent,
+              and take part in the work of LCF. Select a role to meet the
+              published members connected with it.
             </p>
           </div>
 
-          {/* Role Descriptions */}
-          <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
-            {externalRoles.map((role) => (
-              <div
-                key={role.title}
-                className="rounded-xl space-y-2 border border-orange-100 bg-white p-6 transition hover:border-orange-100 hover:shadow-sm"
-              >
-                <h3 className="text-lg font-bold text-orange-500">
-                  {role.title}
-                </h3>
+          {/* Role filters */}
+          <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            {externalRoleTypes.map((roleType) => {
+              const role = externalRoleDetails[roleType];
+              const memberCount = externalRoles.filter(
+                (person) => person.roleType === roleType,
+              ).length;
 
-                <p className=" text-sm leading-7 text-gray-500">
-                  {role.description}
-                </p>
-              </div>
-            ))}
+              return (
+                <button
+                  key={roleType}
+                  type="button"
+                  onClick={() => setSelectedRoleType(roleType)}
+                  className={`rounded-xl p-5 text-left transition ${
+                    selectedRoleType === roleType
+                      ? "bg-orange-500 text-white shadow-md"
+                      : "bg-white text-gray-900 hover:-translate-y-1 hover:shadow-sm"
+                  }`}
+                >
+                  <h3 className="font-bold">{role.title}</h3>
+                  <p className={`mt-2 text-sm leading-6 ${selectedRoleType === roleType ? "text-orange-50" : "text-gray-500"}`}>
+                    {role.description}
+                  </p>
+                  <span className={`mt-4 inline-block text-xs font-semibold ${selectedRoleType === roleType ? "text-white" : "text-orange-600"}`}>
+                    {memberCount} {memberCount === 1 ? "member" : "members"}
+                  </span>
+                </button>
+              );
+            })}
           </div>
 
           {/* External People */}
           <div className="mt-14">
             <div className="mb-8">
               <h3 className="text-xl font-bold text-orange-500 md:text-2xl">
-                Our External Supporters
+                {formatRoleType(selectedRoleType)}
               </h3>
 
-              <p className="mt-2 text-sm text-black">
-                Meet some of the individuals supporting the work of LCF.
+              <p className="mt-2 text-sm text-gray-600">
+                {externalRoleDetails[selectedRoleType].description}
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-              {externalPeople.map((person) => (
+            {externalRolesLoading ? (
+              <p className="py-12 text-center text-gray-500">Loading external roles...</p>
+            ) : externalRolesError ? (
+              <p className="py-12 text-center text-red-500">Failed to load external roles.</p>
+            ) : selectedMembers.length === 0 ? (
+              <p className="rounded-xl bg-white px-6 py-12 text-center text-gray-500">
+                No published members are currently listed for this role.
+              </p>
+            ) : (
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {selectedMembers.map((person) => (
                 <div
-                  key={person.name}
+                  key={person.id}
                   className="overflow-hidden rounded-2xl bg-white shadow-md transition hover:-translate-y-1 hover:shadow-xl"
                 >
                   {/* Image */}
                   <div className="group h-64 w-full overflow-hidden bg-orange-50">
-                    {person.image ? (
-                      <LazyLoadImage
-                        src={person.image}
-                        effect="blur"
-                        alt={person.name}
-                        wrapperClassName="h-full w-full"
-                        className="h-full w-full object-cover object-top transition duration-700 group-hover:scale-105"
-                      />
-                    ) : (
-                      <div className="flex h-full items-center justify-center">
-                        <span className="text-sm text-gray-400">
-                          Photo coming soon
-                        </span>
-                      </div>
-                    )}
+                    <LazyLoadImage
+                      src={person.image}
+                      effect="blur"
+                      alt={person.name}
+                      wrapperClassName="h-full w-full"
+                      className="h-full w-full object-cover object-top transition duration-700 group-hover:scale-105"
+                    />
                   </div>
 
                   {/* Content */}
                   <div className="p-6">
                     <span className="inline-block rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold text-orange-600">
-                      {person.role}
+                      {formatRoleType(person.roleType)}
                     </span>
 
                     <h4 className="mt-3 text-lg font-bold text-gray-900">
                       {person.name}
                     </h4>
 
-                    {person.title ? (
-                      <p className="mt-2 text-sm font-medium text-gray-600">
-                        {person.title}
-                      </p>
-                    ) : (
-                      <p className="mt-2 text-sm italic text-gray-400">
-                        Professional title coming soon
-                      </p>
-                    )}
-
                     {person.bio ? (
-                      <p className="mt-4 text-sm leading-relaxed text-gray-600">
+                      <p className="mt-3 text-sm leading-relaxed text-gray-600">
                         {person.bio}
                       </p>
-                    ) : null}
-
-                    {person.quote ? (
-                      <blockquote className="mt-4 border-l-2 border-orange-500 pl-4 text-sm italic leading-6 text-gray-600">
-                        “{person.quote}”
-                      </blockquote>
                     ) : null}
                   </div>
                 </div>
               ))}
             </div>
+            )}
           </div>
         </section>
       </main>
