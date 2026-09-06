@@ -26,6 +26,7 @@ import ShareReviewModal from "./ShareReviewModal";
 import { TeamSkeleton } from "../components/TeamSkeleton";
 
 import { getPublishedQuotes } from "../api/services/public/quote.service";
+import { getPublishedPartners } from "../api/services/public/partners.service";
 
 type HightlightProps = {
   title: string;
@@ -43,7 +44,7 @@ type TeamCardProps = {
   index: number;
 };
 
-const MAX_LENGTH = 55;
+// const MAX_LENGTH = 55;
 
 export default function HomePage() {
   const { data: events = [] } = useQuery({
@@ -136,6 +137,7 @@ export default function HomePage() {
 
       <LeaderQuotes />
       {/* Testimonials */}
+      <Partners />
       <Testimonials />
       <section className="mx-auto flex w-full gap-10 max-w-4xl flex-col items-stretch justify-center lg:gap-20 px-4 py-10 md:flex-row md:items-stretch">
         <ShareReview />
@@ -315,7 +317,7 @@ export function AboutSection() {
 //HIGHLIGHTS
 
 export function HighLight({ title, image, description }: HightlightProps) {
-  const [expanded, setExpanded] = useState(false);
+  // const [expanded, setExpanded] = useState(false);
 
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -324,12 +326,12 @@ export function HighLight({ title, image, description }: HightlightProps) {
     amount: 0.2,
   });
 
-  const shouldTruncate = description.length > MAX_LENGTH;
+  // const shouldTruncate = description.length > MAX_LENGTH;
 
-  const displayedText =
-    expanded || !shouldTruncate
-      ? description
-      : `${description.slice(0, MAX_LENGTH)}...`;
+  // const displayedText =
+  //   expanded || !shouldTruncate
+  //     ? description
+  //     : `${description.slice(0, MAX_LENGTH)}...`;
 
   return (
     <div
@@ -351,16 +353,16 @@ export function HighLight({ title, image, description }: HightlightProps) {
       <div className="space-y-2 p-4">
         <h4 className="text-sm font-bold text-orange-700">{title}</h4>
 
-        <p className="text-sm text-gray-500">{displayedText}</p>
+        <p className="text-sm text-gray-500">{description}</p>
 
-        {shouldTruncate && (
+        {/* {shouldTruncate && (
           <button
             onClick={() => setExpanded(!expanded)}
             className="text-xs font-semibold text-orange-600 transition hover:text-orange-700"
           >
             {expanded ? "Show Less" : "Show More"}
           </button>
-        )}
+        )} */}
       </div>
     </div>
   );
@@ -376,10 +378,24 @@ function TeamSection() {
     amount: 0.15,
   });
 
+  const {
+    data: teams = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["teams"],
+    queryFn: getPublishedTeams,
+  });
+
+  // Don't show the section if there are no teams
+  if (!isLoading && !isError && teams.length === 0) {
+    return null;
+  }
+
   return (
     <section
       ref={sectionRef}
-      className="relative w-full overflow-hidden bg-white px-4 py-10 md:px-8 lg:px-12 "
+      className="relative w-full  overflow-hidden bg-white px-4 py-10 md:px-8 lg:px-12"
     >
       {/* Section Heading */}
       <div
@@ -397,64 +413,48 @@ function TeamSection() {
       </div>
 
       {/* Team Cards */}
-      <div className="mx-auto mt-10 grid grid-cols-1 items-center justify-center gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        <Teams isInView={isInView} />
+      <div className="flex  justify-center items-center w-full">
+        <div className="mx-auto mt-10  grid  grid-cols-1 items-center justify-center gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {isLoading ? (
+            <TeamSkeleton />
+          ) : isError ? (
+            <p className="p-6 text-red-500">Failed to load team members.</p>
+          ) : (
+            teams
+              .slice(0, 3)
+              .map((team, index) => (
+                <TeamCard
+                  key={team.id}
+                  name={team.name}
+                  role={team.role}
+                  bio={team.bio}
+                  image={team.image}
+                  isInView={isInView}
+                  index={index}
+                />
+              ))
+          )}
+        </div>
       </div>
 
-      <div
-        className={`mt-8 text-center transition-all duration-700 delay-300 ${isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
-      >
-        <Link
-          to={ROUTES.TEAMS}
-          className="inline-flex items-center gap-2 rounded-lg border border-orange-500 px-6 py-2.5 text-sm font-semibold text-orange-500 transition hover:bg-orange-500 hover:text-white"
+      {/* View Full Team */}
+      {!isLoading && !isError && teams.length > 0 && (
+        <div
+          className={`mt-8 text-center transition-all duration-700 delay-300 ${
+            isInView ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+          }`}
         >
-          View full team
-        </Link>
-      </div>
+          <Link
+            to={ROUTES.TEAMS}
+            className="inline-flex items-center gap-2 rounded-lg border border-orange-500 px-6 py-2.5 text-sm font-semibold text-orange-500 transition hover:bg-orange-500 hover:text-white"
+          >
+            View full team
+          </Link>
+        </div>
+      )}
     </section>
   );
 }
-
-//TEAMS
-type TeamsProps = {
-  isInView: boolean;
-};
-
-export function Teams({ isInView }: TeamsProps) {
-  const {
-    data: teams = [],
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["teams"],
-    queryFn: getPublishedTeams,
-  });
-
-  if (isLoading) {
-    return <TeamSkeleton />;
-  }
-
-  if (isError) {
-    return <p className="p-6 text-red-500">Failed to load team members.</p>;
-  }
-
-  return (
-    <>
-      {teams.map((team, index) => (
-        <TeamCard
-          key={team.id}
-          name={team.name}
-          role={team.role}
-          bio={team.bio}
-          image={team.image}
-          isInView={isInView}
-          index={index}
-        />
-      ))}
-    </>
-  );
-}
-
 //TEAM CARD
 
 function TeamCard({ name, role, bio, image, isInView, index }: TeamCardProps) {
@@ -762,7 +762,7 @@ export function Testimonials() {
   }
 
   return (
-    <section className="w-full bg-orange-200/20 px-4 py-10 md:px-8 lg:px-12 mt-20">
+    <section className="w-full bg-orange-200/20 px-4 py-10 md:px-8 lg:px-12 ">
       {/* Header */}
       <div className="space-y-2 text-center">
         <p className="text-xs font-semibold uppercase tracking-wider text-orange-500 md:text-sm">
@@ -933,5 +933,195 @@ export function VolunteerSection() {
         </Link>
       </div>
     </div>
+  );
+}
+
+function getPartnerInitials(name: string) {
+  const words = name.trim().split(/\s+/);
+
+  if (words.length === 1) {
+    return words[0].slice(0, 2).toUpperCase();
+  }
+
+  return words
+    .slice(0, 2)
+    .map((word) => word[0])
+    .join("")
+    .toUpperCase();
+}
+
+export function Partners() {
+  const {
+    data: partners = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["partners"],
+    queryFn: getPublishedPartners,
+    staleTime: 5 * 60 * 1000,
+  });
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [itemsPerSlide, setItemsPerSlide] = useState(2);
+
+  /*
+   * Mobile = 1 partner
+   * Tablet/Desktop = 2 partners
+   */
+  useEffect(() => {
+    const updateItemsPerSlide = () => {
+      setItemsPerSlide(window.innerWidth < 640 ? 2 : 3);
+    };
+
+    updateItemsPerSlide();
+
+    window.addEventListener("resize", updateItemsPerSlide);
+
+    return () => {
+      window.removeEventListener("resize", updateItemsPerSlide);
+    };
+  }, []);
+
+  const totalSlides = Math.ceil(partners.length / itemsPerSlide);
+
+  /*
+   * Make sure current slide is still valid
+   * when screen size changes.
+   */
+  useEffect(() => {
+    if (currentIndex >= totalSlides && totalSlides > 0) {
+      setCurrentIndex(totalSlides - 1);
+    }
+  }, [currentIndex, totalSlides]);
+
+  /*
+   * Automatically move to the next slide every 4 seconds.
+   */
+  useEffect(() => {
+    if (
+      isLoading ||
+      isError ||
+      partners.length <= itemsPerSlide ||
+      totalSlides <= 1
+    ) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev >= totalSlides - 1 ? 0 : prev + 1));
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [partners.length, itemsPerSlide, totalSlides, isLoading, isError]);
+
+  /*
+   * Don't show the section if there are no published partners.
+   */
+  if (!isLoading && !isError && partners.length === 0) {
+    return null;
+  }
+
+  const handlePrevious = () => {
+    setCurrentIndex((prev) => (prev <= 0 ? totalSlides - 1 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev >= totalSlides - 1 ? 0 : prev + 1));
+  };
+
+  const visiblePartners = partners.slice(
+    currentIndex * itemsPerSlide,
+    currentIndex * itemsPerSlide + itemsPerSlide,
+  );
+
+  return (
+    <section className="mx-auto w-full bg-white px-6 py-10 md:px-8 lg:px-12">
+      {/* Header */}
+      <div className="mx-auto max-w-3xl space-y-2 text-center">
+        <p className="text-xs font-bold uppercase tracking-wider text-orange-500 md:text-sm">
+          Partners & Supporters
+        </p>
+
+        <p className="text-sm leading-7 text-gray-500 md:text-base">
+          We are grateful to the organisations that support, collaborate with,
+          and contribute to the work of the Leadership Conference Forum.
+        </p>
+      </div>
+
+      {/* Carousel */}
+      <div className="mx-auto mt-12 flex max-w-5xl items-center justify-center gap-4">
+        {/* Previous Button */}
+        {!isLoading && !isError && partners.length > itemsPerSlide && (
+          <button
+            type="button"
+            onClick={handlePrevious}
+            aria-label="Previous partners"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-orange-100 bg-white text-orange-500 shadow-sm transition-all duration-200 hover:bg-orange-500 hover:text-white hover:shadow-md"
+          >
+            <ChevronLeft size={20} />
+          </button>
+        )}
+
+        {/* Cards Container */}
+        <div className="w-full max-w-3xl overflow-hidden">
+          {isLoading ? (
+            <div className="flex justify-center gap-4">
+              {Array.from({ length: itemsPerSlide }).map((_, index) => (
+                <div
+                  key={index}
+                  className="flex min-h-28 w-full animate-pulse items-center justify-center rounded-xl border border-gray-100 bg-gray-50"
+                />
+              ))}
+            </div>
+          ) : isError ? (
+            <p className="py-6 text-center text-red-500">
+              Failed to load partners.
+            </p>
+          ) : (
+            <div
+              key={currentIndex}
+              className={`grid gap-4 ${
+                itemsPerSlide === 2 ? "grid-cols-1 grid-rows-2" : "grid-cols-3"
+              } animate-slide-in`}
+            >
+              {visiblePartners.map((partner) => (
+                <div
+                  key={partner.id}
+                  className="flex min-h-32 flex-col items-center justify-center gap-3 rounded-xl border border-orange-100 bg-white p-5 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+                >
+                  {partner.logo ? (
+                    <img
+                      src={partner.logo}
+                      alt={partner.name}
+                      className="h-14 w-14 rounded-full "
+                    />
+                  ) : (
+                    <div className="flex h-14 w-14 items-center justify-center rounded-full bg-orange-500 text-sm font-bold text-white">
+                      {getPartnerInitials(partner.name)}
+                    </div>
+                  )}
+
+                  <p className="text-sm font-semibold text-orange-500">
+                    {partner.name}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Next Button */}
+        {!isLoading && !isError && partners.length > itemsPerSlide && (
+          <button
+            type="button"
+            onClick={handleNext}
+            aria-label="Next partners"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-orange-100 bg-white text-orange-500 shadow-sm transition-all duration-200 hover:bg-orange-500 hover:text-white hover:shadow-md"
+          >
+            <ChevronRight size={20} />
+          </button>
+        )}
+      </div>
+    </section>
   );
 }

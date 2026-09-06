@@ -17,6 +17,7 @@ import TestimonialsPage from "../pages/Testimonials/TestimonialsPage";
 import NewsPage from "../pages/News/AdminNews";
 import QuotesPage from "../pages/quote/AdminQuote";
 import VolunteerApplicationsPage from "../pages/volunteers/VolunteerApplicationsPage";
+import PartnersPage from "../pages/partners/PartnersPage";
 
 function AdminRoutes() {
   return (
@@ -40,6 +41,8 @@ function AdminRoutes() {
           <Route path="news" element={<NewsPage />} />
           <Route path="quotes" element={<QuotesPage />} />
           <Route path="volunteers" element={<VolunteerApplicationsPage />} />
+          <Route path="partners" element={<PartnersPage />} />
+
           <Route element={<SuperAdminRoute />}>
             <Route path="users" element={<AdminUsersPage />} />
           </Route>

@@ -78,7 +78,7 @@ export const hightlight = [
     link: "/events",
   },
   {
-    title: "Emerging Leaders Programee",
+    title: "Emerging Leaders Programme",
     description:
       "Participate in community-focused initiatives that make a difference in society.",
     image: charitable,

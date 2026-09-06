@@ -67,7 +67,7 @@ export function EventHero() {
           <p className="max-w-2xl text-base leading-7 text-white md:text-md md:leading-8">
             Explore our upcoming conferences, workshops, and networking events
             inspire, equip, and connect leaders designed across the UK and
-            beyound
+            beyond
           </p>
         </div>
       </div>

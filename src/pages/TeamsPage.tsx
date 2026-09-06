@@ -5,7 +5,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
 import { getPublishedTeams } from "../api/services/public/teams.service";
-import { externalPeople, externalRoles, partners } from "../static-data/data";
+import { externalPeople, externalRoles } from "../static-data/data";
 
 // ============================================================
 // TEAM HERO
@@ -256,35 +256,6 @@ export default function TeamsPage() {
                 </div>
               ))}
             </div>
-          </div>
-        </section>
-
-        <section className="bg-white  mx-auto w-full px-6 py-10 md:px-8 lg:px-12">
-          {/* Header */}
-          <div className="mx-auto max-w-3xl text-center space-y-2">
-            <p className="text-xs font-bold uppercase tracking-wider text-orange-500 md:text-sm">
-              Partners & Supporters
-            </p>
-
-            <p className=" text-sm leading-7 text-gray-500 md:text-base">
-              We are grateful to the organisations that support, collaborate
-              with, and contribute to the work of the Leadership Conference
-              Forum.
-            </p>
-          </div>
-
-          {/* Partner Logos / Names */}
-          <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-            {partners.map((partner) => (
-              <div
-                key={partner}
-                className="flex min-h-24 items-center justify-center rounded-xl border border-orange-100 bg-white p-5 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-md"
-              >
-                <span className="text-sm font-semibold text-orange-500">
-                  {partner}
-                </span>
-              </div>
-            ))}
           </div>
         </section>
       </main>

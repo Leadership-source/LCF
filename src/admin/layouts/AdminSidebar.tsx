@@ -10,6 +10,7 @@ import {
   Newspaper,
   Quote,
   HandHeart,
+  Handshake,
 } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -68,6 +69,12 @@ const coreNavItems = [
     label: "Volunteer Applications",
     to: ADMIN_ROUTES.VOLUNTEERS,
     icon: HandHeart,
+    end: true,
+  },
+  {
+    label: "Partners & Supporters",
+    to: ADMIN_ROUTES.PARTNERS,
+    icon: Handshake,
     end: true,
   },
   {

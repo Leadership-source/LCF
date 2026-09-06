@@ -19,8 +19,7 @@ export default function Footer() {
             </div>
 
             <p className=" text-sm leading-7 text-white">
-              Raising leaders, building capacity, inspiring, developing and
-              connecting current and future leaders.
+              Inspiring, developing and connecting current and future leaders.
             </p>
             <p className=" text-sm leading-7 text-white">
               Leadership Conference Forum – Registered Charity in England and
