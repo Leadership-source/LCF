@@ -961,78 +961,12 @@ export function Partners() {
     staleTime: 5 * 60 * 1000,
   });
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [itemsPerSlide, setItemsPerSlide] = useState(2);
-
-  /*
-   * Mobile = 1 partner
-   * Tablet/Desktop = 2 partners
-   */
-  useEffect(() => {
-    const updateItemsPerSlide = () => {
-      setItemsPerSlide(window.innerWidth < 640 ? 2 : 3);
-    };
-
-    updateItemsPerSlide();
-
-    window.addEventListener("resize", updateItemsPerSlide);
-
-    return () => {
-      window.removeEventListener("resize", updateItemsPerSlide);
-    };
-  }, []);
-
-  const totalSlides = Math.ceil(partners.length / itemsPerSlide);
-
-  /*
-   * Make sure current slide is still valid
-   * when screen size changes.
-   */
-  useEffect(() => {
-    if (currentIndex >= totalSlides && totalSlides > 0) {
-      setCurrentIndex(totalSlides - 1);
-    }
-  }, [currentIndex, totalSlides]);
-
-  /*
-   * Automatically move to the next slide every 4 seconds.
-   */
-  useEffect(() => {
-    if (
-      isLoading ||
-      isError ||
-      partners.length <= itemsPerSlide ||
-      totalSlides <= 1
-    ) {
-      return;
-    }
-
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev >= totalSlides - 1 ? 0 : prev + 1));
-    }, 4000);
-
-    return () => clearInterval(interval);
-  }, [partners.length, itemsPerSlide, totalSlides, isLoading, isError]);
-
   /*
    * Don't show the section if there are no published partners.
    */
   if (!isLoading && !isError && partners.length === 0) {
     return null;
   }
-
-  const handlePrevious = () => {
-    setCurrentIndex((prev) => (prev <= 0 ? totalSlides - 1 : prev - 1));
-  };
-
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev >= totalSlides - 1 ? 0 : prev + 1));
-  };
-
-  const visiblePartners = partners.slice(
-    currentIndex * itemsPerSlide,
-    currentIndex * itemsPerSlide + itemsPerSlide,
-  );
 
   return (
     <section className="mx-auto w-full bg-white px-6 py-10 md:px-8 lg:px-12">
@@ -1048,78 +982,40 @@ export function Partners() {
         </p>
       </div>
 
-      {/* Carousel */}
-      <div className="mx-auto mt-12 flex max-w-5xl items-center justify-center gap-4">
-        {/* Previous Button */}
-        {!isLoading && !isError && partners.length > itemsPerSlide && (
-          <button
-            type="button"
-            onClick={handlePrevious}
-            aria-label="Previous partners"
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-orange-100 bg-white text-orange-500 shadow-sm transition-all duration-200 hover:bg-orange-500 hover:text-white hover:shadow-md"
-          >
-            <ChevronLeft size={20} />
-          </button>
-        )}
-
-        {/* Cards Container */}
-        <div className="w-full max-w-3xl overflow-hidden">
-          {isLoading ? (
-            <div className="flex justify-center gap-4">
-              {Array.from({ length: itemsPerSlide }).map((_, index) => (
-                <div
-                  key={index}
-                  className="flex min-h-28 w-full animate-pulse items-center justify-center rounded-xl border border-gray-100 bg-gray-50"
-                />
-              ))}
-            </div>
-          ) : isError ? (
-            <p className="py-6 text-center text-red-500">
-              Failed to load partners.
-            </p>
-          ) : (
-            <div
-              key={currentIndex}
-              className={`grid gap-4 ${
-                itemsPerSlide === 2 ? "grid-cols-1 grid-rows-2" : "grid-cols-3"
-              } animate-slide-in`}
-            >
-              {visiblePartners.map((partner) => (
-                <div
-                  key={partner.id}
-                  className="flex min-h-32 flex-col items-center justify-center gap-3 rounded-xl border border-orange-100 bg-white p-5 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-md"
-                >
-                  {partner.logo ? (
-                    <img
-                      src={partner.logo}
-                      alt={partner.name}
-                      className="h-14 w-14 rounded-full "
-                    />
-                  ) : (
-                    <div className="flex h-14 w-14 items-center justify-center rounded-full bg-orange-500 text-sm font-bold text-white">
-                      {getPartnerInitials(partner.name)}
-                    </div>
-                  )}
-
-                  <p className="text-sm font-semibold text-orange-500">
-                    {partner.name}
-                  </p>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Next Button */}
-        {!isLoading && !isError && partners.length > itemsPerSlide && (
-          <button
-            type="button"
-            onClick={handleNext}
-            aria-label="Next partners"
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-orange-100 bg-white text-orange-500 shadow-sm transition-all duration-200 hover:bg-orange-500 hover:text-white hover:shadow-md"
-          >
-            <ChevronRight size={20} />
-          </button>
+      <div className="mx-auto mt-10 w-full max-w-7xl overflow-hidden">
+        {isLoading ? (
+          <div className="grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-5">
+            {Array.from({ length: 5 }).map((_, index) => (
+              <div
+                key={index}
+                className="h-24 animate-pulse rounded-lg bg-gray-50"
+              />
+            ))}
+          </div>
+        ) : isError ? (
+          <p className="py-6 text-center text-red-500">Failed to load partners.</p>
+        ) : (
+          <div className="partner-marquee flex w-max animate-marquee items-center">
+            {[...partners, ...partners].map((partner, index) => (
+              <div
+                key={`${partner.id}-${index}`}
+                className="flex w-[44vw] max-w-[180px] shrink-0 flex-col items-center justify-center gap-3 px-4 py-3 text-center sm:w-[25vw] lg:w-[20vw]"
+              >
+                {partner.logo ? (
+                  <img
+                    src={partner.logo}
+                    alt={partner.name}
+                    className="h-14 w-14 rounded-full object-contain grayscale transition duration-300 hover:grayscale-0"
+                  />
+                ) : (
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-orange-500 text-sm font-bold text-white">
+                    {getPartnerInitials(partner.name)}
+                  </div>
+                )}
+                <p className="text-sm font-semibold text-gray-700">{partner.name}</p>
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </section>

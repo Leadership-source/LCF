@@ -13,6 +13,10 @@
   }
 }
 
+.partner-marquee:hover {
+  animation-play-state: paused;
+}
+
 @theme {
   --animate-hero-fade-up: heroFadeUp 0.8s ease-out forwards;
   --animate-hero-image: heroImageZoom 1.2s ease-out forwards;

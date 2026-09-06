@@ -26,24 +26,19 @@ export function EventAttendeesModal({ eventId, onClose }: Props) {
     const win = window.open("", "_blank", "width=900,height=700");
     if (!win) return;
 
-    win.document.write(`
-      <html>
-        <head>
-          <title>Attendees — ${data?.event.title ?? ""}</title>
-          <style>
-            body { font-family: sans-serif; padding: 24px; color: #111; }
-            h1 { font-size: 20px; margin-bottom: 4px; }
-            p { font-size: 13px; color: #555; margin-bottom: 16px; }
-            table { width: 100%; border-collapse: collapse; font-size: 13px; }
-            th { background: #f3f4f6; text-align: left; padding: 8px 12px; font-weight: 600; border-bottom: 2px solid #e5e7eb; }
-            td { padding: 8px 12px; border-bottom: 1px solid #e5e7eb; }
-            tr:last-child td { border-bottom: none; }
-          </style>
-        </head>
-        <body>${content.innerHTML}</body>
-      </html>
-    `);
-    win.document.close();
+    const style = win.document.createElement("style");
+    style.textContent = `
+      body { font-family: sans-serif; padding: 24px; color: #111; }
+      h1 { font-size: 20px; margin-bottom: 4px; }
+      p { font-size: 13px; color: #555; margin-bottom: 16px; }
+      table { width: 100%; border-collapse: collapse; font-size: 13px; }
+      th { background: #f3f4f6; text-align: left; padding: 8px 12px; font-weight: 600; border-bottom: 2px solid #e5e7eb; }
+      td { padding: 8px 12px; border-bottom: 1px solid #e5e7eb; }
+      tr:last-child td { border-bottom: none; }
+    `;
+    win.document.title = `Attendees - ${data?.event.title ?? ""}`;
+    win.document.head.append(style);
+    win.document.body.append(content.cloneNode(true));
     win.focus();
     win.print();
   };

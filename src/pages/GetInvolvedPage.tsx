@@ -296,11 +296,7 @@ type FormFieldProps = {
   type?: "text" | "email" | "tel";
   value: string;
   error?: string;
-  onChange: (
-    event: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
-  ) => void;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
   required?: boolean;
   maxLength: number;
 };
