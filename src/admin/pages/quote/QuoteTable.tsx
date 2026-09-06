@@ -220,10 +220,19 @@ export function QuoteTable({
               >
                 {/* LEADER */}
                 <td className="px-4 py-4 md:px-8">
-                  <div>
+                  <div className="flex items-center gap-3">
+                    {quote.image ? (
+                      <img
+                        src={quote.image}
+                        alt=""
+                        className="h-10 w-10 rounded-full object-cover"
+                      />
+                    ) : null}
+                    <div>
                     <h3 className="text-sm font-semibold">{quote.name}</h3>
 
                     <p className="mt-1 text-sm text-gray-500">{quote.role}</p>
+                    </div>
                   </div>
                 </td>
 

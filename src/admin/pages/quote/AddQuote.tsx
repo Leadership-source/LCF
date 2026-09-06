@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { X } from "lucide-react";
+import { Upload, X } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
@@ -27,6 +27,8 @@ export function AddQuote() {
 
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState(initialForm);
+  const [image, setImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState("");
   const [errors, setErrors] = useState<FormErrors>({});
 
   const createQuoteMutation = useMutation({
@@ -45,6 +47,8 @@ export function AddQuote() {
 
       setOpen(false);
       setForm(initialForm);
+      setImage(null);
+      setImagePreview("");
       setErrors({});
     },
 
@@ -72,6 +76,19 @@ export function AddQuote() {
       ...prev,
       [name]: undefined,
     }));
+  };
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/") || file.size > 5 * 1024 * 1024) {
+      toast.error("Please choose an image smaller than 5MB.");
+      return;
+    }
+
+    setImage(file);
+    setImagePreview(URL.createObjectURL(file));
   };
 
   // --------------------------------
@@ -121,6 +138,7 @@ export function AddQuote() {
       name: form.name.trim(),
       role: form.role.trim(),
       quote: form.quote.trim(),
+      image: image || undefined,
     };
 
     createQuoteMutation.mutate(quoteData);
@@ -174,6 +192,21 @@ export function AddQuote() {
                   Add an inspirational quote from a leader or industry
                   professional.
                 </p>
+              </div>
+
+              <div>
+                <label className="mb-2 block text-sm font-medium">
+                  Leader Image <span className="font-normal text-gray-400">(optional)</span>
+                </label>
+                <label className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-gray-300 p-5 hover:border-orange-500">
+                  {imagePreview ? (
+                    <img src={imagePreview} alt="Quote preview" className="h-28 w-28 rounded-lg object-cover" />
+                  ) : (
+                    <><Upload className="text-gray-400" /><span className="text-sm text-gray-500">Choose an image, max 5MB</span></>
+                  )}
+                  <input type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
+                </label>
+                {image && <p className="mt-1 text-xs text-gray-500">Selected: {image.name}</p>}
               </div>
 
               <button

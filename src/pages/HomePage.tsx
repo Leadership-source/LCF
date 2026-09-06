@@ -650,14 +650,23 @@ export function LeaderQuotes() {
 
                   {/* Leader */}
 
-                  <div className="mt-8">
-                    <h3 className="text-base font-semibold text-orange-500 md:text-xl">
-                      {quote.name}
-                    </h3>
+                  <div className="mt-8 flex items-center gap-3">
+                    {quote.image && (
+                      <img
+                        src={quote.image}
+                        alt={quote.name}
+                        className="h-12 w-12 rounded-full object-cover"
+                      />
+                    )}
+                    <div>
+                      <h3 className="text-base font-semibold text-orange-500 md:text-xl">
+                        {quote.name}
+                      </h3>
 
-                    <p className="mt-1 text-xs text-gray-500 md:text-sm">
-                      {quote.role}
-                    </p>
+                      <p className="mt-1 text-xs text-gray-500 md:text-sm">
+                        {quote.role}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>

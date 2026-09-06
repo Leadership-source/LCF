@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Upload } from "lucide-react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -26,6 +27,8 @@ export default function QuoteInvitationPage() {
   const { token } = useParams<{ token: string }>();
 
   const [formData, setFormData] = useState(initialForm);
+  const [image, setImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState("");
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitted, setSubmitted] = useState(false);
 
@@ -42,13 +45,16 @@ export default function QuoteInvitationPage() {
   });
 
   const submitMutation = useMutation({
-    mutationFn: () => submitQuoteInvitation(token!, formData),
+    mutationFn: () =>
+      submitQuoteInvitation(token!, { ...formData, image: image || undefined }),
 
     onSuccess: (response) => {
       toast.success(response.message || "Quote submitted successfully");
 
       setSubmitted(true);
       setFormData(initialForm);
+      setImage(null);
+      setImagePreview("");
       setErrors({});
     },
 
@@ -76,6 +82,17 @@ export default function QuoteInvitationPage() {
       ...prev,
       [name]: undefined,
     }));
+  };
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith("image/") || file.size > 5 * 1024 * 1024) {
+      toast.error("Please choose an image smaller than 5MB.");
+      return;
+    }
+    setImage(file);
+    setImagePreview(URL.createObjectURL(file));
   };
 
   // --------------------------------
@@ -286,6 +303,16 @@ export default function QuoteInvitationPage() {
                   {formData.quote.length} characters
                 </span>
               </div>
+            </div>
+
+            {/* Submit */}
+            <div>
+              <label className="mb-2 block text-sm font-medium text-gray-700">Your Image <span className="font-normal text-gray-400">(optional)</span></label>
+              <label className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-gray-300 p-5 hover:border-orange-500">
+                {imagePreview ? <img src={imagePreview} alt="Quote preview" className="h-28 w-28 rounded-lg object-cover" /> : <><Upload className="text-gray-400" /><span className="text-sm text-gray-500">Choose an image, max 5MB</span></>}
+                <input type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
+              </label>
+              {image && <p className="mt-1 text-xs text-gray-500">Selected: {image.name}</p>}
             </div>
 
             {/* Submit */}

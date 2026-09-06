@@ -5,6 +5,7 @@ export type PublicQuote = {
   name: string;
   role: string;
   quote: string;
+  image?: string | null;
   publishedAt?: string | null;
 };
 
