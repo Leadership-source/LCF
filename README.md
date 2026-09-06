@@ -1,75 +1,80 @@
-# React + TypeScript + Vite
+# Leadership Conference Forum Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Production frontend for Leadership Conference Forum, built with React, TypeScript, Vite, and Tailwind CSS.
 
-Currently, two official plugins are available:
+## Requirements
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Node.js 20 or newer
+- npm 10 or newer
+- Access to the LCF API
 
-## React Compiler
+## Local Setup
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Create `.env.local` from `.env.example`:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```env
+VITE_API_URL=https://lcf-api-c228.onrender.com
+VITE_SITE_URL=https://leadershipconferenceforum.org
 ```
+
+Use `http://localhost:3000` when running the backend locally.
+
+## Commands
+
+```bash
+npm run dev      # Start the Vite development server
+npm run build    # Type-check and create the production build
+npm run preview  # Preview the production build locally
+npm run lint     # Run ESLint
+```
+
+## Application Areas
+
+Public routes include the home page, about page, events, teams and external roles, news, contact, get involved, legal notice, and quote invitation pages.
+
+Admin routes are protected by authentication and include the dashboard, teams, events, news, testimonials, quotes, volunteer applications, partners, external roles, and settings. User management is restricted to superadmins.
+
+## API Configuration
+
+The frontend uses `VITE_API_URL` as the Axios base URL and sends credentials with requests. Admin requests attach the stored admin token. The backend remains responsible for authorization, validation, file storage, email delivery, and database access.
+
+Implemented API-backed workflows include:
+
+- Two-step admin login with a six-digit email verification code
+- Password reset and authenticated password change
+- Superadmin user creation with optional backend-generated password and welcome email
+- Team, partner, quote, news, testimonial, and external-role management
+- Dynamic volunteer options, availability, submissions, admin review, and read status
+- Public external roles grouped by role type
+- Optional quote images and image uploads for quote invitations
+
+## Deployment
+
+The project is configured for a static deployment on Render:
+
+- Build command: `npm install && npm run build`
+- Publish directory: `dist`
+- SPA fallback: all routes rewrite to `index.html`
+
+Set `VITE_API_URL` in the deployment environment before building. Do not commit `.env.local`, API tokens, or other secrets.
+
+Set `VITE_SITE_URL` to the production domain so canonical links, social sharing metadata, structured data, and the sitemap use the correct URL. The app uses browser history routing, so the host must rewrite unknown paths to `index.html`.
+
+SEO files are served from `/robots.txt` and `/sitemap.xml`. The sitemap currently lists the public, indexable routes; dynamic event and news detail URLs can be added when their content strategy is finalized.
+
+## Handover Checklist
+
+1. Confirm the production API URL is configured in the deployment environment.
+2. Run `npm install` and `npm run build`.
+3. Verify public pages, admin login verification, and role-based access.
+4. Verify image uploads are under the backend's 5MB limit.
+5. Verify welcome emails, volunteer notifications, quote notifications, and password reset emails in the backend email provider.
+6. Confirm the deployed frontend can reach the production API.
+
+## Repository Notes
+
+The frontend does not contain backend credentials or email-provider configuration. Those values belong in the backend deployment environment. The API is the source of truth for published content and authentication state.

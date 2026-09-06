@@ -369,7 +369,7 @@ export const involvementOptions = [
     title: "Attend an Event",
     description:
       "Discover current Leadership Conference Forum events and register to attend.",
-    href: "#/events",
+    href: "/events",
     actionLabel: "View Events",
   },
 

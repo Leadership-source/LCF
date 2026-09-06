@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /quote-invitation/
+
+Sitemap: https://leadershipconferenceforum.org/sitemap.xml
