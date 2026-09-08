@@ -277,7 +277,7 @@ export function Ready() {
               <FieldError message={errors.message} />
             </div>
             <button type="submit" disabled={volunteerMutation.isPending || !options.length || !availabilityOptions.length} className="mt-6 rounded-md bg-white px-5 py-3 text-sm font-semibold text-orange-600 transition hover:bg-orange-100 disabled:cursor-not-allowed disabled:opacity-70">
-              {volunteerMutation.isPending ? "Submitting application..." : "Submit volunteer application"}
+              {volunteerMutation.isPending ? "Submitting application..." : "Apply to Volunteer"}
             </button>
           </>
         )}
