@@ -45,7 +45,7 @@ export default function ExternalRolesPage() {
   return (
     <section className="space-y-8">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <div><h1 className="text-2xl font-bold text-gray-900">External Roles</h1><p className="mt-1 text-sm text-gray-500">Manage advisors, patrons, ambassadors, supporters, and mentees.</p></div>
+        <div><h1 className="text-2xl font-bold text-gray-900">External Roles</h1><p className="mt-1 text-sm text-gray-500">Manage advisors, patrons, ambassadors, supporters, and mentors.</p></div>
         <button type="button" onClick={() => { setEditing(null); setShowForm(true); }} className="inline-flex items-center gap-2 rounded-lg bg-orange-500 px-4 py-2 font-semibold text-white hover:bg-orange-600"><Plus size={18} /> Add role</button>
       </div>
       {isLoading && <p className="py-16 text-center text-gray-500">Loading external roles...</p>}

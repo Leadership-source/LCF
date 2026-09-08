@@ -18,7 +18,7 @@ const pageMetadata: Record<string, { title: string; description: string }> = {
   },
   "/teams": {
     title: "Our People and External Roles | Leadership Conference Forum",
-    description: "Meet the leaders, advisors, patrons, ambassadors, supporters, and mentees contributing to the Leadership Conference Forum community.",
+    description: "Meet the leaders, advisors, patrons, ambassadors, supporters, and mentors contributing to the Leadership Conference Forum community.",
   },
   "/get-involved": {
     title: "Volunteer and Get Involved | Leadership Conference Forum",

@@ -44,6 +44,19 @@ export default function Navbar() {
 
           <li>
             <NavLink
+              to={ROUTES.TEAMS}
+              className={({ isActive }) =>
+                isActive
+                  ? "border-b-2 border-orange-500 pb-1"
+                  : "border-b-2 border-transparent pb-1"
+              }
+            >
+              People
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
               to={ROUTES.EVENTS}
               className={({ isActive }) =>
                 isActive
@@ -52,19 +65,6 @@ export default function Navbar() {
               }
             >
               Events
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink
-              to={ROUTES.TEAMS}
-              className={({ isActive }) =>
-                isActive
-                  ? "border-b-2 border-orange-500 pb-1"
-                  : "border-b-2 border-transparent pb-1"
-              }
-            >
-              Our People
             </NavLink>
           </li>
 
@@ -140,14 +140,14 @@ export default function Navbar() {
             </li>
 
             <li>
-              <NavLink to={ROUTES.EVENTS} onClick={() => setIsOpen(false)}>
-                Events
+              <NavLink to={ROUTES.TEAMS} onClick={() => setIsOpen(false)}>
+                People
               </NavLink>
             </li>
 
             <li>
-              <NavLink to={ROUTES.TEAMS} onClick={() => setIsOpen(false)}>
-                Our People
+              <NavLink to={ROUTES.EVENTS} onClick={() => setIsOpen(false)}>
+                Events
               </NavLink>
             </li>
 

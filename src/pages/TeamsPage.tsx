@@ -33,8 +33,8 @@ const externalRoleDetails: Record<ExternalRoleType, {
     description: "Stand alongside LCF as valued supporters of our programmes and vision.",
   },
   MENTEE: {
-    title: "Mentees",
-    description: "Engage with leadership development, mentoring, and opportunities to grow.",
+    title: "Mentors",
+    description: "Support leadership development through mentoring and opportunities to grow.",
   },
 };
 
@@ -67,7 +67,7 @@ export function TeamHero() {
       <div className="relative mx-auto mt-15 flex max-w-7xl flex-col gap-4 px-6 py-10 md:px-8 lg:px-12">
         <div className="flex max-w-3xl flex-col gap-4">
           <h1 className="text-2xl font-bold leading-[1.08] tracking-tight text-[#ffdcc0] md:text-4xl lg:text-5xl">
-            Our People
+            People
           </h1>
 
           <p className="max-w-2xl text-base leading-7 text-white md:text-md md:leading-8">
