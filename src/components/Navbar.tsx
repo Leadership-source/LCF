@@ -51,7 +51,7 @@ export default function Navbar() {
                   : "border-b-2 border-transparent pb-1"
               }
             >
-              People
+              Our People
             </NavLink>
           </li>
 
@@ -141,7 +141,7 @@ export default function Navbar() {
 
             <li>
               <NavLink to={ROUTES.TEAMS} onClick={() => setIsOpen(false)}>
-                People
+                Our People
               </NavLink>
             </li>
 
