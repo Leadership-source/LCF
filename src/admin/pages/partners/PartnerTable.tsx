@@ -282,7 +282,20 @@ export function PartnerTable({
                           </div>
                         )}
 
-                        <h3 className="font-semibold">{partner.name}</h3>
+                        <div>
+                          <h3 className="font-semibold">{partner.name}</h3>
+
+                          {partner.websiteUrl && (
+                            <a
+                              href={partner.websiteUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="block text-xs text-orange-600 hover:underline"
+                            >
+                              {partner.websiteUrl}
+                            </a>
+                          )}
+                        </div>
                       </div>
                     </td>
 

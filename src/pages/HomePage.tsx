@@ -1010,7 +1010,26 @@ export function Partners() {
                 key={`${partner.id}-${index}`}
                 className="flex w-[44vw] max-w-[180px] shrink-0 flex-col items-center justify-center gap-3 px-4 py-3 text-center sm:w-[25vw] lg:w-[20vw]"
               >
-                {partner.logo ? (
+                {partner.websiteUrl ? (
+                  <a
+                    href={partner.websiteUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Visit ${partner.name}'s website`}
+                  >
+                    {partner.logo ? (
+                      <img
+                        src={partner.logo}
+                        alt={partner.name}
+                        className="h-14 w-14 rounded-full object-contain grayscale transition duration-300 hover:grayscale-0"
+                      />
+                    ) : (
+                      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-orange-500 text-sm font-bold text-white">
+                        {getPartnerInitials(partner.name)}
+                      </div>
+                    )}
+                  </a>
+                ) : partner.logo ? (
                   <img
                     src={partner.logo}
                     alt={partner.name}

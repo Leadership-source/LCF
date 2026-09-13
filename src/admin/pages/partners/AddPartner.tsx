@@ -8,6 +8,7 @@ import { createPartner } from "../../../api/services/admin/partners.service";
 type FormErrors = {
   name?: string;
   logo?: string;
+  websiteUrl?: string;
   general?: string;
 };
 
@@ -19,6 +20,7 @@ export function AddPartner() {
   const [name, setName] = useState("");
   const [logo, setLogo] = useState<File | null>(null);
   const [preview, setPreview] = useState("");
+  const [websiteUrl, setWebsiteUrl] = useState("");
 
   const [errors, setErrors] = useState<FormErrors>({});
 
@@ -41,6 +43,7 @@ export function AddPartner() {
       setName("");
       setLogo(null);
       setPreview("");
+      setWebsiteUrl("");
       setErrors({});
     },
 
@@ -53,6 +56,7 @@ export function AddPartner() {
         setErrors({
           name: responseData.errors.name,
           logo: responseData.errors.logo,
+          websiteUrl: responseData.errors.websiteUrl,
           general: responseData.message,
         });
 
@@ -74,6 +78,16 @@ export function AddPartner() {
     setErrors((prev) => ({
       ...prev,
       name: undefined,
+      general: undefined,
+    }));
+  };
+
+  const handleWebsiteUrlChange = (value: string) => {
+    setWebsiteUrl(value);
+
+    setErrors((prev) => ({
+      ...prev,
+      websiteUrl: undefined,
       general: undefined,
     }));
   };
@@ -134,24 +148,33 @@ export function AddPartner() {
       newErrors.name = "Partner name must contain at least 2 characters.";
     }
 
+    const cleanWebsiteUrl = websiteUrl.trim();
+
+    if (cleanWebsiteUrl && !/^https?:\/\/.+/i.test(cleanWebsiteUrl)) {
+      newErrors.websiteUrl =
+        "Please enter a valid URL starting with http:// or https://.";
+    }
+
     setErrors(newErrors);
 
     return {
       isValid: Object.keys(newErrors).length === 0,
       cleanName,
+      cleanWebsiteUrl,
     };
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const { isValid, cleanName } = validateForm();
+    const { isValid, cleanName, cleanWebsiteUrl } = validateForm();
 
     if (!isValid) return;
 
     createPartnerMutation.mutate({
       name: cleanName,
       logo: logo || undefined,
+      websiteUrl: cleanWebsiteUrl || undefined,
     });
   };
 
@@ -219,6 +242,30 @@ export function AddPartner() {
 
                 {errors.name && (
                   <p className="mt-1 text-sm text-red-500">{errors.name}</p>
+                )}
+              </div>
+
+              {/* Website URL */}
+              <div>
+                <label className="mb-2 block text-sm font-medium">
+                  Website URL{" "}
+                  <span className="font-normal text-gray-400">(optional)</span>
+                </label>
+
+                <input
+                  type="url"
+                  value={websiteUrl}
+                  onChange={(e) => handleWebsiteUrlChange(e.target.value)}
+                  placeholder="https://example.com"
+                  className={`w-full rounded-lg border px-4 py-3 outline-none focus:border-orange-500 ${
+                    errors.websiteUrl ? "border-red-500" : "border-gray-300"
+                  }`}
+                />
+
+                {errors.websiteUrl && (
+                  <p className="mt-1 text-sm text-red-500">
+                    {errors.websiteUrl}
+                  </p>
                 )}
               </div>
 

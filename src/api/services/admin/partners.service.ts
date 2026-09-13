@@ -5,6 +5,7 @@ export type AdminPartner = {
   id: string;
   name: string;
   logo: string | null;
+  websiteUrl: string | null;
   status: PartnerStatus;
   createdBy: string | null;
   createdAt: string;
@@ -20,6 +21,7 @@ export async function getPartners(): Promise<AdminPartner[]> {
 export type CreatePartnerData = {
   name: string;
   logo?: File;
+  websiteUrl?: string;
 };
 
 export async function createPartner(data: CreatePartnerData) {
@@ -31,6 +33,10 @@ export async function createPartner(data: CreatePartnerData) {
     formData.append("logo", data.logo);
   }
 
+  if (data.websiteUrl) {
+    formData.append("websiteUrl", data.websiteUrl);
+  }
+
   const response = await apiClient.post("/partners", formData);
 
   return response.data;
@@ -39,6 +45,7 @@ export async function createPartner(data: CreatePartnerData) {
 export type UpdatePartnerData = {
   name?: string;
   logo?: File;
+  websiteUrl?: string;
 };
 
 export async function updatePartner(id: string, data: UpdatePartnerData) {
@@ -50,6 +57,10 @@ export async function updatePartner(id: string, data: UpdatePartnerData) {
 
   if (data.logo) {
     formData.append("logo", data.logo);
+  }
+
+  if (data.websiteUrl !== undefined) {
+    formData.append("websiteUrl", data.websiteUrl);
   }
 
   const response = await apiClient.put(`/partners/${id}`, formData);

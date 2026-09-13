@@ -4,6 +4,7 @@ type Partner = {
   id: string;
   name: string;
   logo: string | null;
+  websiteUrl: string | null;
   status: "PUBLISHED";
 };
 

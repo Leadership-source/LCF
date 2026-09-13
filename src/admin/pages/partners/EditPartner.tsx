@@ -15,6 +15,7 @@ type EditPartnerProps = {
 type FormErrors = {
   name?: string;
   logo?: string;
+  websiteUrl?: string;
   general?: string;
 };
 
@@ -24,6 +25,7 @@ export function EditPartner({ partner, onClose }: EditPartnerProps) {
   const [name, setName] = useState(partner.name);
   const [logo, setLogo] = useState<File | null>(null);
   const [preview, setPreview] = useState(partner.logo || "");
+  const [websiteUrl, setWebsiteUrl] = useState(partner.websiteUrl || "");
 
   const [errors, setErrors] = useState<FormErrors>({});
 
@@ -32,6 +34,7 @@ export function EditPartner({ partner, onClose }: EditPartnerProps) {
       updatePartner(partner.id, {
         name: name.trim(),
         logo: logo || undefined,
+        websiteUrl: websiteUrl.trim(),
       }),
 
     onSuccess: (response) => {
@@ -61,6 +64,7 @@ export function EditPartner({ partner, onClose }: EditPartnerProps) {
         setErrors({
           name: responseData.errors.name,
           logo: responseData.errors.logo,
+          websiteUrl: responseData.errors.websiteUrl,
           general: responseData.message,
         });
 
@@ -82,6 +86,16 @@ export function EditPartner({ partner, onClose }: EditPartnerProps) {
     setErrors((prev) => ({
       ...prev,
       name: undefined,
+      general: undefined,
+    }));
+  };
+
+  const handleWebsiteUrlChange = (value: string) => {
+    setWebsiteUrl(value);
+
+    setErrors((prev) => ({
+      ...prev,
+      websiteUrl: undefined,
       general: undefined,
     }));
   };
@@ -152,6 +166,16 @@ export function EditPartner({ partner, onClose }: EditPartnerProps) {
       return;
     }
 
+    const cleanWebsiteUrl = websiteUrl.trim();
+
+    if (cleanWebsiteUrl && !/^https?:\/\/.+/i.test(cleanWebsiteUrl)) {
+      setErrors({
+        websiteUrl: "Please enter a valid URL starting with http:// or https://.",
+      });
+
+      return;
+    }
+
     updatePartnerMutation.mutate();
   };
 
@@ -194,6 +218,28 @@ export function EditPartner({ partner, onClose }: EditPartnerProps) {
 
             {errors.name && (
               <p className="mt-1 text-sm text-red-500">{errors.name}</p>
+            )}
+          </div>
+
+          {/* Website URL */}
+          <div>
+            <label className="mb-2 block text-sm font-medium">
+              Website URL{" "}
+              <span className="font-normal text-gray-400">(optional)</span>
+            </label>
+
+            <input
+              type="url"
+              value={websiteUrl}
+              onChange={(e) => handleWebsiteUrlChange(e.target.value)}
+              placeholder="https://example.com"
+              className={`w-full rounded-lg border px-4 py-3 outline-none focus:border-orange-500 ${
+                errors.websiteUrl ? "border-red-500" : "border-gray-300"
+              }`}
+            />
+
+            {errors.websiteUrl && (
+              <p className="mt-1 text-sm text-red-500">{errors.websiteUrl}</p>
             )}
           </div>
 
