@@ -544,7 +544,7 @@ export function LeaderQuotes() {
   useEffect(() => {
     if (!hasMultipleQuotes) return;
 
-    const interval = setInterval(nextSlide, 5000);
+    const interval = setInterval(nextSlide, 9000);
 
     return () => clearInterval(interval);
   }, [quotes.length, hasMultipleQuotes]);
